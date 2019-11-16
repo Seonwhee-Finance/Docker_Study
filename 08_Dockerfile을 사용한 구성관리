@@ -7,4 +7,22 @@
 1-4) 컨테이너 안에서 데몬 실행
 
 명령은 관례적으로 대문자로 통일해서 사용한다.
+주석은 #
+파일명은 디폴트로 Dockerfile
+다른 파일명을 쓰면 build시 별도로 지정해야 함
 
+2) VS code Extensions -> vscode-docker 검색 -> 마이크로소프트의 플러그인 설치
+Ctrl + spacebar 는 스니펫 표시(명령 부가정보..)
+docker-compose.yaml도 지원
+
+3) build 실행(Dockerfile로부터 이미지를 생성하는 작업)
+docker build -t sample:1.0 .
+Dockerfile 위치가 /home/user1/sample에 있을 때
+docker build -t sample:1.0 /home/user1/sample
+
+이미지 실체는 동일하다 
+docker build -t sample:2.0 ./dkfile/
+
+
+별도의 파일
+docker build -t websample:1.0 -f Dockerfile.base .

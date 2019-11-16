@@ -1,0 +1,81 @@
+user1@docker01:~/Docker_Study/dkfile$ ls
+Dockerfile
+
+user1@docker01:~/Docker_Study/dkfile$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+seonwhee0docker/webfront       1.0                 ac37258706c5        About an hour ago   126MB
+helloworld                     latest              909ddb4f1406        6 days ago          123MB
+ubuntu                         16.04               5f2bf26e3524        2 weeks ago         123MB
+ubuntu                         latest              775349758637        2 weeks ago         64.2MB
+nginx                          latest              540a289bab6c        3 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        3 weeks ago         126MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        3 weeks ago         126MB
+centos                         latest              0f3e07c0138f        6 weeks ago         220MB
+
+user1@docker01:~/Docker_Study/dkfile$ docker build -t sample:1.0 .
+Sending build context to Docker daemon  2.048kB
+Step 1/1 : FROM centos:centos7
+centos7: Pulling from library/centos
+ab5ef0e58194: Pull complete 
+Digest: sha256:4a701376d03f6b39b8c2a8f4a8e499441b0d567f9ab9d58e4991de4472fb813c
+Status: Downloaded newer image for centos:centos7
+ ---> 5e35e350aded
+Successfully built 5e35e350aded
+Successfully tagged sample:1.0
+
+
+user1@docker01:~/Docker_Study$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+seonwhee0docker/webfront       1.0                 ac37258706c5        About an hour ago   126MB
+centos                         centos7             5e35e350aded        4 days ago          203MB
+sample                         1.0                 5e35e350aded        4 days ago          203MB
+helloworld                     latest              909ddb4f1406        6 days ago          123MB
+ubuntu                         16.04               5f2bf26e3524        2 weeks ago         123MB
+ubuntu                         latest              775349758637        2 weeks ago         64.2MB
+nginx                          latest              540a289bab6c        3 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        3 weeks ago         126MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        3 weeks ago         126MB
+centos                         latest              0f3e07c0138f        6 weeks ago         220MB
+
+user1@docker01:~/Docker_Study$ docker build -t sample:2.0 ./dkfile/
+Sending build context to Docker daemon  2.048kB
+Step 1/1 : FROM centos:centos7
+ ---> 5e35e350aded
+Successfully built 5e35e350aded
+Successfully tagged sample:2.0
+
+user1@docker01:~/Docker_Study$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+seonwhee0docker/webfront       1.0                 ac37258706c5        About an hour ago   126MB
+centos                         centos7             5e35e350aded        4 days ago          203MB
+sample                         1.0                 5e35e350aded        4 days ago          203MB
+sample                         2.0                 5e35e350aded        4 days ago          203MB
+helloworld                     latest              909ddb4f1406        6 days ago          123MB
+ubuntu                         16.04               5f2bf26e3524        2 weeks ago         123MB
+ubuntu                         latest              775349758637        2 weeks ago         64.2MB
+nginx                          latest              540a289bab6c        3 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        3 weeks ago         126MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        3 weeks ago         126MB
+centos                         latest              0f3e07c0138f        6 weeks ago         220MB
+
+user1@docker01:~/Docker_Study/dkfile$ docker build -t websample:1.0 -f Dockerfile.base .
+Sending build context to Docker daemon  3.072kB
+Step 1/1 : FROM nginx:latest
+ ---> 540a289bab6c
+Successfully built 540a289bab6c
+Successfully tagged websample:1.0
+
+user1@docker01:~/Docker_Study/dkfile$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+seonwhee0docker/webfront       1.0                 ac37258706c5        About an hour ago   126MB
+centos                         centos7             5e35e350aded        4 days ago          203MB
+sample                         1.0                 5e35e350aded        4 days ago          203MB
+sample                         2.0                 5e35e350aded        4 days ago          203MB
+helloworld                     latest              909ddb4f1406        6 days ago          123MB
+ubuntu                         16.04               5f2bf26e3524        2 weeks ago         123MB
+ubuntu                         latest              775349758637        2 weeks ago         64.2MB
+nginx                          latest              540a289bab6c        3 weeks ago         126MB
+websample                      1.0                 540a289bab6c        3 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        3 weeks ago         126MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        3 weeks ago         126MB
+centos                         latest              0f3e07c0138f        6 weeks ago         220MB
