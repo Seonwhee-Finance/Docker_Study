@@ -1,0 +1,76 @@
+
+user1@docker01:~/dockerTest/multi_stage$ ls
+DockerFile  main.go
+user1@docker01:~/dockerTest/multi_stage$ docker build -t greetgo .
+Sending build context to Docker daemon  3.072kB
+Step 1/9 : FROM golang AS builder
+latest: Pulling from library/golang
+c7b7d16361e0: Pull complete 
+b7a128769df1: Pull complete 
+1128949d0793: Pull complete 
+667692510b70: Pull complete 
+c70d80036479: Pull complete 
+50f26e2b5c7f: Pull complete 
+2ea72dab87cf: Pull complete 
+Digest: sha256:793ef107402fbed57a9c29941f3b4e8932ef96eb70fb682e567cd4d3a2bb33c1
+Status: Downloaded newer image for golang:latest
+ ---> 54e71dcafb7c
+Step 2/9 : WORKDIR /go/src/github.com/Seonwhee-Finance/dockertext-greet
+ ---> Running in 99bdbd7c7244
+Removing intermediate container 99bdbd7c7244
+ ---> c65ec81d7b23
+Step 3/9 : RUN go get -d -v github.com/urfave/cli
+ ---> Running in 22faaa5119a6
+github.com/urfave/cli (download)
+github.com/cpuguy83/go-md2man (download)
+Removing intermediate container 22faaa5119a6
+ ---> 25143d87dfe3
+Step 4/9 : COPY main.go .
+ ---> cf04070b35fd
+Step 5/9 : RUN GOOS=linux go build -a -o greet .
+ ---> Running in 5f7028dd486a
+Removing intermediate container 5f7028dd486a
+ ---> 7b7d10a75461
+Step 6/9 : FROM busybox
+latest: Pulling from library/busybox
+0f8c40e1270f: Pull complete 
+Digest: sha256:1303dbf110c57f3edf68d9f5a16c082ec06c4cf7604831669faf2c712260b5a0
+Status: Downloaded newer image for busybox:latest
+ ---> 020584afccce
+Step 7/9 : WORKDIR /opt/greet/bin
+ ---> Running in 512df1ae7b8d
+Removing intermediate container 512df1ae7b8d
+ ---> 098559e98f33
+Step 8/9 : COPY --from=builder /go/src/github.com/Seonwhee-Finance/dockertext-greet .
+ ---> 4b4d1c8dfc43
+Step 9/9 : ENTRYPOINT ["./greet"]
+ ---> Running in 504205fb9d14
+Removing intermediate container 504205fb9d14
+ ---> 78143c7d41da
+Successfully built 78143c7d41da
+Successfully tagged greetgo:latest
+
+
+user1@docker01:~/dockerTest/multi_stage$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+greetgo                        latest              78143c7d41da        6 seconds ago       6.08MB
+<none>                         <none>              7b7d10a75461        12 seconds ago      826MB
+webap                          latest              bcf1b204f274        31 minutes ago      205MB
+seonwhee0docker/webfront       1.0                 ac37258706c5        3 hours ago         126MB
+centos                         centos7             5e35e350aded        4 days ago          203MB
+sample                         1.0                 5e35e350aded        4 days ago          203MB
+sample                         2.0                 5e35e350aded        4 days ago          203MB
+helloworld                     latest              909ddb4f1406        7 days ago          123MB
+golang                         latest              54e71dcafb7c        2 weeks ago         803MB
+ubuntu                         16.04               5f2bf26e3524        2 weeks ago         123MB
+ubuntu                         latest              775349758637        2 weeks ago         64.2MB
+busybox                        latest              020584afccce        2 weeks ago         1.22MB
+nginx                          latest              540a289bab6c        3 weeks ago         126MB
+websample                      1.0                 540a289bab6c        3 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        3 weeks ago         126MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        3 weeks ago         126MB
+centos                         latest              0f3e07c0138f        6 weeks ago         220MB
+
+user1@docker01:~/dockerTest$ docker container run -it --rm greetgo Seonwhee
+Hello Seonwhee
+
