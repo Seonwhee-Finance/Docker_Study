@@ -26,3 +26,10 @@ docker build -t sample:2.0 ./dkfile/
 
 별도의 파일
 docker build -t websample:1.0 -f Dockerfile.base .
+
+docker build -t webap .
+
+Dockerfile로부터 생성된 webap 이미지로부터 백그라운드로 80포트로 이름을 webapserver로 해서 실행한다
+docker container run --name webapserver -d -p 8001:80 webap
+
+docker container exec --it webapserver ls /usr/share/nginx/html
