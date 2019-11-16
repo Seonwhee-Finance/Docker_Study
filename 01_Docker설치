@@ -1,0 +1,30 @@
+1) Update
+sudo apt-get update
+2) Package install
+sudo apt-get install -y \ 
+apt-transport-https \ 
+ca-certificates \ 
+curl \ 
+software-properties-common
+3) GPG key 추가
+curl -fssL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+4) Repository 등록
+sudo add-apt-repository \ 
+"deb [arch=amd64] https://download.docker.com/ \ 
+linux/ubuntu \ 
+$(lsb_release -cs) \ 
+stable"
+sudo apt-get update
+
+5) Docker community edition
+sudo apt-get -y install docker-ce
+
+6) Docker version
+docker --version
+sudo docker version
+
+7) docker 명령 권한 부여
+sudo usermod -a -G docker $USER
+sudo usermod -aG docker $USER
+
+sudo reboot

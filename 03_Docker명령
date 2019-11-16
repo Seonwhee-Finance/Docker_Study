@@ -1,0 +1,97 @@
+1 Docker 명령 - container 명령
+이미지가 있어야 컨테이너를 만들 수 있다. 도커허브는 이미지를 관리하는 곳이다.
+컨테이너는 종료상태를 저장한다.
+
+2 라이프 사이클
+1) docker container create
+도커 이미지를 바탕으로 snapshot을 작성한다
+
+2) docker container run
+컨테이너 생성과 시작
+컨테이너상에 임의의 프로세스를 시작한다.
+도커 이미지를 바탕으로 snapshot을 작성한다
+
+docker container run -it --name "test1" centos /bin/cal
+현재 동작하는 모든 컨테이너 정보 보기
+docker container ls 
+중지된 컨테이너까지 보기
+docker container ls -a
+
+2-1) bash 실행
+docker container run -it --name "test2" centos /bin/bash
+
+2-2) background 실행
+--detach, -d
+docker container run -d centos /bin/ping localhost
+
+docker container logs -t [container id]
+docker container stop [container id]
+
+2-3) container port mapping 컨테이너와 Host OS와의 통신
+백그라운드 실행
+docker container run -d -p 8080:80 nginx
+
+docker container run -p 8080:80 nginx
+
+2-4) 컨테이너의 DNS 서버지정 
+docker container run -d --dns 192.168.1.1 nginx
+MAC 주소지정
+docker container run -d --mac-address="92:d0:c6:0a:29:33" centos
+docker container inspect --format="{{.Config.MacAddress}}" [container id]
+
+Hostname 변경
+
+2-5) CPU 시간의 상대 비율과 메모리 사용량 지정
+docker container run --cpu-shares=512 --memory=1g centos
+
+2-6) Host OS와 컨테이너 사이의 폴더 공유 -v, --volume
+docker container run -v /Users/user1/webap:/usr/share/nginx/html nginx
+
+2-7) 가동 컨테이너 목록을 표시
+
+현재 동작하는 모든 컨테이너 정보 보기
+docker container ls 
+중지된 컨테이너까지 보기
+docker container ls -a
+docker container ls --all 
+
+docker container ls -a -f name=test1
+종료된 컨테이너만 보기
+docker container ls -a --filter exited=0
+
+2-8) 컨테이너 가동 확인
+docker container stats 
+docker container stats webserver
+
+2-9) 컨테이너에서 동작하는 프로세스 확인
+컨테이너는 프로세스를 돌리는 모듈과 라이브러리 모음이다.
+프로세스는 동작할 때 메모리에 올라간다.
+docker container start webserver
+docker container top webserver
+
+3) docker container stop
+docker container stop [이름]
+docker container stop [container id]
+
+2초 후에 정지
+docker container stop -t 2 webserver
+docker container stop --time 2 webserver
+
+4) docker container restart
+
+docker container restart -t 2 webserver
+
+5) docker container rm
+
+정지 중인 모든 컨테이너 삭제
+docker container prune
+
+docker container rm [이름]
+docker container rm [container id]
+
+실행 여부 관계 없이 강제로 삭제 --force, -f 
+
+6) docker container pause
+docker container unpause [container id]
+docker container pause [이름]
+

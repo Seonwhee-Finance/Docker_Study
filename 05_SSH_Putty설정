@@ -1,0 +1,13 @@
+텔넷 (비암호화) --> SSH (암호화)
+
+1) 우분투 터미널에서 
+sudo apt-get install ssh
+sudo apt-get install openssh-server
+sudo /etc/init.d/ssh restart
+
+2) Windows
+Putty.exe
+우분투 터미널에서 ifconfig
+Host OS의 네트워크 리스트 출력
+eth0 IP주소 확인
+Putty.exe에 설정

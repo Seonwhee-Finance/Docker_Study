@@ -1,0 +1,54 @@
+1) 컨테이너 포트 맵핑
+
+Host 8080 포트와 nginx의 80포트를 연결
+docker container run -d -p 8080:80 nginx
+
+2) 컨테이너의 도메인 네임 서버(DNS) 지정
+docker container run -d --dns 192.168.1.1 nginx
+
+3) 컨테이너의 네트워크 카드 물리적주소(MAC address) 지정
+docker container run -d --mac-address="92:d0:c6:0a:29:33" centos
+docker container inspect [container id]
+
+4) 컨테이너의 컴퓨터 이름(Host name)과 ip주소 정의
+docker container run -it --add-host test.com:192.168.1.1 centos
+docker container run -it --hostname www.test.com --add-host node1.test.com: ???????
+
+5) 자원을 지정해서 컨테이너 생성 및 실행
+기본은 cpu-shares=1024 이므로 절반만 배분
+docker container run --cpu-shares=512 --memory=1g centos
+
+6) 컨테이너 생성 시작하는 환경 변수 지정
+docker container run -it -e foo=bar centos /bin/bash
+컨테이너에서 set으로 확인가능
+
+7) 사용하지 않는 대상 삭제
+docker image prune
+docker container prune
+docker system prune   이미지, 컨테이너 모두 포함
+
+8) 네트워크 목록 표시
+docker network ls
+docker network ls -q --filter driver=bridge
+
+9) 컨테이너가 생성되면 따로 네트워크를 설정해주지 않으면 자동으로 Host OS와 연결되는 bridge 네트워크와 연결되게 된다
+
+10) 새로운 네트워크 생성
+docker network create --driver=bridge web-network
+
+11) 네트워크에 연결
+docker network connect web-network sample
+docker container inspect sample
+docker network inspect web-network
+
+docker container run -itd --name=webap --net=web-network nginx
+docker network inspect web-network
+
+12) 네트워크 연결 해제 
+docker network disconnect web-network sample
+docker network disconnect web-network webap
+docker network inspect web-network
+
+13) 네트워크 삭제
+docker network rm web-network
+docker network ls

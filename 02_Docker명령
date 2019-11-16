@@ -1,0 +1,108 @@
+1 Docker 명령
+1) image 관리 명령
+2) container 관리 명령
+
+2 ubuntu 컨테이너 바로 실행
+
+ubuntu 최신버전 환경을 (다운로드) 컨테이너로 동작시켜라
+docker container run ubuntu:latest /bin/echo 'Hello World'
+
+현재 실행되는 컨테이너들을 보여줘
+docker container ls
+
+3 Docker Hub
+https://hub.docker.com/
+
+4 Docker의 실행환경 확인
+docker system info
+
+5 Docker 디스크 이용 상황
+docker system df
+
+6 nginx 이미지 다운로드 (from docker hub)
+자동으로 latest를 다운
+docker pull nginx
+docker pull nginx:latest
+
+7 nginx 이미지 확인
+docker image ls
+
+8 nginx를 컨테이너로 동작
+webserver라는 이름의 컨테이너를 동작시켜라 nginx 이미지를 가지고 컨테이너를 만들어라
+백그라운드에서 동작시키고, Host OS의 포트 80, 컨테이너의 포트 80으로 연결시켜라
+docker container run --name webserver -d -p 80:80 nginx
+
+9 nginx의 상태 확인
+docker container ps
+
+10 nginx 컨테이너 가동 확인
+docker container stats webserver
+docker container stats [컨테이너 ID]
+
+11 nginx 컨테이너 동작 중지
+docker stop webserver
+docker stop [컨테이너 ID]
+
+12 nginx 컨테이너의 시작
+docker start webserver
+
+13 특정버전의 centos image를 가져오겠다.
+docker image pull centos:7
+
+14 모든 centos image를 가져오겠다.
+docker image pull -a centos
+
+docker image pull tensorflow/tensorflow
+
+15 image의 위장/변조를 막기 위해 
+1) DCT 기능 활성화(Docker Content Trust)
+export DOCKER_CONTENT_TRUST=1
+2) docker image pull ubuntu:latest
+3) DCT 기능 비활성화
+export DOCKER_CONTENT_TRUST=0
+
+16 image의 상세정보 표시
+docker image inspect centos:7
+docker image inspect --format="{{.ContainerConfig.Image}}" centos:7
+docker image inspect --format="{{.Os}}" centos:7
+
+17 docker hub의 규칙
+username/imagename:[tagname]
+
+현재 이미지 확인
+docker image ls
+
+이미지 이름 변경
+docker image tag nginx sd/webserver:1.0
+docker image ls
+
+18 도커 허브의 이미지 검색
+docker search nginx
+다 검색
+docker search nginx --no-trunc
+5건만 검색 
+docker search nginx --limit=5
+별 1000개 이상 검색
+docker search nginx --filter=starts=1000
+
+19 Docker image 삭제
+docker image rm centos:7
+docker image rm sd/webserver:1.0
+docker image rm -f nginx
+docker image rm -force nginx
+
+20 사용하지 않는 docker image 삭제
+docker image prune -a
+docker image prune -all
+docker image prune -f 
+docker image prune -force
+
+21 Docker Hub에 로그인
+docker login
+
+22 Docker Hub에 image upload
+docker image push nginx:latest
+docker image tag nginx seonwhee0docker/nginx_server:1.0
+
+23 Docker Hub에서 logout
+docker logout

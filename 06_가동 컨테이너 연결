@@ -1,0 +1,48 @@
+1) 컨테이너에 연결하기
+docker container attach sample
+sample계정으로 전환됨
+
+빠져나오고 싶으면 ctrl + p , ctrl + q 누른다. 컨테이너는 계속 동작
+
+ctrl + c 누르면 컨테이너 종료
+
+2) 가동 컨테이너에서 프로세스 실행
+docker container attach를 해도 쉘이 작동하지 않는 경우는 명령을 실행할 수 없다. 
+
+그런 경우에는
+docker container exec -it webap /bin/echo "Hello World"
+
+3)
+docker container top sample
+
+
+4) 가동 컨테이너의 포트 전송 확인
+docker container port webap
+
+5) 가동 컨테이너 이름 변경
+
+docker container rename webap webserver
+docker container rename sample ubuntu_shell
+docker container ls
+
+6) 컨테이너 안의 파일을 복사
+
+webserver 컨테이너로부터 Host로
+docker container cp webserver:/etc/nginx/nginx.conf /tmp/nginx.conf
+ls /tmp
+cat /tmp/nginx.conf
+
+
+Host에서 webserver 컨테이너로부터
+touch test.txt 파일 생성
+docker container cp ./test.txt webserver:/tmp/test.txt
+docker container exec -it webserver ls tmp
+
+7) 컨테이너 조작시 차분 확인
+docker container attach ubuntu_shell
+useradd newuser 컨테이너에 새로운 사용자 등록
+exit 컨테이너 나오기
+명령을 내리기 전후로 달라진 파일 목록 확인
+docker container diff ubuntu_shell
+
+

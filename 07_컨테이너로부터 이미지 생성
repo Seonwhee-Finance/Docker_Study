@@ -1,0 +1,51 @@
+1) 이미지를 다운로드
+pull 이미지
+이미지 -> 컨테이너 생성
+
+2) 환경에 맞게 설정을 변경한 컨테이너를 --> 이미지로 생성
+
+3) 
+이미지-> 파일(tar)로 저장/로딩
+컨테이너 -> 파일(tar)로 저장/로딩
+
+4) 컨테이너로부터 이미지 작성
+"seonwhee0docker"라는 작성자 추가해서 이미지 작성
+webserver라는 컨테이너를 seonwhee0docker/webfront:1.0 이미지로 작성
+docker container commit -a "seonwhee0docker" webserver seonwhee0docker/webfront:1.0
+docker image ls
+docker image inspect seonwhee0docker/webfront:1.0
+
+5) 컨테이너를 tar파일로 출력
+docker container export webserver > c_webserver.tar
+
+docker container export webserver > ./docker_exe/_01_export_tar/c_webserver.tar
+tar -tf ./docker_exe/_01_export_tar/c_webserver.tar | more
+
+6) 이미지를 컨테이너로 읽어들이기
+docker_exe image import - ./docker_exe/_01_export_tar/c_webserver.tar
+cat ./docker_exe/_01_export_tar/c_webserver.tar | docker image import - sh/webserver:1.1
+
+7) 이미지 -> tar
+docker pull tensorflow/tensorflow
+docker image save -o ./docker_exe/_01_export_tar/i_tensor.tar tensorflow/tensorflow
+
+8) tar -> 이미지
+docker image load -i ./docker_exe/_01_export_tar/i_tensor.tar
+
+9) export/import 
+컨테이너 -> 파일 출력, 파일 -> 이미지 포함
+c_webserver.tar
+save/load 
+이미지 -> 파일 저장, 파일 -> 이미지 로딩
+i_tensor.tar
+
+파일 구조가 달라서 export로 저장한 것은 import로 읽고
+save로 저장한 것은 load로 읽어야만 한다
+
+tar xvf ./docker_exe/_01_export_tar/c_webserver.tar
+tar xvf ./docker_exe/_01_export_tar/i_tensor.tar
+
+10) 불필요한 이미지와 컨테이너 일괄 삭제
+docker system prune -a 사용 안하면 모두 삭제
+docker system prune -f 강제 삭제
+
