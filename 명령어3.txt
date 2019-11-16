@@ -74,3 +74,37 @@ centos                         latest              0f3e07c0138f        6 weeks a
 user1@docker01:~/dockerTest$ docker container run -it --rm greetgo Seonwhee
 Hello Seonwhee
 
+------------------------------------------------------------------------------------
+
+user1@docker01:~/Docker_Study/dkfile$ docker build -t run-sample .Sending build context to Docker daemon   5.12kB
+Step 1/4 : FROM ubuntu:latest
+ ---> 775349758637
+Step 2/4 : RUN echo Hello Shell Type
+ ---> Running in 0ef68f74010d
+Hello Shell Type
+Removing intermediate container 0ef68f74010d
+ ---> c3e81874cf4f
+Step 3/4 : RUN ["echo", "Hello Exec Type"]
+ ---> Running in 769840ccb412
+Hello Exec Type
+Removing intermediate container 769840ccb412
+ ---> 56d632195b86
+Step 4/4 : RUN ["/bin/bash", "-c", "echo 'Hello Exec Type using bash ' "]
+ ---> Running in 449f2378a6ea
+Hello Exec Type using bash 
+Removing intermediate container 449f2378a6ea
+ ---> 5a972f1f953d
+Successfully built 5a972f1f953d
+Successfully tagged run-sample:latest
+
+user1@docker01:~/Docker_Study/dkfile$ docker history run-sample
+IMAGE               CREATED              CREATED BY                                      SIZE                COMMENT
+5a972f1f953d        About a minute ago   /bin/bash -c echo 'Hello Exec Type using bas…   0B                  
+56d632195b86        About a minute ago   echo Hello Exec Type                            0B                  
+c3e81874cf4f        About a minute ago   /bin/sh -c echo Hello Shell Type                0B                  
+775349758637        2 weeks ago          /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B                  
+<missing>           2 weeks ago          /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B                  
+<missing>           2 weeks ago          /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B                
+<missing>           2 weeks ago          /bin/sh -c [ -z "$(apt-get indextargets)" ]     987kB               
+<missing>           2 weeks ago          /bin/sh -c #(nop) ADD file:a48a5dc1b9dbfc632…   63.2MB              
+

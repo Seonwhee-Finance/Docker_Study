@@ -1,7 +1,5 @@
-FROM ubuntu:16.04
+FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y -q nginx
-
-COPY index.html /var/www/html/
-
-CMD ["nginx", "-g", "daemon off;"]
+RUN echo Hello Shell Type
+RUN ["echo", "Hello Exec Type"]
+RUN ["/bin/bash", "-c", "echo 'Hello Exec Type using bash ' "]
