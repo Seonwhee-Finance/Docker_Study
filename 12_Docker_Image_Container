@@ -1,0 +1,1136 @@
+jeff@jeff-VirtualBox:~$ docker info
+Containers: 2
+ Running: 0
+ Paused: 0
+ Stopped: 2
+Images: 2
+Server Version: 18.09.3
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: false
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins:
+ Volume: local
+ Network: bridge host macvlan null overlay
+ Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version: e6b3f5632f50dbc4e9cb6288d911bf4f5e95b18e
+runc version: 6635b4f0c6af3810594d2770f662f34ddc15b40d
+init version: fec3683
+Security Options:
+ apparmor
+ seccomp
+  Profile: default
+Kernel Version: 4.4.0-31-generic
+Operating System: Ubuntu 16.04.1 LTS
+OSType: linux
+Architecture: x86_64
+CPUs: 4
+Total Memory: 4.351GiB
+Name: jeff-VirtualBox
+ID: WJMH:XSXG:PBVA:MFOJ:PBB2:5IB2:MZVU:5VPH:6HXQ:ZIAB:R3OC:Q4JA
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+Labels:
+Experimental: false
+Insecure Registries:
+ 127.0.0.0/8
+Live Restore Enabled: false
+Product License: Community Engine
+WARNING: No swap limit support
+ 
+ 
+jeff@jeff-VirtualBox:~$ ps -ef | grep docker
+root      2621     1  0 10:16 ?        00:00:00 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+jeff      4390  3927  0 10:36 pts/2    00:00:00 grep --color=auto docker
+ 
+jeff@jeff-VirtualBox:~$ ps -ef | grep docker
+root      2621     1  0 10:16 ?        00:00:00 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+jeff      4390  3927  0 10:36 pts/2    00:00:00 grep --color=auto docker
+jeff@jeff-VirtualBox:~$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              881bd08c0b08        8 months ago        109MB
+ubuntu              latest              47b19964fb50        9 months ago        88.1MB
+jeff@jeff-VirtualBox:~$ docker run -it centos:7 /bin/bash
+Unable to find image 'centos:7' locally
+7: Pulling from library/centos
+ab5ef0e58194: Pull complete
+Digest: sha256:4a701376d03f6b39b8c2a8f4a8e499441b0d567f9ab9d58e4991de4472fb813c
+Status: Downloaded newer image for centos:7
+ 
+[root@3f77eb79192d /]# cat /etc/os-release
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="7"
+PRETTY_NAME="CentOS Linux 7 (Core)"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:7"
+HOME_URL="https://www.centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+CENTOS_MANTISBT_PROJECT="CentOS-7"
+CENTOS_MANTISBT_PROJECT_VERSION="7"
+REDHAT_SUPPORT_PRODUCT="centos"
+REDHAT_SUPPORT_PRODUCT_VERSION="7"
+ 
+[root@3f77eb79192d /]# jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+3f77eb79192d        centos:7            "/bin/bash"         2 minutes ago       Up 2 minutes                            cocky_leakey
+jeff@jeff-VirtualBox:~$ docker exec -it cocky_leakey bash
+[root@3f77eb79192d /]#
+[root@3f77eb79192d /]#
+ 
+jeff@jeff-VirtualBox:~$ docker system df
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              3                   3                   400.4MB             0B (0%)
+Containers          3                   1                   5B                  5B (100%)
+Local Volumes       0                   0                   0B                  0B
+Build Cache         0                   0                   0B                  0B
+ 
+jeff@jeff-VirtualBox:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            2.2G     0  2.2G   0% /dev
+tmpfs           446M  6.9M  439M   2% /run
+/dev/sda1        48G  4.7G   41G  11% /
+tmpfs           2.2G  196K  2.2G   1% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           2.2G     0  2.2G   0% /sys/fs/cgroup
+tmpfs           446M   52K  446M   1% /run/user/1000
+ 
+ 
+jeff@jeff-VirtualBox:~$ docker pull ubuntu:latest
+latest: Pulling from library/ubuntu
+7ddbc47eeb70: Pull complete
+c1bbdc448b72: Pull complete
+8c3b70e39044: Pull complete
+45d437916d57: Pull complete
+Digest: sha256:6e9f67fa63b0323e9a1e587fd71c561ba48a034504fb804fd26fd8800039835d
+Status: Downloaded newer image for ubuntu:latest
+ 
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              7                   5e35e350aded        11 days ago         203MB
+ubuntu              latest              775349758637        3 weeks ago         64.2MB
+nginx               latest              881bd08c0b08        8 months ago        109MB
+ubuntu              <none>              47b19964fb50        9 months ago        88.1MB
+ 
+jeff@jeff-VirtualBox:~$ docker run -it ubuntu:latest echo "Hello World"
+Hello World
+jeff@jeff-VirtualBox:~$ docker run -it ubuntu:latest echo "Hello World2"
+Hello World2
+jeff@jeff-VirtualBox:~$ docker run -it ubuntu:latest echo "Hello World3"
+Hello World3
+jeff@jeff-VirtualBox:~$ cat /etc/lsb-release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04.1 LTS"
+
+jeff@jeff-VirtualBox:~$ docker run -it ubuntu:latest bash
+ 
+root@a8a8e6dc1c2a:/# cat /etc/lsb-release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.3 LTS"
+ 
+
+root@a8a8e6dc1c2a:/# ifconfig
+bash: ifconfig: command not found
+ 
+root@a8a8e6dc1c2a:/# apt-get update
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic InRelease [242 kB]
+Get:3 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [736 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:6 http://archive.ubuntu.com/ubuntu bionic/restricted amd64 Packages [13.5 kB]
+Get:7 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [186 kB]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [16.8 kB]
+Get:9 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [6508 B]
+Get:10 http://archive.ubuntu.com/ubuntu bionic/main amd64 Packages [1344 kB]
+Get:11 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [787 kB]
+Get:12 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [11.3 MB]
+Get:13 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [9578 B]
+Get:14 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [29.9 kB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1314 kB]
+Get:16 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [1031 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [4235 B]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2496 B]
+Fetched 17.3 MB in 32s (540 kB/s)
+Reading package lists... Done
+ 
+root@a8a8e6dc1c2a:/# apt-get install net-tools
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 194 kB of archives.
+After this operation, 803 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 net-tools amd64 1.60+git20161116.90da8a0-1ubuntu1 [194 kB]
+Fetched 194 kB in 2s (114 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 4046 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20161116.90da8a0-1ubuntu1_amd64.deb ...
+Unpacking net-tools (1.60+git20161116.90da8a0-1ubuntu1) ...
+Setting up net-tools (1.60+git20161116.90da8a0-1ubuntu1) ...
+ 
+root@a8a8e6dc1c2a:/# apt-get -y install iputils-ping
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2 libcap2-bin libidn11 libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2 libcap2-bin libidn11 libpam-cap
+0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+Need to get 142 kB of archives.
+After this operation, 537 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 libcap2 amd64 1:2.25-1.2 [13.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libidn11 amd64 1.33-2.1ubuntu1.2 [46.6 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 iputils-ping amd64 3:20161105-1ubuntu3 [54.2 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic/main amd64 libcap2-bin amd64 1:2.25-1.2 [20.6 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic/main amd64 libpam-cap amd64 1:2.25-1.2 [7268 B]
+Fetched 142 kB in 4s (35.2 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 4094 files and directories currently installed.)
+Preparing to unpack .../libcap2_1%3a2.25-1.2_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.25-1.2) ...
+Selecting previously unselected package libidn11:amd64.
+Preparing to unpack .../libidn11_1.33-2.1ubuntu1.2_amd64.deb ...
+Unpacking libidn11:amd64 (1.33-2.1ubuntu1.2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20161105-1ubuntu3_amd64.deb ...
+Unpacking iputils-ping (3:20161105-1ubuntu3) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../libcap2-bin_1%3a2.25-1.2_amd64.deb ...
+Unpacking libcap2-bin (1:2.25-1.2) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.25-1.2_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.25-1.2) ...
+Setting up libcap2:amd64 (1:2.25-1.2) ...
+Setting up libidn11:amd64 (1.33-2.1ubuntu1.2) ...
+Setting up iputils-ping (3:20161105-1ubuntu3) ...
+Setting up libpam-cap:amd64 (1:2.25-1.2) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up libcap2-bin (1:2.25-1.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+ 
+root@a8a8e6dc1c2a:/# ping 192.168.56.101
+PING 192.168.56.101 (192.168.56.101) 56(84) bytes of data.
+64 bytes from 192.168.56.101: icmp_seq=1 ttl=64 time=0.028 ms
+64 bytes from 192.168.56.101: icmp_seq=2 ttl=64 time=0.033 ms
+64 bytes from 192.168.56.101: icmp_seq=3 ttl=64 time=0.148 ms
+64 bytes from 192.168.56.101: icmp_seq=4 ttl=64 time=0.068 ms
+64 bytes from 192.168.56.101: icmp_seq=5 ttl=64 time=0.044 ms
+64 bytes from 192.168.56.101: icmp_seq=6 ttl=64 time=0.025 ms
+64 bytes from 192.168.56.101: icmp_seq=7 ttl=64 time=0.067 ms
+64 bytes from 192.168.56.101: icmp_seq=8 ttl=64 time=0.025 ms
+64 bytes from 192.168.56.101: icmp_seq=9 ttl=64 time=0.026 ms
+64 bytes from 192.168.56.101: icmp_seq=10 ttl=64 time=0.067 ms
+^C
+--- 192.168.56.101 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 8997ms
+rtt min/avg/max/mdev = 0.025/0.053/0.148/0.036 ms
+ 
+root@a8a8e6dc1c2a:/# jeff@jeff-VirtualBox:~$
+ 
+jeff@jeff-VirtualBox:~$
+
+==========================================================================================================
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+a8a8e6dc1c2a        ubuntu:latest       "bash"              17 minutes ago      Up 17 minutes                           romantic_fermi
+3f77eb79192d        centos:7            "/bin/bash"         28 minutes ago      Up 28 minutes                           cocky_leakey
+ 
+jeff@jeff-VirtualBox:~$ docker inspect romantic_fermi | grep IPAddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.3",
+                    "IPAddress": "172.17.0.3",
+ 
+jeff@jeff-VirtualBox:~$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+6ff0de00966f        bridge              bridge              local
+ccad6a98a769        host                host                local
+b438bf2284c6        none                null                local
+
+jeff@jeff-VirtualBox:~$ ifconfig docker0
+docker0   Link encap:Ethernet  HWaddr 02:42:74:5c:1d:40
+          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::42:74ff:fe5c:1d40/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5979 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6481 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:245758 (245.7 KB)  TX bytes:18011962 (18.0 MB)
+
+jeff@jeff-VirtualBox:~$ ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:74:5c:1d:40
+          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::42:74ff:fe5c:1d40/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5979 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6481 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:245758 (245.7 KB)  TX bytes:18011962 (18.0 MB)
+enp0s3    Link encap:Ethernet  HWaddr 08:00:27:a5:46:16
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::4796:eeb4:44ba:d40d/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:710142 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:299947 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:633904300 (633.9 MB)  TX bytes:19468116 (19.4 MB)
+enp0s8    Link encap:Ethernet  HWaddr 08:00:27:a3:4f:8a
+          inet addr:192.168.56.101  Bcast:192.168.56.255  Mask:255.255.255.0
+          inet6 addr: fe80::532c:6bf5:8dc9:224a/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2072 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1754 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:179103 (179.1 KB)  TX bytes:273873 (273.8 KB)
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:426 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:426 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1
+          RX bytes:46496 (46.4 KB)  TX bytes:46496 (46.4 KB)
+veth0012db0 Link encap:Ethernet  HWaddr 82:15:30:d1:c6:2c
+          inet6 addr: fe80::8015:30ff:fed1:c62c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:64 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:8111 (8.1 KB)
+vethac2a9f5 Link encap:Ethernet  HWaddr 5a:80:53:2d:e0:fe
+          inet6 addr: fe80::5880:53ff:fe2d:e0fe/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5979 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6474 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:329464 (329.4 KB)  TX bytes:18010717 (18.0 MB)
+ 
+ 
+---사용예 2 ---------------------
+ 
+jeff@jeff-VirtualBox:~$ docker pull mysql:5.7
+5.7: Pulling from library/mysql
+80369df48736: Pull complete
+e8f52315cb10: Pull complete
+cf2189b391fc: Pull complete
+cc98f645c682: Pull complete
+27a27ac83f74: Pull complete
+fa1f04453414: Pull complete
+d45bf7d22d33: Pull complete
+c7d49ffebc56: Pull complete
+511a8052b204: Pull complete
+5d5df4c12444: Pull complete
+d482603a2922: Pull complete
+Digest: sha256:44b33224e3c406bf50b5a2ee4286ed0d7f2c5aec1f7fdb70291f7f7c570284dd
+Status: Downloaded newer image for mysql:5.7
+
+jeff@jeff-VirtualBox:~$ docker run -it mysql:5.7 bash
+
+root@c17ff1f969d0:/# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 9 (stretch)"
+NAME="Debian GNU/Linux"
+VERSION_ID="9"
+VERSION="9 (stretch)"
+VERSION_CODENAME=stretch
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+root@c17ff1f969d0:/# ls /etc/init.d/
+hwclock.sh  mysql
+root@c17ff1f969d0:/# /etc/init.d/mysql start
+No directory, logging in with HOME=/
+2019-11-23T02:16:53.393236Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2019-11-23T02:16:53.761841Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2019-11-23T02:16:53.844800Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2019-11-23T02:16:53.931521Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 510dfb84-0d97-11ea-a2b5-0242ac110004.
+2019-11-23T02:16:53.934885Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2019-11-23T02:16:54.394016Z 0 [Warning] CA certificate ca.pem is self signed.
+2019-11-23T02:16:55.187913Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+No directory, logging in with HOME=/
+..
+[info] MySQL Community Server 5.7.28 is started.
+ 
+root@c17ff1f969d0:/# mysql -uroot
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.28 MySQL Community Server (GPL)
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+mysql> CREATE DATABASE dockerdb;
+Query OK, 1 row affected (0.00 sec)
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| dockerdb           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+mysql> quit;
+Bye
+ 
+root@c17ff1f969d0:/# ls /var/lib/mysql
+auto.cnf          ca-key.pem  client-cert.pem  dockerdb        ib_logfile0  ibdata1  mysql               private_key.pem  server-cert.pem  sys
+c17ff1f969d0.err  ca.pem      client-key.pem   ib_buffer_pool  ib_logfile1  ibtmp1   performance_schema  public_key.pem   server-key.pem
+ 
+root@c17ff1f969d0:/# exit
+exit
+ 
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+a8a8e6dc1c2a        ubuntu:latest       "bash"              29 minutes ago      Up 29 minutes                           romantic_fermi
+3f77eb79192d        centos:7            "/bin/bash"         40 minutes ago      Up 40 minutes                           cocky_leakey
+ 
+jeff@jeff-VirtualBox:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+c17ff1f969d0        mysql:5.7           "docker-entrypoint.s…"   2 minutes ago       Exited (0) 10 seconds ago                       inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest       "bash"                   29 minutes ago      Up 29 minutes                                   romantic_fermi
+f042c6ca6e23        ubuntu:latest       "echo 'Hello World3'"    30 minutes ago      Exited (0) 30 minutes ago                       quirky_vaughan
+4699e272c6db        ubuntu:latest       "echo 'Hello World2'"    30 minutes ago      Exited (0) 30 minutes ago                       fervent_johnson
+6410182e3029        ubuntu:latest       "echo 'Hello World'"     30 minutes ago      Exited (0) 30 minutes ago                       determined_goldstine
+3f77eb79192d        centos:7            "/bin/bash"              40 minutes ago      Up 40 minutes                                   cocky_leakey
+30df53e07a2d        nginx               "nginx -g 'daemon of…"   8 months ago        Exited (0) 8 months ago                         webserver
+9b772a6c6c47        47b19964fb50        "bash"                   8 months ago        Exited (0) 8 months ago                         brave_sutherland
+ 
+jeff@jeff-VirtualBox:~$ docker start inspiring_carson
+inspiring_carson
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                 NAMES
+c17ff1f969d0        mysql:5.7           "docker-entrypoint.s…"   4 minutes ago       Up 7 seconds        3306/tcp, 33060/tcp   inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest       "bash"                   30 minutes ago      Up 30 minutes                             romantic_fermi
+3f77eb79192d        centos:7            "/bin/bash"              41 minutes ago      Up 41 minutes                             cocky_leakey
+
+jeff@jeff-VirtualBox:~$ docker exec -it inspiring_carson bash
+
+root@c17ff1f969d0:/# ls
+bin  boot  dev  docker-entrypoint-initdb.d  entrypoint.sh  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+ 
+------------------------------------------------------------
+ 
+jeff@jeff-VirtualBox:~$ docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+8d691f585fa8: Pull complete
+fea3111adf4a: Pull complete
+0f8661492b6d: Pull complete
+Digest: sha256:1b1bfdecaee87035926ff2fcb26795a9b0e8b8b0134718ddd824c7614ad6199b
+Status: Downloaded newer image for nginx:latest
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              4152a9608752        3 days ago          126MB
+centos              7                   5e35e350aded        11 days ago         203MB
+ubuntu              latest              775349758637        3 weeks ago         64.2MB
+mysql               5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+nginx               <none>              881bd08c0b08        8 months ago        109MB
+ubuntu              <none>              47b19964fb50        9 months ago        88.1MB
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                 NAMES
+c17ff1f969d0        mysql:5.7           "docker-entrypoint.s…"   12 minutes ago      Up 8 minutes        3306/tcp, 33060/tcp   inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest       "bash"                   39 minutes ago      Up 39 minutes                             romantic_fermi
+3f77eb79192d        centos:7            "/bin/bash"              About an hour ago   Up About an hour                          cocky_leakey
+jeff@jeff-VirtualBox:~$ docker container run --name webserver -d -p 80:80 nginx
+docker: Error response from daemon: Conflict. The container name "/webserver" is already in use by container "30df53e07a2d0457815c3787a9bfe5f18e2f395b1f5c50cd35cfd98cd87258c1". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+
+==========================================================================================
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                 NAMES
+c17ff1f969d0        mysql:5.7           "docker-entrypoint.s…"   22 minutes ago      Up 17 minutes       3306/tcp, 33060/tcp   inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest       "bash"                   About an hour ago   Up About an hour                          romantic_fermi
+3f77eb79192d        centos:7            "/bin/bash"              About an hour ago   Up About an hour                          cocky_leakey
+30df53e07a2d        881bd08c0b08        "nginx -g 'daemon of…"   8 months ago        Up 2 minutes        0.0.0.0:80->80/tcp    webserver
+
+jeff@jeff-VirtualBox:~$ docker run -p 8080:8080 -d --name cadvisor google/cadvisor:latest
+Unable to find image 'google/cadvisor:latest' locally
+latest: Pulling from google/cadvisor
+ff3a5c916c92: Pull complete
+44a45bb65cdf: Pull complete
+0bbe1a2fe2a6: Pull complete
+Digest: sha256:815386ebbe9a3490f38785ab11bda34ec8dacf4634af77b8912832d4f85dca04
+Status: Downloaded newer image for google/cadvisor:latest
+49d4d7ee153597aa17e65b04455f31f38ee937e1d9f85a97e0d164e3556c0b60
+ 
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+49d4d7ee1535        google/cadvisor:latest   "/usr/bin/cadvisor -…"   5 seconds ago       Up 3 seconds        0.0.0.0:8080->8080/tcp   cadvisor
+c17ff1f969d0        mysql:5.7                "docker-entrypoint.s…"   23 minutes ago      Up 18 minutes       3306/tcp, 33060/tcp      inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest            "bash"                   About an hour ago   Up About an hour                             romantic_fermi
+3f77eb79192d        centos:7                 "/bin/bash"              About an hour ago   Up About an hour                             cocky_leakey
+30df53e07a2d        881bd08c0b08             "nginx -g 'daemon of…"   8 months ago        Up 3 minutes        0.0.0.0:80->80/tcp       webserver
+ 
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              4152a9608752        3 days ago          126MB
+centos              7                   5e35e350aded        11 days ago         203MB
+ubuntu              latest              775349758637        3 weeks ago         64.2MB
+mysql               5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+nginx               <none>              881bd08c0b08        8 months ago        109MB
+ubuntu              <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor     latest              eb1210707573        12 months ago       69.6MB
+ 
+jeff@jeff-VirtualBox:~$ docker stop webserver
+webserver
+ 
+jeff@jeff-VirtualBox:~$ mkdir nginx
+ 
+jeff@jeff-VirtualBox:~$ ls
+Desktop  Documents  Downloads  examples.desktop  Music  nginx  Pictures  Public  Templates  Videos
+ 
+jeff@jeff-VirtualBox:~$ vi ./nginx/Dockerfile
+ 
+jeff@jeff-VirtualBox:~$ ll ./nginx/
+total 12
+drwxrwxr-x  2 jeff jeff 4096 11월 23 11:45 ./
+drwxr-xr-x 17 jeff jeff 4096 11월 23 11:44 ../
+-rw-rw-r--  1 jeff jeff  112 11월 23 11:45 Dockerfile
+jeff@jeff-VirtualBox:~$ vi ./nginx/index.html
+jeff@jeff-VirtualBox:~$ ll ./nginx/
+total 16
+drwxrwxr-x  2 jeff jeff 4096 11월 23 11:46 ./
+drwxr-xr-x 17 jeff jeff 4096 11월 23 11:44 ../
+-rw-rw-r--  1 jeff jeff  112 11월 23 11:45 Dockerfile
+-rw-rw-r--  1 jeff jeff   27 11월 23 11:46 index.html
+ 
+jeff@jeff-VirtualBox:~$ cd nginx
+ 
+jeff@jeff-VirtualBox:~/nginx$ docker build -t my-nginx-image:latest .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM nginx:latest
+ ---> 4152a9608752
+Step 2/4 : COPY index.html /usr/share/nginx/html/index.html
+ ---> 8234215d13f4
+Step 3/4 : EXPOSE 80
+ ---> Running in 3f537540602c
+Removing intermediate container 3f537540602c
+ ---> 60d0817a6fce
+Step 4/4 : CMD ["nginx", "-g", "daemon off;"]
+ ---> Running in 421ccbfaa3da
+Removing intermediate container 421ccbfaa3da
+ ---> eaa0a55a928f
+Successfully built eaa0a55a928f
+Successfully tagged my-nginx-image:latest
+ 
+jeff@jeff-VirtualBox:~/nginx$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image      latest              eaa0a55a928f        11 seconds ago      126MB
+nginx               latest              4152a9608752        3 days ago          126MB
+centos              7                   5e35e350aded        11 days ago         203MB
+ubuntu              latest              775349758637        3 weeks ago         64.2MB
+mysql               5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+nginx               <none>              881bd08c0b08        8 months ago        109MB
+ubuntu              <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor     latest              eb1210707573        12 months ago       69.6MB
+ 
+jeff@jeff-VirtualBox:~/nginx$ docker run -d -p 80:80 my-nginx-image:latest
+da331fd0b32895006e63fb2c09c857b7a6691b5931c749624d47eaad7e713228
+ 
+ =================================================================================================
+
+ jeff@jeff-VirtualBox:~$ docker search oracle-xe
+NAME                                DESCRIPTION                                     STARS
+oracleinanutshell/oracle-xe-11g                                                     71
+orangehrm/oracle-xe-11g              docker container with Oracle Express Editio…   8
+christophesurmont/oracle-xe-11g     Clone of the wnameless/oracle-xe-11g.           5
+ukhomeofficedigital/oracle-xe-11g   Oracle Database Express Edition 11g Container   4
+chameleon82/oracle-xe-10g           Oracle Express Edition Universal 10g R2 (10.…   3
+wscherphof/oracle-xe-11g-r2         Oracle® Database Express Edition 11g Release…   3
+philipharries/oracle-xe             Oracle XE Container with transparent build m…   3
+wnameless/oracle-xe-11g-r2          Oracle Express Edition 11g Release 2 on Ubun…   3
+moremagic/oracle-xe                 CentOS7 in oracle-xe                            2
+dragonbest520/oracle-xe-10g         Oracle Express Edition 10g Release 2 (10.2.0…   2
+thebookpeople/oracle-xe-11g                                                         2
+mcgregorandrew/oracle-xe-11g        Oracle image with password expiry time set t…   2
+pmdevel/oracle-xe                   Oracle XE on Centos 6.5                         1
+acktsw/oracle-xe-11g                fork from https://hub.docker.com/r/sath89/or…   1
+webdizz/oracle-xe-11g-sa            This is a simple image based on sath89/oracl…   1
+genezys/oracle-xe                   Dockerized Oracle Express Edition using offi…   1
+jaspeen/oracle-xe-11g               Fork from sath89/docker-oracle-xe-11g - smal…   0
+lucazz/oracle-xe                    Simple Debian Container running oracle-xe.      0
+moufmouf/oracle-xe-php              Oracle XE + PHP (with OCI8 driver) in a sing…   0
+larmic/oracle-xe-11g                Using wnameless/oracle-xe-11g with created u…   0
+zeroturnaround/oracle-xe-11g                                                        0
+larmic/oracle-xe                    A oracle xe image with user integrationtest …   0
+jycr/oracle-xe2                                                                     0
+tharindu1st/oracle-xe               Docker image for Oracle Express edition 11.2…   0
+nritholtz/oracle-xe-11g             nritholtz/oracle-xe-11g                         0
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image      latest              eaa0a55a928f        23 minutes ago      126MB
+nginx               latest              4152a9608752        3 days ago          126MB
+centos              7                   5e35e350aded        11 days ago         203MB
+ubuntu              latest              775349758637        3 weeks ago         64.2MB
+mysql               5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+nginx               <none>              881bd08c0b08        8 months ago        109MB
+ubuntu              <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor     latest              eb1210707573        12 months ago       69.6MB
+jeff@jeff-VirtualBox:~$ docker pull orangehrm/oracle-xe-11g:latest
+latest: Pulling from orangehrm/oracle-xe-11g
+cb56c90f0b30: Pull complete
+0acc551e5716: Pull complete
+8956dcd35143: Pull complete
+908242721214: Pull complete
+b44ff14dd3bb: Pull complete
+81ac3d025953: Pull complete
+b555aeaf1117: Pull complete
+e1896669ff82: Pull complete
+9437119349eb: Pull complete
+96e36910991c: Pull complete
+2de589c896ac: Pull complete
+c5510f7fcb03: Pull complete
+c09e52e19f4b: Pull complete
+abbfadca26af: Pull complete
+c14464a9caeb: Pull complete
+4468bbe36672: Pull complete
+85cfa88ee1f2: Pull complete
+d4831108a661: Pull complete
+0821dd9b7524: Pull complete
+b19f8225db0a: Pull complete
+3001b1e31fbc: Pull complete
+585b27c5a8cb: Pull complete
+4977c21ef050: Pull complete
+acf12f209883: Pull complete
+51a0fc043bdd: Pull complete
+47759cd1519f: Pull complete
+Digest: sha256:b56c95bb59dfef4ee8d373713209105dedb52f09d56c82f94edb29f1fac3b60c
+Status: Downloaded newer image for orangehrm/oracle-xe-11g:latest
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image            latest              eaa0a55a928f        26 minutes ago      126MB
+nginx                     latest              4152a9608752        3 days ago          126MB
+centos                    7                   5e35e350aded        11 days ago         203MB
+ubuntu                    latest              775349758637        3 weeks ago         64.2MB
+mysql                     5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+nginx                     <none>              881bd08c0b08        8 months ago        109MB
+ubuntu                    <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor           latest              eb1210707573        12 months ago       69.6MB
+orangehrm/oracle-xe-11g   latest              42dda6eba3ea        2 years ago         2.39GB
+jeff@jeff-VirtualBox:~$ docker run -it --shm-size=2g -p 1521:1521 -p 8081:8080 orangehrm/orac
+root@c45ccd05d88f:/# sqlplus sys/oracle as sysdba
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Nov 23 03:15:07 2019
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+Connected to an idle instance.
+SQL> startup
+ORACLE instance started.
+Total System Global Area  601272320 bytes
+Fixed Size                  2228848 bytes
+Variable Size             180358544 bytes
+Database Buffers          415236096 bytes
+Redo Buffers                3448832 bytes
+Database mounted.
+Database opened.
+SQL> exit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+root@c45ccd05d88f:/# su - oracle
+oracle@c45ccd05d88f:~$ env | grep ORACLE
+ORACLE_SID=XE
+ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+oracle@c45ccd05d88f:~$ cd $ORACLE_HOME/network/admin
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vim listener.ora
+-su: vim: command not found
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$ docker run -it --shm-size=2g -p 1521:1521 -p 8081:8080 orangehrm/orac
+docker: Error response from daemon: driver failed programming external connectivity on endpoi081 failed: port is already allocated.
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                            COMMAND                  CREATED
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest   "bash"                   8 minutes ago
+da331fd0b328        my-nginx-image:latest            "nginx -g 'daemon of…"   35 minutes ago
+49d4d7ee1535        google/cadvisor:latest           "/usr/bin/cadvisor -…"   44 minutes ago
+c17ff1f969d0        mysql:5.7                        "docker-entrypoint.s…"   About an hour a
+a8a8e6dc1c2a        ubuntu:latest                    "bash"                   2 hours ago
+3f77eb79192d        centos:7                         "/bin/bash"              2 hours ago
+jeff@jeff-VirtualBox:~$ docker exec -it --shm-size=2g -p 1521:1521 -p 8081:8080 orangehrm/ora
+unknown flag: --shm-size
+See 'docker exec --help'.
+jeff@jeff-VirtualBox:~$ docker exec -it silly_swartz bash
+root@c45ccd05d88f:/# su - oracle
+oracle@c45ccd05d88f:~$ cd $ORACLE_HOME/network/admin/
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ vi listener.ora
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ lsnrctl start
+LSNRCTL for Linux: Version 11.2.0.2.0 - Production on 23-NOV-2019 03:40:01
+Copyright (c) 1991, 2011, Oracle.  All rights reserved.
+Starting /u01/app/oracle/product/11.2.0/xe/bin/tnslsnr: please wait...
+TNSLSNR for Linux: Version 11.2.0.2.0 - Production
+System parameter file is /u01/app/oracle/product/11.2.0/xe/network/admin/listener.ora
+Log messages written to /u01/app/oracle/product/11.2.0/xe/log/diag/tnslsnr/c45ccd05d88f/listener/alert/log.xml
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC_FOR_XE)))
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=c45ccd05d88f)(PORT=1521)))
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC_FOR_XE)))
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR for Linux: Version 11.2.0.2.0 - Production
+Start Date                23-NOV-2019 03:40:03
+Uptime                    0 days 0 hr. 0 min. 0 sec
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Default Service           XE
+Listener Parameter File   /u01/app/oracle/product/11.2.0/xe/network/admin/listener.ora
+Listener Log File         /u01/app/oracle/product/11.2.0/xe/log/diag/tnslsnr/c45ccd05d88f/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC_FOR_XE)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=c45ccd05d88f)(PORT=1521)))
+Services Summary...
+Service "PLSExtProc" has 1 instance(s).
+  Instance "PLSExtProc", status UNKNOWN, has 1 handler(s) for this service...
+The command completed successfully
+oracle@c45ccd05d88f:~/product/11.2.0/xe/network/admin$ lsnrctl services
+LSNRCTL for Linux: Version 11.2.0.2.0 - Production on 23-NOV-2019 03:40:25
+Copyright (c) 1991, 2011, Oracle.  All rights reserved.
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC_FOR_XE)))
+Services Summary...
+Service "PLSExtProc" has 1 instance(s).
+  Instance "PLSExtProc", status UNKNOWN, has 1 handler(s) for this service...
+    Handler(s):
+      "DEDICATED" established:0 refused:0
+         LOCAL SERVER
+The command completed successfully
+
+=======================================================================================================
+
+
+jeff@jeff-VirtualBox:~$ docker pull tensorflow/tensorflow:latest-py3
+latest-py3: Pulling from tensorflow/tensorflow
+5667fdb72017: Pull complete
+d83811f270d5: Pull complete
+ee671aafb583: Pull complete
+7fc152dfb3a6: Pull complete
+485ea80d093d: Pull complete
+8e7d3ffcd500: Pull complete
+1c60aaf19cc4: Pull complete
+af228bb15b86: Pull complete
+c2f81144f815: Pull complete
+fb9676c41022: Pull complete
+66257906239d: Pull complete
+Digest: sha256:0b236338fac6c3361cf3ae1448f8c053994e260c1edc4fa63ed80adb3045abb2
+Status: Downloaded newer image for tensorflow/tensorflow:latest-py3
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                            COMMAND                  CREATED                                                          STATUS              PORTS                                            NAMES
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest   "bash"                   2 hours ago                                                      Up 2 hours          0.0.0.0:1521->1521/tcp, 0.0.0.0:8081->8080/tcp   silly_swartz
+da331fd0b328        my-nginx-image:latest            "nginx -g 'daemon of…"   2 hours ago                                                      Up 2 hours          0.0.0.0:80->80/tcp                               musing_blackburn
+49d4d7ee1535        google/cadvisor:latest           "/usr/bin/cadvisor -…"   3 hours ago                                                      Up 3 hours          0.0.0.0:8080->8080/tcp                           cadvisor
+c17ff1f969d0        mysql:5.7                        "docker-entrypoint.s…"   3 hours ago                                                      Up 3 hours          3306/tcp, 33060/tcp                              inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                    "bash"                   3 hours ago                                                      Up 3 hours                                                           romantic_fermi
+3f77eb79192d        centos:7                         "/bin/bash"              4 hours ago                                                      Up 4 hours                                                           cocky_leakey
+jeff@jeff-VirtualBox:~$ docker run -it -p 8888:8888 tensorflow/tensorflow:latest-py3
+
+________                               _______________
+___  __/__________________________________  ____/__  /________      __
+__  /  _  _ \_  __ \_  ___/  __ \_  ___/_  /_   __  /_  __ \_ | /| / /
+_  /   /  __/  / / /(__  )/ /_/ /  /   _  __/   _  / / /_/ /_ |/ |/ /
+/_/    \___//_/ /_//____/ \____//_/    /_/      /_/  \____/____/|__/
+
+
+WARNING: You are running this container as root, which can cause new files in
+mounted volumes to be created as the root user on your host machine.
+
+To avoid this, run the container by specifying your user's userid:
+
+$ docker run -u $(id -u):$(id -g) args...
+
+root@3c50afdf9087:/# jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              25 seconds ago      Up 23 seconds       0.0.0.0:8888->8888/tcp                           hardcore_leavitt
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   2 hours ago         Up 2 hours          0.0.0.0:1521->1521/tcp, 0.0.0.0:8081->8080/tcp   silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp                               musing_blackburn
+49d4d7ee1535        google/cadvisor:latest             "/usr/bin/cadvisor -…"   3 hours ago         Up 3 hours          0.0.0.0:8080->8080/tcp                           cadvisor
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   3 hours ago         Up 3 hours          3306/tcp, 33060/tcp                              inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   3 hours ago         Up 3 hours                                                           romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              4 hours ago         Up 4 hours                                                           cocky_leakey
+jeff@jeff-VirtualBox:~$ docker image ls
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image            latest              eaa0a55a928f        2 hours ago         126MB
+nginx                     latest              4152a9608752        3 days ago          126MB
+centos                    7                   5e35e350aded        11 days ago         203MB
+ubuntu                    latest              775349758637        3 weeks ago         64.2MB
+mysql                     5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+tensorflow/tensorflow     latest-py3          90f5cb97b18f        7 weeks ago         1.07GB
+nginx                     <none>              881bd08c0b08        8 months ago        109MB
+ubuntu                    <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor           latest              eb1210707573        12 months ago       69.6MB
+orangehrm/oracle-xe-11g   latest              42dda6eba3ea        2 years ago         2.39GB
+
+=====================================================================
+
+jeff@jeff-VirtualBox:~$ sudo grep jeff /etc/shadow
+[sudo] password for jeff:
+jeff:$6$SY0w8F2u$cbXlcHD5dDu7hl3ZAPxvxIyCi2OdvpK6XsV4SObxfe1kU8sVD4GH9SmPQk2vyJhy101x87veh7DIKrlJ2661l/:17966:0:99999:7:::
+
+
+$6
+$SY0w8F2u
+$cbXlcHD5dDu7hl3ZAPxvxIyCi2OdvpK6XsV4SObxfe1kU8sVD4GH9SmPQk2vyJhy101x87veh7DIKrlJ2661l/
+
+-----------------------------------------------------------------------
+
+jeff@jeff-VirtualBox:~$ export DOCKER_CONTENT_TRUST=1
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image            latest              eaa0a55a928f        3 hours ago         126MB
+nginx                     latest              4152a9608752        3 days ago          126MB
+centos                    7                   5e35e350aded        11 days ago         203MB
+ubuntu                    latest              775349758637        3 weeks ago         64.2MB
+mysql                     5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+tensorflow/tensorflow     latest-py3          90f5cb97b18f        7 weeks ago         1.07GB
+nginx                     <none>              881bd08c0b08        8 months ago        109MB
+ubuntu                    <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor           latest              eb1210707573        12 months ago       69.6MB
+orangehrm/oracle-xe-11g   latest              42dda6eba3ea        2 years ago         2.39GB
+jeff@jeff-VirtualBox:~$ docker pull ubuntu:14.04
+Pull (1 of 1): ubuntu:14.04@sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90
+sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90: Pulling from library/ubuntu
+a7344f52cb74: Pull complete
+515c9bb51536: Pull complete
+e1eabe0537eb: Pull complete
+4701f1215c13: Pull complete
+Digest: sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90
+Status: Downloaded newer image for ubuntu@sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90
+Tagging ubuntu@sha256:2f7c79927b346e436cc14c92bd4e5bd778c3bd7037f35bc639ac1589a7acfa90 as ubuntu:14.04
+jeff@jeff-VirtualBox:~$ export DOCKER_CONTENT_TRUST=0
+
+실제로 컨테이너에 대한 inspect가 이미지에 대한 것보다 압도적으로 많다
+
+jeff@jeff-VirtualBox:~$ docker rm $(docker ps --filter 'status=exited' -a -q)
+f042c6ca6e23
+4699e272c6db
+6410182e3029
+30df53e07a2d
+9b772a6c6c47
+=================================================================================================
+jeff@jeff-VirtualBox:~$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: seonwhee0docker
+Password:
+WARNING! Your password will be stored unencrypted in /home/jeff/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+my-nginx-image            latest              eaa0a55a928f        3 hours ago         126MB
+nginx                     latest              4152a9608752        3 days ago          126MB
+centos                    7                   5e35e350aded        11 days ago         203MB
+ubuntu                    latest              775349758637        3 weeks ago         64.2MB
+mysql                     5.7                 cd3ed0dfff7e        5 weeks ago         437MB
+tensorflow/tensorflow     latest-py3          90f5cb97b18f        7 weeks ago         1.07GB
+ubuntu                    14.04               2c5e00d77a67        6 months ago        188MB
+nginx                     <none>              881bd08c0b08        8 months ago        109MB
+ubuntu                    <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor           latest              eb1210707573        12 months ago       69.6MB
+orangehrm/oracle-xe-11g   latest              42dda6eba3ea        2 years ago         2.39GB
+
+jeff@jeff-VirtualBox:~$ docker tag mysql:5.7 seonwhee0docker/mysql:mysql-v5.7
+
+jeff@jeff-VirtualBox:~$ docker push seonwhee0docker/mysql:mysql-v5.7
+The push refers to repository [docker.io/seonwhee0docker/mysql]
+ccbee7d06322: Mounted from library/mysql
+392376ec36d5: Mounted from library/mysql
+05ef222f4cd4: Mounted from library/mysql
+7ec35a0f9fd8: Mounted from library/mysql
+13272fe0aa5c: Mounted from library/mysql
+ca3e8d7fe261: Mounted from library/mysql
+452ea71a57ff: Mounted from library/mysql
+d8cb0457f31e: Mounted from library/mysql
+3c353031df8b: Mounted from library/mysql
+096401f81d2c: Mounted from library/mysql
+67ecfc9591c8: Mounted from library/mysql
+mysql-v5.7: digest: sha256:ba2eda1bf1249bd7e7160fa6c446d03b3261f75d3de91bc2125967d39db1525c size: 2622
+
+=================================================================================================
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              30 minutes ago      Up 30 minutes       0.0.0.0:8888->8888/tcp                           hardcore_leavitt
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   2 hours ago         Up 2 hours          0.0.0.0:1521->1521/tcp, 0.0.0.0:8081->8080/tcp   silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   3 hours ago         Up 3 hours          0.0.0.0:80->80/tcp                               musing_blackburn
+49d4d7ee1535        google/cadvisor:latest             "/usr/bin/cadvisor -…"   3 hours ago         Up 3 hours          0.0.0.0:8080->8080/tcp                           cadvisor
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   3 hours ago         Up 3 hours          3306/tcp, 33060/tcp                              inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   4 hours ago         Up 4 hours                                                           romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              4 hours ago         Up 4 hours                                                           cocky_leakey
+
+jeff@jeff-VirtualBox:~$ id
+uid=1000(jeff) gid=1000(jeff) groups=1000(jeff),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare),999(docker)
+jeff@jeff-VirtualBox:~$ cd /var/lib/docker/
+
+jeff@jeff-VirtualBox:/var/lib/docker$ sudo su
+[sudo] password for jeff:
+
+root@jeff-VirtualBox:/var/lib/docker# id
+uid=0(root) gid=0(root) groups=0(root)
+
+root@jeff-VirtualBox:/var/lib/docker# ls
+builder  buildkit  containers  image  network  overlay2  plugins  runtimes  swarm  tmp  trust  volumes
+
+root@jeff-VirtualBox:/var/lib/docker# cd overlay2
+
+root@jeff-VirtualBox:/var/lib/docker/overlay2# ls
+064b63486fdb3a4e7c1c2adf90b87f4de01b241a4cbf241006dc3d2f0d539da8
+084a9e65752ee41ee70dbcd70c051f01e7eb8a6521261f22a6325fa44e2daf08
+1063ba71740021bffeef3ed53e08dc0de649b929bb044b776d782c81ceb65305
+122cc17dee8cc4f8a626608653002ce34d54b2688966cec498b29875999ad5c8
+135ddb138f330613232e2782ac2d5ba22b4279e78839186ab3585465cc8b8f45
+135ddb138f330613232e2782ac2d5ba22b4279e78839186ab3585465cc8b8f45-init
+185799c5fd7719781295e6085b5666a2d012db2c36a3b1877ee053aafdf38ded
+1861d2597ee224d4a754d26fcefe7e2339c4313c4e058def61a680a894711c14
+2268c93c2882a4cbe4cb189a1690e526f3bccb4e2cb7ba8d395aad8e6b4a2c0e
+2363bab8c01e133b468bf02bf69704547d6d5738456ad1e1e0c6a92f82b75c33
+2547b05f1f99a96265dea9440b6f1a7c0e9cd7378c2ad4fa9ae2b60fc147f565
+26a882a4bb30d67830deaf0f09d36b5bb60a49e2c5e2bdc88ca8a6da410a1849
+2c8fe3fc94cfe872d89a5c9aff4ff144b7c58e2b1fa1347cd5a8b5ac4faf9c64
+302d6d7b68c67a06e52431e7b8545649b979aa301969140c242302b6ce7f2573
+30b32857f3aa3ee2b2313838486178beae609da879c9c0adb933053564eb9d70
+380c0ac4394c1928350a1d163261200ba0c43d8880ef94807cba53f1a88acda5
+3daa72f002821dd559323dda8ce5b9e72b4ae65ebe8578c91c83780f0be245e3
+40d0dc326ede24fe462f34ba02356b35fc1e33664f82c91f8aee8ac9127d0ec1
+410ce29e6e78ec6c99e3eb9d0ce112c2f1181ea4ba4574198f5d71fe444f1917
+448acad448a4067854bc9049b9dd709c2d8f86536b809e0921c4c5e0658298ad
+4749f3a25e4218797f0575df8ad81d7d999ca6607fe6249bf1f387883aec8755
+48703304e4cbd0926887e8ff5e3bfdea5530bceece41e4d9b6eb11813c0b8a0b
+4aa02d0f882da0353d9caaf24804f3c9ebccc495f7b491dfcbc3dcc20591e653
+4aa02d0f882da0353d9caaf24804f3c9ebccc495f7b491dfcbc3dcc20591e653-init
+4d03c2915334c08db4d416dde131be87cd65cf422ccb10a77f74a6cbe4d5ddd8
+4feb830a2f4f03aedcd365cdd3bc745934b9db701ce761cc1eaf6e9375949d3b
+57815c4d129099f9bd799ffd827a548178a35f7510cd6c9168c7e21e62106bae
+578773cfcdcf18019a48d4f289cf2cc14d62f5b6788b31071fa5476933032475
+5b482dc993686960390c56a0120fcb798955050bd672531215889ff34d7a52a5
+5c52b30b04f44f19e70c777b505626fe545a69a51b692b68b61e1e2a1fca69c7
+6376bdf2870bfdfaac130e65f55f1134bfd471c9b6752872475c8aa2be8d9047
+656b19d1bd2738070768bf9d5c2fd2bd330e72a69ca94ccc9c71a515cd50fb79
+66fa66d72bccf5eebc4bf41f41e6b9b8ceb9d9fe5ec3d9044fefc1158a59c447
+676dd2d401366beb29b52eedd8eadf37e17189d910e9d0796aaa05e0e48654bd
+6a9e81f6555b4d3c2e0795ef09c4225e9a840400e72a7bbbfae3fbef724695da
+70a779e2828afcdba0763b9456a3456c9d34f4e1539959b9c80af87bf5e8e211
+71cc27e4ecc34f6cbda322b2324aa7ad24d26b1b66e0e2a7c9d7dd0d749f2e50
+71fad2b16afe327978ddb008381ba29bfdfb03379a2dea335e381c5391b6aa5a
+71fad2b16afe327978ddb008381ba29bfdfb03379a2dea335e381c5391b6aa5a-init
+726092f38f09e566523c23fc8adf4062bf23ae384d7275af08988b083f73a7c0
+76ffc123a56be2e8467f103ba3b976c1c9135001fc17a8d770a220b3ed3d37d8
+7939f3eb0f75520a1fcb49f0f6c13f19795d380c4435d2a75fe952678df8fe27
+79791b7a275e52dc6ecf1499e977067b8551090e055af129d1c564b152841876
+7b1dfc49be087572e27763292360bac114dacd09cb45d0f765aa6eb1b3615cd1
+82ebb65823a69aef8cfc11fec473f2fc4c5d4ed4e59d5bad5bf6daaf03cbb548
+844c51b3c5714d60be419420a0e83cad0a8b168b8e55f62358daccc912ca32c0
+854331b8c703336946fb3670841d921b9f922aa6b9b5cf885ee28f955e0c5802
+869415724ad80b635f954e2054e8a1f56c55f5c2f85b6de30f75cb733c6a312f
+869415724ad80b635f954e2054e8a1f56c55f5c2f85b6de30f75cb733c6a312f-init
+87932a22052cb321b57ae935519eb0748f22d5943467dd4776dd97725581fb19
+8a382f94b9ca4e80e92b197b8b2ffa211213e64a2bf6322683efc8cada37c40d
+8eeedc9b8cfd09fe5c259d47b684fc07aa08ec1298d03cc1f76dc865ceb71d22
+94f5d42f1982cb1da37b3ba20d2adcb7070930e0a8386fa2f6f4b091b1bc3bef
+97970469da19c2cf63d7da349eafffbdcad374446438fcb373196d6c88ddf771
+9d0459215a391cbdf098a39b76804a96b30357d94cec71e00d454d88b79519c3
+9d2aa6d6fc0f778a2ef8ade94a28550db6f23cfe0c0d03e897fbfc0825737583
+9d6521428a4a52b78feef85f5931bc590cd5aa5e0190bfb12581ff48bab1ee3b
+9de11728896fa7a2889d223a9cb095592a74d9b5da74f3613f9676d9fc659e15
+9e47af2275ecd2c3105db65dab7f1d566c9146987454b9854a181ef60bd20d8b
+9eeb118ce5649a95212bf50614300d451e29e0e06e74fc72904de1df5f14ecfb
+a79374a5e4f883801b753656d36e016d97751fc77f04f08f33eb8a761c3d7d3f
+abdeaeb237afa2caf3158ed2cb03cfcd8e52d685c5ef5ef09494f52adefa2747
+abdeaeb237afa2caf3158ed2cb03cfcd8e52d685c5ef5ef09494f52adefa2747-init
+b522d32f4081d389c27685b4e2087b102622d14620f75c303af7e53c72d07c74
+b59a75ff17f19834b23be55856dac35fbb663285c0cbd0775e56dd312c14da68
+bb76af2b4377b6ad89df967957642abcee1d743ccb72a3f83260ff3df61f0122
+bd16ed33286a8ad79615d8a0dc7e6dfaf35001fdaa676705f46ddd525af1f5b0
+c3e727dc48d853b729bf03a0d5ea11d3393c8a32cb49672fbf3b68a16790f64c
+c5301c84491e24a9c43323dee6446bca46f865d5afbeefd14ab30632f96505c4
+c7661b5bd9d2c8f7f44440faa6b273e28419a4155df06b95fc6218267365e5ab
+ca2dcac746f785ca1035861d32a7ca1dd310d76d5e15b2c825da9ec6e97c2e03
+dbfb404720a1b8366e6b4ed8207b6331a6c0568dbc3240146984b93305d696c7
+df03abbd3732db962249de0ba0ec0e720a8110b7aa0062ab5e1e561d3c7697ca
+e01580c1ab96f8192113e7923756c3237264137a9a00b37587a47aef10f47fe2
+e0830590c1c1c0cefb3a9f5438260b123717a5148157f891f225f8bbd6941ae0
+e0be20e56825e86df84695e70a4106bcf4d2711ac627bc21ba62e6afa9c941a3
+e76a97639a1f771a7d82e5db4f6f4f80dcf539ea37f9ac54974c1d39efe8e579
+ec0d97d477fdc7e2fd498cbb9562ae9a646c4a1e02ed3432101b5c5867ebcb32
+eea66fac6e77ffc563c13f3509df61704c81284a948d42b02b2e62fb7fa61fb6
+eea66fac6e77ffc563c13f3509df61704c81284a948d42b02b2e62fb7fa61fb6-init
+ef23dd82efab8a03977d36526180a29040d5f6e93da346cdd91e12f59db409c8
+f153a4fd87bdec8820020e8fb43fea3838fc97a71fa0e344dc8c65a77c51286e
+f153a4fd87bdec8820020e8fb43fea3838fc97a71fa0e344dc8c65a77c51286e-init
+f326d0141f62f8131e24a7c3ad94095eb394ebf10c0c3e11e7d83c092b21e1cd
+f6d1ce52aa654c772d321968bae855d2abcba5ec3fb64393de1261a3d9eee702
+f6d1ce52aa654c772d321968bae855d2abcba5ec3fb64393de1261a3d9eee702-init
+f87d7cd64c627f16c1f1602749c20039a15f4a7798e9ed8611cd9ef1f96b6e1d
+fe2dd5879a92b7cf5f9b3fc86c433a47ab70d3f6d4821f7906db7c8b973cd9e1
+ffd480f9fbe3e7535e1865985aed8c4d20d4bace50c83361c3ed9b834e19cdb5
+l
+root@jeff-VirtualBox:/var/lib/docker/overlay2# cd 1063ba71740021bffeef3ed53e08dc0de649b929bb044b776d782c81ceb65305
+root@jeff-VirtualBox:/var/lib/docker/overlay2/1063ba71740021bffeef3ed53e08dc0de649b929bb044b776d782c81ceb65305# ls
+diff  link  lower  work
+
+===============================================================================
+
+jeff@jeff-VirtualBox:~$ docker container run -d centos /bin/ping localhost
+Unable to find image 'centos:latest' locally
+latest: Pulling from library/centos
+729ec3a6ada3: Pull complete
+Digest: sha256:f94c1d992c193b3dc09e297ffd54d8a4f1dc946c37cbeceb26d35ce1647f88d9
+Status: Downloaded newer image for centos:latest
+0a0de5dbe518985ffdec2b28727e0974fce8bf18b2a5a722860d2e8e0eebc339
+jeff@jeff-VirtualBox:~$ docker logs -t 0a0de
+2019-11-23T05:49:14.921992868Z PING localhost (127.0.0.1) 56(84) bytes of data.
+2019-11-23T05:49:14.922036553Z 64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.033 ms
+2019-11-23T05:49:15.921474334Z 64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.043 ms
+2019-11-23T05:49:16.921227627Z 64 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=64 time=0.026 ms
+2019-11-23T05:49:17.926615956Z 64 bytes from localhost (127.0.0.1): icmp_seq=4 ttl=64 time=0.024 ms
+2019-11-23T05:49:18.932352366Z 64 bytes from localhost (127.0.0.1): icmp_seq=5 ttl=64 time=0.046 ms
+2019-11-23T05:49:19.951060161Z 64 bytes from localhost (127.0.0.1): icmp_seq=6 ttl=64 time=0.044 ms
+2019-11-23T05:49:20.951961076Z 64 bytes from localhost (127.0.0.1): icmp_seq=7 ttl=64 time=0.027 ms
+2019-11-23T05:49:21.951743032Z 64 bytes from localhost (127.0.0.1): icmp_seq=8 ttl=64 time=0.026 ms
+2019-11-23T05:49:22.950711730Z 64 bytes from localhost (127.0.0.1): icmp_seq=9 ttl=64 time=0.027 ms
+2019-11-23T05:49:23.950682374Z 64 bytes from localhost (127.0.0.1): icmp_seq=10 ttl=64 time=0.047 ms
+2019-11-23T05:49:24.949547083Z 64 bytes from localhost (127.0.0.1): icmp_seq=11 ttl=64 time=0.020 ms
+2019-11-23T05:49:25.948735548Z 64 bytes from localhost (127.0.0.1): icmp_seq=12 ttl=64 time=0.021 ms
+2019-11-23T05:49:26.948891148Z 64 bytes from localhost (127.0.0.1): icmp_seq=13 ttl=64 time=0.025 ms
+2019-11-23T05:49:27.950356510Z 64 bytes from localhost (127.0.0.1): icmp_seq=14 ttl=64 time=0.028 ms
+jeff@jeff-VirtualBox:~$ docker container stop 0a0de
+0a0de
+jeff@jeff-VirtualBox:~$ docker container ps
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              39 minutes ago      Up 39 minutes       0.0.0.0:8888->8888/tcp                           hardcore_leavitt
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   3 hours ago         Up 3 hours          0.0.0.0:1521->1521/tcp, 0.0.0.0:8081->8080/tcp   silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   3 hours ago         Up 3 hours          0.0.0.0:80->80/tcp                               musing_blackburn
+49d4d7ee1535        google/cadvisor:latest             "/usr/bin/cadvisor -…"   3 hours ago         Up 3 hours          0.0.0.0:8080->8080/tcp                           cadvisor
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   4 hours ago         Up 3 hours          3306/tcp, 33060/tcp                              inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   4 hours ago         Up 4 hours                                                           romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              4 hours ago         Up 4 hours                                                           cocky_leakey
+jeff@jeff-VirtualBox:~$ docker logs -t 0a0de
+2019-11-23T05:49:14.921992868Z PING localhost (127.0.0.1) 56(84) bytes of data.
+2019-11-23T05:49:14.922036553Z 64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.033 ms
+2019-11-23T05:49:15.921474334Z 64 bytes from localhost (127.0.0.1): icmp_seq=2 ttl=64 time=0.043 ms
+2019-11-23T05:49:16.921227627Z 64 bytes from localhost (127.0.0.1): icmp_seq=3 ttl=64 time=0.026 ms
+2019-11-23T05:49:17.926615956Z 64 bytes from localhost (127.0.0.1): icmp_seq=4 ttl=64 time=0.024 ms
+2019-11-23T05:49:18.932352366Z 64 bytes from localhost (127.0.0.1): icmp_seq=5 ttl=64 time=0.046 ms
+2019-11-23T05:49:19.951060161Z 64 bytes from localhost (127.0.0.1): icmp_seq=6 ttl=64 time=0.044 ms
+2019-11-23T05:49:20.951961076Z 64 bytes from localhost (127.0.0.1): icmp_seq=7 ttl=64 time=0.027 ms
+2019-11-23T05:49:21.951743032Z 64 bytes from localhost (127.0.0.1): icmp_seq=8 ttl=64 time=0.026 ms
+2019-11-23T05:49:22.950711730Z 64 bytes from localhost (127.0.0.1): icmp_seq=9 ttl=64 time=0.027 ms
+2019-11-23T05:49:23.950682374Z 64 bytes from localhost (127.0.0.1): icmp_seq=10 ttl=64 time=0.047 ms
+2019-11-23T05:49:24.949547083Z 64 bytes from localhost (127.0.0.1): icmp_seq=11 ttl=64 time=0.020 ms
+2019-11-23T05:49:25.948735548Z 64 bytes from localhost (127.0.0.1): icmp_seq=12 ttl=64 time=0.021 ms
+2019-11-23T05:49:26.948891148Z 64 bytes from localhost (127.0.0.1): icmp_seq=13 ttl=64 time=0.025 ms
+2019-11-23T05:49:27.950356510Z 64 bytes from localhost (127.0.0.1): icmp_seq=14 ttl=64 time=0.028 ms
+2019-11-23T05:49:28.957622648Z 64 bytes from localhost (127.0.0.1): icmp_seq=15 ttl=64 time=0.040 ms
+2019-11-23T05:49:29.977862956Z 64 bytes from localhost (127.0.0.1): icmp_seq=16 ttl=64 time=0.025 ms
+2019-11-23T05:49:30.976829219Z 64 bytes from localhost (127.0.0.1): icmp_seq=17 ttl=64 time=0.020 ms
+2019-11-23T05:49:31.977309583Z 64 bytes from localhost (127.0.0.1): icmp_seq=18 ttl=64 time=0.058 ms
+2019-11-23T05:49:32.976636893Z 64 bytes from localhost (127.0.0.1): icmp_seq=19 ttl=64 time=0.042 ms
+2019-11-23T05:49:33.976645255Z 64 bytes from localhost (127.0.0.1): icmp_seq=20 ttl=64 time=0.025 ms
+2019-11-23T05:49:34.977039373Z 64 bytes from localhost (127.0.0.1): icmp_seq=21 ttl=64 time=0.024 ms
+2019-11-23T05:49:35.996991067Z 64 bytes from localhost (127.0.0.1): icmp_seq=22 ttl=64 time=0.149 ms
+2019-11-23T05:49:36.999259340Z 64 bytes from localhost (127.0.0.1): icmp_seq=23 ttl=64 time=0.026 ms
+2019-11-23T05:49:38.000521155Z 64 bytes from localhost (127.0.0.1): icmp_seq=24 ttl=64 time=0.022 ms
+2019-11-23T05:49:39.005617268Z 64 bytes from localhost (127.0.0.1): icmp_seq=25 ttl=64 time=0.020 ms
+2019-11-23T05:49:40.008133911Z 64 bytes from localhost (127.0.0.1): icmp_seq=26 ttl=64 time=0.029 ms
+2019-11-23T05:49:41.007082823Z 64 bytes from localhost (127.0.0.1): icmp_seq=27 ttl=64 time=0.021 ms
+2019-11-23T05:49:42.031708028Z 64 bytes from localhost (127.0.0.1): icmp_seq=28 ttl=64 time=0.059 ms
+2019-11-23T05:49:43.030303269Z 64 bytes from localhost (127.0.0.1): icmp_seq=29 ttl=64 time=0.021 ms
+2019-11-23T05:49:44.033064159Z 64 bytes from localhost (127.0.0.1): icmp_seq=30 ttl=64 time=0.031 ms
+2019-11-23T05:49:45.040771647Z 64 bytes from localhost (127.0.0.1): icmp_seq=31 ttl=64 time=0.031 ms
+2019-11-23T05:49:46.048210627Z 64 bytes from localhost (127.0.0.1): icmp_seq=32 ttl=64 time=0.058 ms
+2019-11-23T05:49:47.059962899Z 64 bytes from localhost (127.0.0.1): icmp_seq=33 ttl=64 time=0.023 ms
+2019-11-23T05:49:48.062750816Z 64 bytes from localhost (127.0.0.1): icmp_seq=34 ttl=64 time=0.026 ms
+2019-11-23T05:49:49.067295411Z 64 bytes from localhost (127.0.0.1): icmp_seq=35 ttl=64 time=0.061 ms
+2019-11-23T05:49:50.066456564Z 64 bytes from localhost (127.0.0.1): icmp_seq=36 ttl=64 time=0.055 ms
+2019-11-23T05:49:51.071259930Z 64 bytes from localhost (127.0.0.1): icmp_seq=37 ttl=64 time=0.059 ms
+2019-11-23T05:49:52.073159198Z 64 bytes from localhost (127.0.0.1): icmp_seq=38 ttl=64 time=0.026 ms
+2019-11-23T05:49:53.077359681Z 64 bytes from localhost (127.0.0.1): icmp_seq=39 ttl=64 time=0.037 ms
+
+Container의 interface는 eth0로 통일되어 있다.
+
+jeff@jeff-VirtualBox:~$ sudo apt-get -y install iptraf-ng
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libdbusmenu-gtk4 libmircommon5 libqpdf17 ubuntu-core-launcher
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  iptraf-ng
+0 upgraded, 1 newly installed, 0 to remove and 322 not upgraded.
+Need to get 291 kB of archives.
+After this operation, 753 kB of additional disk space will be used.
+Get:1 http://kr.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 iptraf-ng amd64 1.1.4-2ubuntu0.16.04.1 [291 kB]
+Fetched 291 kB in 2s (144 kB/s)
+Selecting previously unselected package iptraf-ng.
+(Reading database ... 209876 files and directories currently installed.)
+Preparing to unpack .../iptraf-ng_1.1.4-2ubuntu0.16.04.1_amd64.deb ...
+Unpacking iptraf-ng (1.1.4-2ubuntu0.16.04.1) ...
+Processing triggers for doc-base (0.10.7) ...
+Processing 1 added doc-base file...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up iptraf-ng (1.1.4-2ubuntu0.16.04.1) ...
+
+jeff@jeff-VirtualBox:~$ docker run -d centos /bin/ping 192.168.56.1
+c8f8178c72ab75296594edaf5ae1119d362cdf15cdba0ae170a085acbba7aa6e
+jeff@jeff-VirtualBox:~$ sudo iptraf-ng
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+c8f8178c72ab        centos                             "/bin/ping 192.168.5…"   3 minutes ago       Up 3 minutes                                                         jolly_khayyam
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              About an hour ago   Up About an hour    0.0.0.0:8888->8888/tcp                           hardcore_leavitt
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   3 hours ago         Up 3 hours          0.0.0.0:1521->1521/tcp, 0.0.0.0:8081->8080/tcp   silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   3 hours ago         Up 3 hours          0.0.0.0:80->80/tcp                               musing_blackburn
+49d4d7ee1535        google/cadvisor:latest             "/usr/bin/cadvisor -…"   3 hours ago         Up 3 hours          0.0.0.0:8080->8080/tcp                           cadvisor
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   4 hours ago         Up 4 hours          3306/tcp, 33060/tcp                              inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   4 hours ago         Up 4 hours                                                           romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              4 hours ago         Up 4 hours                                                           cocky_leakey
+
