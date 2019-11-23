@@ -1,0 +1,380 @@
+user1@docker01:~$ docker search elasticsearch
+NAME                                 DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+elasticsearch                        Elasticsearch is a powerful open source sear…   3987                [OK]                
+nshou/elasticsearch-kibana           Elasticsearch-7.1.1 Kibana-7.1.1                109                                     [OK]
+itzg/elasticsearch                   Provides an easily configurable Elasticsearc…   69                                      [OK]
+mobz/elasticsearch-head              elasticsearch-head front-end and standalone …   50                                      
+elastichq/elasticsearch-hq           Official Docker image for ElasticHQ: Elastic…   43                                      [OK]
+bitnami/elasticsearch                Bitnami Docker Image for Elasticsearch          25                                      [OK]
+elastic/elasticsearch                The Elasticsearch Docker image maintained by…   25                                      
+taskrabbit/elasticsearch-dump        Import and export tools for elasticsearch       18                                      [OK]
+lmenezes/elasticsearch-kopf          elasticsearch kopf                              18                                      [OK]
+barnybug/elasticsearch               Latest Elasticsearch 1.7.2 and previous rele…   17                                      [OK]
+esystemstech/elasticsearch           Debian based Elasticsearch packing for Lifer…   15                                      
+justwatch/elasticsearch_exporter     Elasticsearch stats exporter for Prometheus     13                                      
+monsantoco/elasticsearch             ElasticSearch Docker image                      11                                      [OK]
+mesoscloud/elasticsearch             [UNMAINTAINED] Elasticsearch                    9                                       [OK]
+blacktop/elasticsearch               Alpine Linux based Elasticsearch Docker Image   8                                       [OK]
+centerforopenscience/elasticsearch   Elasticsearch                                   4                                       [OK]
+barchart/elasticsearch-aws           Elasticsearch AWS node                          3                                       
+dtagdevsec/elasticsearch             elasticsearch                                   3                                       [OK]
+bitnami/elasticsearch-exporter       Bitnami Elasticsearch Exporter Docker Image     2                                       [OK]
+jetstack/elasticsearch-pet           An elasticsearch image for kubernetes PetSets   1                                       [OK]
+axway/elasticsearch-docker-beat      "Beat" extension to read logs of containers …   1                                       [OK]
+phenompeople/elasticsearch           Elasticsearch is a powerful open source sear…   1                                       [OK]
+wreulicke/elasticsearch              elasticsearch                                   0                                       [OK]
+18fgsa/elasticsearch-ha              Built from https://github.com/18F/kubernetes…   0                                       
+18fgsa/elasticsearch                 Built from https://github.com/docker-library…   0                                       
+
+Google Cloud가 하루에 서비스하는 컨테이너가 5만개 정도된다.
+
+user1@docker01:~$ docker pull mongo
+Using default tag: latest
+latest: Pulling from library/mongo
+7ddbc47eeb70: Already exists 
+c1bbdc448b72: Already exists 
+8c3b70e39044: Already exists 
+45d437916d57: Already exists 
+e119fb0e0a55: Pull complete 
+91f0b9bae1ea: Pull complete 
+53e7c2967f11: Pull complete 
+69a945568374: Pull complete 
+93333bc225a7: Pull complete 
+b9c10bd6c9bd: Pull complete 
+7f4e3538e99c: Pull complete 
+1164b51d180a: Pull complete 
+a715a7d71f27: Pull complete 
+Digest: sha256:1a9478d8188d6be31dd2e8de076d402edf20446e54933aad7ff49f5b457d486c
+Status: Downloaded newer image for mongo:latest
+
+user1@docker01:~$ docker image ls
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+run-sample                     latest              5a972f1f953d        6 days ago          64.2MB
+greetgo                        latest              78143c7d41da        6 days ago          6.08MB
+<none>                         <none>              7b7d10a75461        6 days ago          826MB
+webap                          latest              bcf1b204f274        6 days ago          205MB
+seonwhee0docker/webfront       1.0                 ac37258706c5        6 days ago          126MB
+centos                         centos7             5e35e350aded        11 days ago         203MB
+sample                         1.0                 5e35e350aded        11 days ago         203MB
+sample                         2.0                 5e35e350aded        11 days ago         203MB
+helloworld                     latest              909ddb4f1406        13 days ago         123MB
+golang                         latest              54e71dcafb7c        3 weeks ago         803MB
+mongo                          latest              965553e202a4        3 weeks ago         363MB
+ubuntu                         16.04               5f2bf26e3524        3 weeks ago         123MB
+ubuntu                         latest              775349758637        3 weeks ago         64.2MB
+busybox                        latest              020584afccce        3 weeks ago         1.22MB
+seonwhee0docker/nginx_server   1.0                 540a289bab6c        4 weeks ago         126MB
+nginx                          latest              540a289bab6c        4 weeks ago         126MB
+websample                      1.0                 540a289bab6c        4 weeks ago         126MB
+sd/webserver                   1.0                 540a289bab6c        4 weeks ago         126MB
+centos                         latest              0f3e07c0138f        7 weeks ago         220MB
+
+user1@docker01:~$ docker run -it --name=mongo-server mongo bash
+
+root@803bf33ca5f3:/# cat /etc/os-release
+NAME="Ubuntu"
+VERSION="18.04.3 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.3 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+
+root@803bf33ca5f3:/# ps -ef | grep mongo
+root         13      1  0 00:28 pts/0    00:00:00 grep --color=auto mongo
+
+Container는 OS에서 프로세스로 보고 있다
+
+user1@docker01:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+803bf33ca5f3        mongo               "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        27017/tcp           mongo-server
+
+user1@docker01:~$ ps -ef | grep docker
+avahi       588      1  0 09:09 ?        00:00:00 avahi-daemon: running [docker01.local]
+root       1423      1  0 09:09 ?        00:00:10 /usr/bin/dockerd --raw-logs
+root       1576   1423  0 09:09 ?        00:00:05 docker-containerd --config /var/run/docker/containerd/containerd.toml
+user1      3336   2638  0 09:27 pts/4    00:00:00 docker run -it --name=mongo-server mongo bash
+root       3362   1576  0 09:27 ?        00:00:00 docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345 -address /var/run/docker/containerd/docker-containerd.sock -containerd-binary /usr/bin/docker-containerd -runtime-root /var/run/docker/runtime-runc
+user1      3489   3462  0 09:30 pts/5    00:00:00 grep --color=auto docker
+
+user1@docker01:~$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+8c2fb44b044f        bridge              bridge              local
+8f6704c02fd3        host                host                local
+afaa9b33937e        none                null                local
+user1@docker01:~$ ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:74:b4:e3:d4  
+          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::42:74ff:feb4:e3d4/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:36 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:5654 (5.6 KB)
+
+eth0      Link encap:Ethernet  HWaddr 00:0c:29:df:a3:81  
+          inet addr:10.0.1.130  Bcast:10.0.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:fedf:a381/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:88437 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:15693 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:129651657 (129.6 MB)  TX bytes:1276592 (1.2 MB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:544 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:544 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:102315 (102.3 KB)  TX bytes:102315 (102.3 KB)
+
+vethfe0b306 Link encap:Ethernet  HWaddr 7e:9a:e5:08:d7:c7  
+          inet6 addr: fe80::7c9a:e5ff:fe08:d7c7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:64 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:9962 (9.9 KB)
+
+user1@docker01:~$ docker inspect mongo-server
+[
+    {
+        "Id": "803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345",
+        "Created": "2019-11-23T00:27:57.580160932Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "bash"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 3381,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2019-11-23T00:27:58.420147854Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:965553e202a44592bc26d8c076eafef996a6dfc0de5bb2c1cf1795cd3b3a7373",
+        "ResolvConfPath": "/var/lib/docker/containers/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345/hostname",
+        "HostsPath": "/var/lib/docker/containers/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345/hosts",
+        "LogPath": "/var/lib/docker/containers/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345/803bf33ca5f326597c1b9878d60185e2d3ef08afd28b65061d2eb44e5beeb345-json.log",
+        "Name": "/mongo-server",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/asound",
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/816d09b6ced0dfdeef549ea125bd2008dea0742874f664f5174bb92fc26b2813-init/diff:/var/lib/docker/overlay2/9bb021b6e63b2e25352f6615c98d5c9ae31fbda79421522495f00d82e97c3d7d/diff:/var/lib/docker/overlay2/ff5f57d50359ca87cce2ce6b5498462ec3242c6477974445fdf93459f30af38f/diff:/var/lib/docker/overlay2/37a88defec8e5d4242259eac7f061c3ef3281a53778b1a083176d3254e5fe377/diff:/var/lib/docker/overlay2/56ef77c35a6ea3eead5a72cab2da63cb3d696aaeec4fb0f82e44bb32a41042aa/diff:/var/lib/docker/overlay2/501f2a5623c840f76a08d676d32a318012e300e3c554a8bf1c672d98a7e815a5/diff:/var/lib/docker/overlay2/96f10222f5a206b52a93d0c291508d8f55df67784c4864c7155071b19e4f7ef3/diff:/var/lib/docker/overlay2/249835ad65114bc99d4c6d6efda9d2307d71e003e3f91f955d62a63376cc3fb3/diff:/var/lib/docker/overlay2/9403f69fff2f224bdb24e4c5ce7b17f066f37542cce2d22d5b4a768f719eddca/diff:/var/lib/docker/overlay2/578d016cb6becbe29f85ba9e27ea1aa12a622274fa7bb66162b026b4b0691ae9/diff:/var/lib/docker/overlay2/cbbcef15fbbb522e13bd2c38acaf18a05b0e3e6a9d9f7adca0bb9f14794736a7/diff:/var/lib/docker/overlay2/44fefe1112a65cc8ea5d55113c00131b5a37db226def1283cc240877f60bbbf0/diff:/var/lib/docker/overlay2/14d57f54e92d0019b7ea6fcc83233447042f9666d99c4db23575eeebadb85482/diff:/var/lib/docker/overlay2/62176c259f1fb2d27643a0a1df976dd015d06620ecde0d6967c6605e9e316525/diff",
+                "MergedDir": "/var/lib/docker/overlay2/816d09b6ced0dfdeef549ea125bd2008dea0742874f664f5174bb92fc26b2813/merged",
+                "UpperDir": "/var/lib/docker/overlay2/816d09b6ced0dfdeef549ea125bd2008dea0742874f664f5174bb92fc26b2813/diff",
+                "WorkDir": "/var/lib/docker/overlay2/816d09b6ced0dfdeef549ea125bd2008dea0742874f664f5174bb92fc26b2813/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "140b9a149961b551b9f135c41991b0a72eb32a38123a7e3feb57b87e4d3c5e35",
+                "Source": "/var/lib/docker/volumes/140b9a149961b551b9f135c41991b0a72eb32a38123a7e3feb57b87e4d3c5e35/_data",
+                "Destination": "/data/db",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "volume",
+                "Name": "875970a8a17a4cf0c854da5e2068fcc9e756400313adaa3a76ca419483a63fce",
+                "Source": "/var/lib/docker/volumes/875970a8a17a4cf0c854da5e2068fcc9e756400313adaa3a76ca419483a63fce/_data",
+                "Destination": "/data/configdb",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "803bf33ca5f3",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.11",
+                "JSYAML_VERSION=3.13.0",
+                "GPG_KEYS=E162F504A20CDF15827F718D4B7C549A058F8B6B",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=4.2",
+                "MONGO_VERSION=4.2.1"
+            ],
+            "Cmd": [
+                "bash"
+            ],
+            "Image": "mongo",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "4ceefb1053a96fc19bd498eff5cad38c8a11c384269214bff11f4112b8e3ecdb",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "27017/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/4ceefb1053a9",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "2ef43693efdbb84f0e2fcdc3922330ff24ba83fd82eba097948e0eeaa675e313",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "8c2fb44b044f8ce526c2108265a172a842d2ca46b9c6135039fe39eee26ee604",
+                    "EndpointID": "2ef43693efdbb84f0e2fcdc3922330ff24ba83fd82eba097948e0eeaa675e313",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
