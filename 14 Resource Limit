@@ -1,0 +1,411 @@
+CPU (중앙처리장치)
+원리? 커널 작업요청 > register(우선순위) > 스케줄링
+
+Memory (작업장 <- process) : physical vs swap(가상: disk partition, file)
+
+Disk (Storage; Block) : 성능지표 IOPS / MBPS
+
+Docker < lxc (linux container = namespace + cgroup)
+
+GRUB (GRand Unified Bootload)
+
+-------------------------------------------------------------------------------------------------------
+
+
+jeff@jeff-VirtualBox:~$ docker container ps -a
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS                    PORTS               NAMES
+276af4c95f95        ssh-test-image:0.0                 "/bin/bash"              6 days ago          Exited (137) 6 days ago                       c7_ssh_test2
+8f15500fb721        ssh-test-image:0.0                 "/bin/bash"              6 days ago          Exited (137) 6 days ago                       c7_ssh_test1
+51fcf4c0e296        centos:7                           "/bin/bash"              6 days ago          Exited (137) 6 days ago                       c7_ssh
+ce4ea61ce07d        ubuntu:16.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                         ubuntu2
+aa03a55f91e5        ubuntu:16.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                         ubuntu1
+35084c856a03        centos                             "/bin/bash"              6 days ago          Exited (0) 6 days ago                         fervent_noyce
+2930e2b910e1        ubuntu:14.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                         mywebserver
+9413f299c0a1        my-nginx-image:latest              "bash"                   6 days ago          Exited (0) 6 days ago                         wonderful_thompson
+c8f8178c72ab        centos                             "/bin/ping 192.168.5…"   6 days ago          Exited (137) 6 days ago                       jolly_khayyam
+0a0de5dbe518        centos                             "/bin/ping localhost"    6 days ago          Exited (137) 6 days ago                       infallible_hermann
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              6 days ago          Exited (0) 6 days ago                         hardcore_leavitt
+cef84e3d19b0        orangehrm/oracle-xe-11g:latest     "bash"                   6 days ago          Created                                       nostalgic_visvesvaraya
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   6 days ago          Exited (137) 6 days ago                       silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   6 days ago          Exited (0) 6 days ago                         musing_blackburn
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   6 days ago          Exited (0) 6 days ago                         inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   6 days ago          Exited (0) 6 days ago                         romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              6 days ago          Exited (137) 6 days ago                       cocky_leakey
+
+jeff@jeff-VirtualBox:~$ docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:rw   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --publish=8080:8080   --detach=true   --name=cadvisor   google/cadvisor:latest
+4bddb73985b9e4b6ec8a5424b55edb40f890d8c1ee5b5c3e2203379d099edf2e
+
+jeff@jeff-VirtualBox:~$ sudo apt-get update
+[sudo] password for jeff:
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Hit:2 http://kr.archive.ubuntu.com/ubuntu xenial InRelease
+Get:3 http://kr.archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+Get:4 http://kr.archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+Get:5 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+Fetched 325 kB in 32s (10.0 kB/s)
+Reading package lists... Done
+
+jeff@jeff-VirtualBox:~$ sudo apt-get install sysstat
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libdbusmenu-gtk4 libmircommon5 libqpdf17 ubuntu-core-launcher
+Use 'sudo apt autoremove' to remove them.
+Suggested packages:
+  isag
+The following NEW packages will be installed:
+  sysstat
+0 upgraded, 1 newly installed, 0 to remove and 311 not upgraded.
+Need to get 243 kB of archives.
+After this operation, 1,004 kB of additional disk space will be used.
+Get:1 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 sysstat amd64 11.2.0-1ubuntu0.2 [243 kB]
+Fetched 243 kB in 2s (119 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package sysstat.
+(Reading database ... 210053 files and directories currently installed.)
+Preparing to unpack .../sysstat_11.2.0-1ubuntu0.2_amd64.deb ...
+Unpacking sysstat (11.2.0-1ubuntu0.2) ...
+Processing triggers for systemd (229-4ubuntu21.21) ...
+Processing triggers for ureadahead (0.100.0-19) ...
+Processing triggers for doc-base (0.10.7) ...
+Processing 1 added doc-base file...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up sysstat (11.2.0-1ubuntu0.2) ...
+
+Creating config file /etc/default/sysstat with new version
+update-alternatives: using /usr/bin/sar.sysstat to provide /usr/bin/sar (sar) in auto mode
+Processing triggers for systemd (229-4ubuntu21.21) ...
+Processing triggers for ureadahead (0.100.0-19) ...
+
+
+jeff@jeff-VirtualBox:~$ iostat 2 3
+Linux 4.4.0-169-generic (jeff-VirtualBox)       2019년 11월 30일        _x86_64_        (4 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.64    1.02    0.83    1.66    0.00   94.85
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.01         0.00          8          0
+sda              48.33       711.30       592.77    1114823     929048
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.26    0.00    0.75    0.00    0.00   97.99
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda               0.00         0.00         0.00          0          0
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.52    0.00    0.38    0.00    0.00   98.11
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda               0.00         0.00         0.00          0          0
+
+
+jeff@jeff-VirtualBox:~$ docker run -d --memory=1g --name=nginx_mem_1g nginx
+WARNING: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+7b11654315713f7423bf4cf256285d2b383efacc078395cf3c4faded78d1a24a
+jeff@jeff-VirtualBox:~$ docker container stop 7b11654
+7b11654
+jeff@jeff-VirtualBox:~$ docker container rm 7b11654
+7b11654
+jeff@jeff-VirtualBox:~$ docker container ls
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+4bddb73985b9        google/cadvisor:latest   "/usr/bin/cadvisor -…"   12 minutes ago      Up 12 minutes       0.0.0.0:8080->8080/tcp   cadvisor
+jeff@jeff-VirtualBox:~$ sudo vi /etc/default/grub
+jeff@jeff-VirtualBox:~$ sudo vi /etc/default/grub
+jeff@jeff-VirtualBox:~$ sudo update-grup
+sudo: update-grup: command not found
+jeff@jeff-VirtualBox:~$ sudo update-grub
+Generating grub configuration file ...
+Warning: Setting GRUB_TIMEOUT to a non-zero value when GRUB_HIDDEN_TIMEOUT is set is no longer supported.
+Found linux image: /boot/vmlinuz-4.4.0-169-generic
+Found initrd image: /boot/initrd.img-4.4.0-169-generic
+Found linux image: /boot/vmlinuz-4.4.0-31-generic
+Found initrd image: /boot/initrd.img-4.4.0-31-generic
+Found memtest86+ image: /boot/memtest86+.elf
+Found memtest86+ image: /boot/memtest86+.bin
+done
+
+
+----------------------------------------------------------------
+jeff@jeff-VirtualBox:~$ docker run -d --memory=1g --name=ngninx_mem_1g nginx
+165ced5dd18b2dbac48b982d61e05e136ef416e3890f82e1435e3a66734786a8
+jeff@jeff-VirtualBox:~$ docker inspect ngninx_mem_1g | grep \"Memory\"
+            "Memory": 1073741824,
+
+
+jeff@jeff-VirtualBox:~$ docker container stop 4bddb
+4bddb
+jeff@jeff-VirtualBox:~$ docker container rm 4bddb
+4bddb
+jeff@jeff-VirtualBox:~$ docker run   --volume=/:/rootfs:ro   --volume=/var/run:/var/run:rw   --volume=/sys:/sys:ro   --volume=/var/lib/docker/:/var/lib/docker:ro   --publish=8080:8080   --detach=true   --name=cadvisor   google/cadvisor:latest
+a2525e88b979b605e2e8e093efdef2c26ced72b9175bf1441a17d09e88e791b2
+
+
+
+jeff@jeff-VirtualBox:~$ docker run -d --name cpu_1024 --cpu-shares 1024 alicek106/stress stress --cpu 1
+Unable to find image 'alicek106/stress:latest' locally
+latest: Pulling from alicek106/stress
+f7277927d38a: Pull complete
+8d3eac894db4: Pull complete
+edf72af6d627: Pull complete
+3e4f86211d23: Pull complete
+d6e1f41c61e5: Pull complete
+Digest: sha256:35e7f4fb3481e223d0640888b1770d0c78731091344d6c3c5ed5c695b08a28de
+Status: Downloaded newer image for alicek106/stress:latest
+28f9b38b92e0508d3185b16b8e541fe8555d81ae2ac3ab67f8dd5eacbf83ff58
+
+jeff@jeff-VirtualBox:~$ docker run -d --name cpu_512 --cpu-shares 512 alicek106/stress stress --cpu 1
+9207d2bde4f072717a67d426c3326391da2f0299c7bdfb44ceae6e1807e75ea7
+
+jeff@jeff-VirtualBox:~$ ps -auxf | grep stress
+root      2526  0.9  0.0   7480   924 ?        Ss   09:52   0:00  |   \_ stress --cpu 1
+root      2560 99.8  0.0   7480    92 ?        R    09:52   0:33  |       \_ stress --cpu 1
+root      2633  2.1  0.0   7480   952 ?        Ss   09:52   0:00      \_ stress --cpu 1
+root      2666 99.8  0.0   7480    96 ?        R    09:52   0:12          \_ stress --cpu 1
+
+jeff@jeff-VirtualBox:~$ docker container ls
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                    NAMES
+9207d2bde4f0        alicek106/stress         "stress --cpu 1"         24 seconds ago      Up 23 seconds                                cpu_512
+28f9b38b92e0        alicek106/stress         "stress --cpu 1"         45 seconds ago      Up 44 seconds                                cpu_1024
+a2525e88b979        google/cadvisor:latest   "/usr/bin/cadvisor -…"   7 minutes ago       Up 7 minutes        0.0.0.0:8080->8080/tcp   cadvisor
+165ced5dd18b        nginx                    "nginx -g 'daemon of…"   10 minutes ago      Up 10 minutes       80/tcp                   ngninx_mem_1g
+
+jeff@jeff-VirtualBox:~$ docker stop 9207d2
+9207d2
+
+jeff@jeff-VirtualBox:~$ docker stop 28f9b
+28f9b
+
+jeff@jeff-VirtualBox:~$ docker rm 28f9b
+28f9b
+
+jeff@jeff-VirtualBox:~$ docker rm 9207d2
+9207d2
+
+
+-----------CPU 지정--------------------------------------------------------------------------------------
+
+jeff@jeff-VirtualBox:~$ sudo apt-get install htop
+[sudo] password for jeff:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libdbusmenu-gtk4 libmircommon5 libqpdf17 ubuntu-core-launcher
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  htop
+0 upgraded, 1 newly installed, 0 to remove and 311 not upgraded.
+Need to get 76.4 kB of archives.
+After this operation, 215 kB of additional disk space will be used.
+Get:1 http://kr.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 htop amd64 2.0.1-1ubuntu1 [76.4 kB]
+Fetched 76.4 kB in 0s (80.8 kB/s)
+Selecting previously unselected package htop.
+(Reading database ... 210102 files and directories currently installed.)
+Preparing to unpack .../htop_2.0.1-1ubuntu1_amd64.deb ...
+Unpacking htop (2.0.1-1ubuntu1) ...
+Processing triggers for gnome-menus (3.13.3-6ubuntu3.1) ...
+Processing triggers for desktop-file-utils (0.22-1ubuntu5) ...
+Processing triggers for bamfdaemon (0.5.3~bzr0+16.04.20160701-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for mime-support (3.59ubuntu1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up htop (2.0.1-1ubuntu1) ...
+jeff@jeff-VirtualBox:~$ docker run -d --name cpuset_1 --cpuset-cpus=2 alicek106/stress stress --cpu 1
+5d084b306d1b373a7452e25201c8993eaa705d065b20299a2c7b0bb9592eb893
+jeff@jeff-VirtualBox:~$ docker run -d --name cpuset_2 --cpuset-cpus=0,3 alicek106/stress stress --cpu 2
+afce815e0af6d13547e9fd80df8bda16902cab8f6c6456d71293889d211bc662
+
+-----------------------------------------------------------------------------------------------------------
+jeff@jeff-VirtualBox:~$ sar 2 5
+Linux 4.4.0-169-generic (jeff-VirtualBox)       2019년 11월 30일        _x86_64_        (4 CPU)
+
+                CPU     %user     %nice   %system   %iowait    %steal     %idle
+                all     75.19      0.00      0.50      0.00      0.00     24.31
+                all     75.06      0.00      0.38      0.13      0.00     24.44
+                all     75.16      0.00      0.38      0.00      0.00     24.47
+                all     75.09      0.00      0.38      0.00      0.00     24.53
+                all     75.31      0.00      0.25      0.00      0.00     24.44
+Average:        all     75.16      0.00      0.38      0.03      0.00     24.44
+
+jeff@jeff-VirtualBox:~$ iostat 2 5
+Linux 4.4.0-169-generic (jeff-VirtualBox)       2019년 11월 30일        _x86_64_        (4 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          21.64    0.01    0.61    0.47    0.00   77.26
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          8          0
+sda               9.03       250.22       106.51     589911     251108
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          74.78    0.00    0.50    0.25    0.00   24.47
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda              18.00        72.00         2.00        144          4
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          75.22    0.00    0.25    0.00    0.00   24.53
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda               0.00         0.00         0.00          0          0
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          75.00    0.00    0.50    0.00    0.00   24.50
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda               0.00         0.00         0.00          0          0
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          75.09    0.00    0.38    0.00    0.00   24.53
+
+Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn
+loop0             0.00         0.00         0.00          0          0
+sda               1.00         0.00         4.00          0          8
+
+-----------------------------------------------------------------------------------------
+
+jeff@jeff-VirtualBox:~$ mkdir hello1 hello2
+jeff@jeff-VirtualBox:~$ cd hello1
+
+jeff@jeff-VirtualBox:~/hello1$ cat > test1
+test1
+
+jeff@jeff-VirtualBox:~/hello1$ cd ../hello2
+
+jeff@jeff-VirtualBox:~/hello2$ cat > test2
+test2jeff@jeff-VirtualBox:~/hello2$
+
+jeff@jeff-VirtualBox:~/hello2$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            2.2G     0  2.2G   0% /dev
+tmpfs           446M  6.9M  439M   2% /run
+/dev/sda1        48G   13G   33G  28% /
+tmpfs           2.2G  176K  2.2G   1% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           2.2G     0  2.2G   0% /sys/fs/cgroup
+tmpfs           446M   28K  446M   1% /run/user/108
+tmpfs           446M     0  446M   0% /run/user/1000
+
+jeff@jeff-VirtualBox:~/hello2$ docker run -it --name ubuntu_volume -v /home/jeff/hello1:/hello1 -v /home/jeff/hello2:/hello2 ubuntu:16.04
+
+root@37919df107b4:/# ls
+bin  boot  dev  etc  hello1  hello2  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@37919df107b4:/# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          48G   13G   33G  28% /
+tmpfs            64M     0   64M   0% /dev
+tmpfs           2.2G     0  2.2G   0% /sys/fs/cgroup
+/dev/sda1        48G   13G   33G  28% /hello1
+shm              64M     0   64M   0% /dev/shm
+tmpfs           2.2G     0  2.2G   0% /proc/acpi
+tmpfs           2.2G     0  2.2G   0% /proc/scsi
+tmpfs           2.2G     0  2.2G   0% /sys/firmware
+root@37919df107b4:/# cd hello1
+root@37919df107b4:/hello1# ls
+test1
+root@37919df107b4:/hello1# mount
+overlay on / type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/GHX35GOHVYPE32TBURVIVCP5WH:/var/lib/docker/overlay2/l/BP7XYEPQ53UJ7IFTNHZSCMIMS7:/var/lib/docker/overlay2/l/K3VLXIQOFJUKLYWNYGKWYMCSRI:/var/lib/docker/overlay2/l/DBF6FRCFXFMR5BGMA7NVYAN7XQ:/var/lib/docker/overlay2/l/VVCG7OFJCN2ZNKRXNSZQF6MN7D,upperdir=/var/lib/docker/overlay2/dee87b2bcd75e6e002f9e3a8c0a6fb28b1b3829ce5bfedc7b5c20a5e45d83b83/diff,workdir=/var/lib/docker/overlay2/dee87b2bcd75e6e002f9e3a8c0a6fb28b1b3829ce5bfedc7b5c20a5e45d83b83/work)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev type tmpfs (rw,nosuid,size=65536k,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+sysfs on /sys type sysfs (ro,nosuid,nodev,noexec,relatime)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,relatime,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (ro,nosuid,nodev,noexec,relatime,xattr,release_agent=/lib/systemd/systemd-cgroups-agent,name=systemd)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (ro,nosuid,nodev,noexec,relatime,net_cls,net_prio)
+cgroup on /sys/fs/cgroup/freezer type cgroup (ro,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/memory type cgroup (ro,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/pids type cgroup (ro,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (ro,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (ro,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (ro,nosuid,nodev,noexec,relatime,cpu,cpuacct)
+cgroup on /sys/fs/cgroup/blkio type cgroup (ro,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/devices type cgroup (ro,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (ro,nosuid,nodev,noexec,relatime,hugetlb)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+/dev/sda1 on /hello1 type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+/dev/sda1 on /hello2 type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+/dev/sda1 on /etc/resolv.conf type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+/dev/sda1 on /etc/hostname type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+/dev/sda1 on /etc/hosts type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+shm on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,size=65536k)
+devpts on /dev/console type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+proc on /proc/bus type proc (ro,relatime)
+proc on /proc/fs type proc (ro,relatime)
+proc on /proc/irq type proc (ro,relatime)
+proc on /proc/sys type proc (ro,relatime)
+proc on /proc/sysrq-trigger type proc (ro,relatime)
+tmpfs on /proc/acpi type tmpfs (ro,relatime)
+tmpfs on /proc/kcore type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/keys type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/timer_list type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/timer_stats type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/sched_debug type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/scsi type tmpfs (ro,relatime)
+tmpfs on /sys/firmware type tmpfs (ro,relatime)
+
+root@37919df107b4:/hello1# echo "HI~" >> hello1.txt
+
+root@37919df107b4:/hello1# cat hello1.txt
+HI~
+
+root@37919df107b4:/hello1# 
+
+jeff@jeff-VirtualBox:~/hello1$ cat hello1.txt
+HI~
+jeff@jeff-VirtualBox:~/hello1$ docker inspect --format="{{ .HostConfig.Binds }}" ubuntu_volume
+[/home/jeff/hello1:/hello1 /home/jeff/hello2:/hello2]
+
+----------------------QUOTA ----------------------------------------------------------------------------------------------------------
+root@jeff-VirtualBox:~# dd if=/dev/zero of=harddrive.img count=512 bs=1M
+512+0 records in
+512+0 records out
+536870912 bytes (537 MB, 512 MiB) copied, 0.513163 s, 1.0 GB/s
+
+root@jeff-VirtualBox:~# mkfs.ext4 harddrive.img
+mke2fs 1.42.13 (17-May-2015)
+Discarding device blocks: done
+Creating filesystem with 131072 4k blocks and 32768 inodes
+Filesystem UUID: 4099b113-d0f6-4151-a439-10f0be1af84b
+Superblock backups stored on blocks:
+        32768, 98304
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+root@jeff-VirtualBox:~# fdisk -l harddrive.img
+Disk harddrive.img: 512 MiB, 536870912 bytes, 1048576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+root@jeff-VirtualBox:~# mount -o loop harddrive.img /home/jeff/myvolume
+root@jeff-VirtualBox:~# chown -R jeff.jeff /home/jeff/myvolume/
+root@jeff-VirtualBox:~# exit
+logout
+
+
+jeff@jeff-VirtualBox:~$ docker run -v /home/jeff/myvolume:/webapp -i -t ubuntu /bin/bash
+
+root@66f77750e28f:/# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          48G   13G   33G  28% /
+tmpfs            64M     0   64M   0% /dev
+tmpfs           2.2G     0  2.2G   0% /sys/fs/cgroup
+/dev/loop0      488M  396K  452M   1% /webapp
+/dev/sda1        48G   13G   33G  28% /etc/hosts
+shm              64M     0   64M   0% /dev/shm
+tmpfs           2.2G     0  2.2G   0% /proc/acpi
+tmpfs           2.2G     0  2.2G   0% /proc/scsi
+tmpfs           2.2G     0  2.2G   0% /sys/firmware
+
+
