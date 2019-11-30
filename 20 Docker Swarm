@@ -1,0 +1,200 @@
+<< manager >>
+jeff@swarm-manager:~$ docker swarm init --advertise-addr 192.168.56.102
+Swarm initialized: current node (mr2mtj9ctlu7c9gt4eehyzhd9) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-4n9xkwxjzwi35kd2tpdes8rqxmp7985fp8ovxvq4h         pzyzlsagv-552eojutjk8eitd9cri5qtv5d 192.168.56.102:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow          the instructions.
+
+jeff@swarm-manager:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILI         TY        MANAGER STATUS      ENGINE VERSION
+mr2mtj9ctlu7c9gt4eehyzhd9 *   swarm-manager       Ready               Active                       Leader              18.09.3
+kjchx7umtw840zuamzfhylfzs     swarm-worker1       Ready               Active                                           18.09.3
+nanwxxba443e2ac3swp9s8949     swarm-worker2       Ready               Active                                           18.09.3
+
+
+
+
+<< worker1, 2>>
+
+jeff@swarm-worker1:~$ docker swarm join --token SWMTKN-1-4n9xkwxjzwi35kd2tpdes8rqxmp7985fp8ovxvq4hpzyzlsagv-552eojutjk8eitd9cri5qtv5d 192.168.56.102:2377
+This node joined a swarm as a worker.
+
+jeff@swarm-worker2:~$ docker swarm join --token SWMTKN-1-4n9xkwxjzwi35kd2tpdes8rqxmp7985fp8ovxvq4hpzyzlsagv-552eojutjk8eitd9cri5qtv5d 192.168.56.102:2377
+This node joined a swarm as a worker.
+
+<< manager >>
+
+jeff@swarm-manager:~$ docker service create --name=vis_swarm --publish=8081:8080 --constraint=node.role==manager --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
+vkubb0g8qwgnpo4jscpyqjxu7
+overall progress: 1 out of 1 tasks
+1/1: running
+verify: Service converged
+
+
+
+jeff@swarm-manager:~$ docker service create ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 2; done"
+quty9a51wpjbq8igjgvbcp7qx
+overall progress: 1 out of 1 tasks
+1/1: running
+verify: Service converged
+
+jeff@swarm-manager:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS
+quty9a51wpjb        stupefied_gauss     replicated          1/1                 ubuntu:14.04
+vkubb0g8qwgn        vis_swarm           replicated          1/1                 dockersamples/visualizer:latest   *:8081->8080/tcp
+
+
+jeff@swarm-manager:~$ docker service ps stupefied_gauss
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE                ERROR               PORTS
+y0cdq9iesvua        stupefied_gauss.1   ubuntu:14.04        swarm-worker1       Running             Running about a minute ago
+
+jeff@swarm-manager:~$ docker service logs y0cdq9
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+stupefied_gauss.1.y0cdq9iesvua@swarm-worker1    | hello world
+
+
+jeff@swarm-manager:~$ docker service rm stupefied_gauss
+stupefied_gauss
+
+
+jeff@swarm-manager:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS
+vkubb0g8qwgn        vis_swarm           replicated          1/1                 dockersamples/visualizer:latest   *:8081->8080/tcp
+
+
+
+jeff@swarm-manager:~$ docker service create --name myweb --replicas 2 -p 80:80 nginx
+kauhgh0m23konbq0kt7krtbp5
+overall progress: 2 out of 2 tasks
+1/2: running   [==================================================>]
+2/2: running   [==================================================>]
+verify: Service converged
+
+jeff@swarm-manager:~$ docker service ps myweb
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STA       TE                ERROR               PORTS
+c53gm9pf8kt2        myweb.1             nginx:latest        swarm-worker2       Running             Running abo       ut a minute ago
+knte7w2iall9        myweb.2             nginx:latest        swarm-worker1       Running             Running abo       ut a minute ago
+
+jeff@swarm-manager:~$ docker service scale myweb=3
+myweb scaled to 3
+overall progress: 3 out of 3 tasks
+1/3: running   [==================================================>]
+2/3: running   [==================================================>]
+3/3: running   [==================================================>]
+verify: Service converged
+
+jeff@swarm-manager:~$ docker service ps myweb
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
+c53gm9pf8kt2        myweb.1             nginx:latest        swarm-worker2       Running             Running 3 minutes ago
+knte7w2iall9        myweb.2             nginx:latest        swarm-worker1       Running             Running 3 minutes ago
+vhjbzc03mzom        myweb.3             nginx:latest        swarm-manager       Running             Running 14 seconds ago
+
+<< worker2 >>
+jeff@swarm-worker2:~$ docker container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+38c7661242d7        nginx:latest        "nginx -g 'daemon of…"   5 minutes ago       Up 5 minutes        80/tcp              myweb.1.c53gm9pf8kt2z4gasn6xme8ny
+
+<< manager >>
+
+jeff@swarm-manager:~$ docker service ps myweb
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
+c53gm9pf8kt2        myweb.1             nginx:latest        swarm-worker2       Running             Running 3 minutes ago
+knte7w2iall9        myweb.2             nginx:latest        swarm-worker1       Running             Running 3 minutes ago
+vhjbzc03mzom        myweb.3             nginx:latest        swarm-manager       Running             Running 14 seconds ago
+
+
+jeff@swarm-manager:~$ docker service scale myweb=4
+myweb scaled to 4
+overall progress: 4 out of 4 tasks
+1/4: running   [==================================================>]
+2/4: running   [==================================================>]
+3/4: running   [==================================================>]
+4/4: running   [==================================================>]
+verify: Service converged
+
+
+jeff@swarm-manager:~$ docker service create --name global_myweb --mode global nginx
+4mb0xwk7jaux3m3ewttnuf6de
+overall progress: 3 out of 3 tasks
+nanwxxba443e: running   [==================================================>]
+kjchx7umtw84: running   [==================================================>]
+mr2mtj9ctlu7: running   [==================================================>]
+verify: Service converged
+
+jeff@swarm-manager:~$ docker service ps global_myweb
+ID                  NAME                                     IMAGE               NODE                DESIRED STATE       CURRENT STATE                ERROR               PORTS
+qu9v72nfefq9        global_myweb.kjchx7umtw840zuamzfhylfzs   nginx:latest        swarm-worker1       Running             Running about a minute ago
+vo92afrsuntm        global_myweb.mr2mtj9ctlu7c9gt4eehyzhd9   nginx:latest        swarm-manager       Running             Running about a minute ago
+1tcqdsicffk7        global_myweb.nanwxxba443e2ac3swp9s8949   nginx:latest        swarm-worker2       Running             Running about a minute ago
+
+jeff@swarm-manager:~$ docker service create --name rollup_myweb --replicas 3 nginx:1.10
+gm7qiudjr1xx2xfgijl0qesni
+overall progress: 3 out of 3 tasks
+1/3: running   [==================================================>]
+2/3: running   [==================================================>]
+3/3: running   [==================================================>]
+verify: Service converged

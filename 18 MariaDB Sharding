@@ -1,0 +1,358 @@
+
+<<< Terminal 4 >>>
+
+jeff@jeff-VirtualBox:~$ docker pull mariadb:10.1
+10.1: Pulling from library/mariadb
+7ddbc47eeb70: Already exists
+c1bbdc448b72: Already exists
+8c3b70e39044: Already exists
+45d437916d57: Already exists
+215d801d0263: Pull complete
+59feacde9e08: Pull complete
+741aa98d779c: Pull complete
+e3f771d07df1: Pull complete
+38be307a8063: Pull complete
+5ef9df553f6d: Pull complete
+4b173614c1a7: Pull complete
+04742eaf8115: Pull complete
+6ca651c62b2a: Pull complete
+b807793e3550: Pull complete
+Digest: sha256:854b6b832b19dbefe31ff1086358e904791335fd88598ac8cc7c883eadf937ef
+Status: Downloaded newer image for mariadb:10.1
+
+
+
+<<< Terminal 1 >>>
+
+jeff@jeff-VirtualBox:~$ docker volume create spider-db-volume
+spider-db-volume
+
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=spider -e MYSQL_DATABASE=master-db -v /spider-db-volume:/var/lib/mysql mariadb:10.1
+22596020c60d3cef1605fe6650da1cffecaffdf334a0c9318b79b117005b1149
+
+jeff@jeff-VirtualBox:~$ docker exec -it spider bash
+
+root@22596020c60d:/# apt-get update
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic InRelease [242 kB]
+Get:3 http://ftp.osuosl.org/pub/mariadb/repo/10.1/ubuntu bionic InRelease [6196 B]
+Get:4 http://ftp.osuosl.org/pub/mariadb/repo/10.1/ubuntu bionic/main amd64 Packages [5732 B]
+Get:5 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [6508 B]
+Get:6 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [789 kB]
+Get:7 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:8 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:9 http://archive.ubuntu.com/ubuntu bionic/main amd64 Packages [1344 kB]
+Get:10 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [739 kB]
+Get:11 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [16.8 kB]
+Get:12 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [186 kB]
+Get:13 http://archive.ubuntu.com/ubuntu bionic/restricted amd64 Packages [13.5 kB]
+Get:14 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [11.3 MB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1316 kB]
+Get:16 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [29.9 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [9549 B]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [1035 kB]
+Get:19 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2496 B]
+Get:20 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [4235 B]
+Fetched 17.3 MB in 1min 6s (263 kB/s)
+Reading package lists... Done
+
+root@22596020c60d:/# apt-get install net-tools && ifconfig
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 4 not upgraded.
+Need to get 194 kB of archives.
+After this operation, 803 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 net-tools amd64 1.60+git20161116.90da8a0-1ubuntu1 [194 kB]
+Fetched 194 kB in 2s (111 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 9436 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20161116.90da8a0-1ubuntu1_amd64.deb ...
+Unpacking net-tools (1.60+git20161116.90da8a0-1ubuntu1) ...
+Setting up net-tools (1.60+git20161116.90da8a0-1ubuntu1) ...
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 6586  bytes 17898431 (17.8 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6503  bytes 356226 (356.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+root@22596020c60d:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2 libcap2-bin libidn11 libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2 libcap2-bin libidn11 libpam-cap
+0 upgraded, 5 newly installed, 0 to remove and 4 not upgraded.
+Need to get 142 kB of archives.
+After this operation, 537 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 libcap2 amd64 1:2.25-1.2 [13.0 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libidn11 amd64 1.33-2.1ubuntu1.2 [46.6 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 iputils-ping amd64 3:20161105-1ubuntu3 [54.2 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic/main amd64 libcap2-bin amd64 1:2.25-1.2 [20.6 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic/main amd64 libpam-cap amd64 1:2.25-1.2 [7268 B]
+Fetched 142 kB in 2s (90.0 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 9484 files and directories currently installed.)
+Preparing to unpack .../libcap2_1%3a2.25-1.2_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.25-1.2) ...
+Selecting previously unselected package libidn11:amd64.
+Preparing to unpack .../libidn11_1.33-2.1ubuntu1.2_amd64.deb ...
+Unpacking libidn11:amd64 (1.33-2.1ubuntu1.2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20161105-1ubuntu3_amd64.deb ...
+Unpacking iputils-ping (3:20161105-1ubuntu3) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../libcap2-bin_1%3a2.25-1.2_amd64.deb ...
+Unpacking libcap2-bin (1:2.25-1.2) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.25-1.2_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.25-1.2) ...
+Setting up libcap2:amd64 (1:2.25-1.2) ...
+Setting up libidn11:amd64 (1.33-2.1ubuntu1.2) ...
+Setting up iputils-ping (3:20161105-1ubuntu3) ...
+Setting up libpam-cap:amd64 (1:2.25-1.2) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+Setting up libcap2-bin (1:2.25-1.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+
+
+root@22596020c60d:/# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 6677  bytes 18046689 (18.0 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6589  bytes 361694 (361.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+root@22596020c60d:/# mysql -u root -pkoreapass < /usr/share/mysql/install_spider.sql
+
+root@22596020c60d:/# mysql -u root -pkoreapass
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.1.43-MariaDB-1~bionic mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW ENGINES\G;
+*************************** 1. row ***************************
+      Engine: SPIDER
+     Support: YES
+     Comment: Spider storage engine
+Transactions: YES
+          XA: YES
+  Savepoints: NO
+*************************** 2. row ***************************
+      Engine: MRG_MyISAM
+     Support: YES
+     Comment: Collection of identical MyISAM tables
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 3. row ***************************
+      Engine: CSV
+     Support: YES
+     Comment: Stores tables as CSV files
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 4. row ***************************
+      Engine: MEMORY
+     Support: YES
+     Comment: Hash based, stored in memory, useful for temporary tables
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 5. row ***************************
+      Engine: MyISAM
+     Support: YES
+     Comment: Non-transactional engine with good performance and small data footprint
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 6. row ***************************
+      Engine: SEQUENCE
+     Support: YES
+     Comment: Generated tables filled with sequential values
+Transactions: YES
+          XA: NO
+  Savepoints: YES
+*************************** 7. row ***************************
+      Engine: Aria
+     Support: YES
+     Comment: Crash-safe tables with MyISAM heritage
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 8. row ***************************
+      Engine: PERFORMANCE_SCHEMA
+     Support: YES
+     Comment: Performance Schema
+Transactions: NO
+          XA: NO
+  Savepoints: NO
+*************************** 9. row ***************************
+      Engine: InnoDB
+     Support: DEFAULT
+     Comment: Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables
+Transactions: YES
+          XA: YES
+  Savepoints: YES
+9 rows in set (0.00 sec)
+
+ERROR: No query specified
+
+MariaDB [(none)]> SHOW ENGINES;
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| SPIDER             | YES     | Spider storage engine                                                                            | YES          | YES  | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                                            | NO           | NO   | NO         |
+| CSV                | YES     | Stores tables as CSV files                                                                       | NO           | NO   | NO         |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables                                        | NO           | NO   | NO         |
+| MyISAM             | YES     | Non-transactional engine with good performance and small data footprint                          | NO           | NO   | NO         |
+| SEQUENCE           | YES     | Generated tables filled with sequential values                                                   | YES          | NO   | YES        |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                                                           | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                                               | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables | YES          | YES  | YES        |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+9 rows in set (0.00 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| master-db          |
+| mysql              |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+
+<<< Terminal 2 >>>
+
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=korea1 -v /spider-db-volume:/var/lib/mysql mariadb:10.1                         
+028011c7a17e5a0e4103728483c93e930fcfb3bb5b4b556bac679353e2ff1cce
+jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+c3661096b09b        mariadb:10.1        "docker-entrypoint.s…"   10 seconds ago      Up 8 seconds        3306/tcp               korea2
+028011c7a17e        mariadb:10.1        "docker-entrypoint.s…"   32 seconds ago      Up 30 seconds       3306/tcp               korea1
+22596020c60d        mariadb:10.1        "docker-entrypoint.s…"   19 minutes ago      Up 19 minutes       3306/tcp               spider
+2e92886264b2        wordpress           "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:8080->80/tcp   wp2
+42a918416620        mysql:5.7           "docker-entrypoint.s…"   About an hour ago   Up About an hour    3306/tcp, 33060/tcp    wp-db2
+
+
+
+<<< Terminal 3 >>>
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=korea2 -v /spider-db-volume:/var/lib/mysql mariadb:10.1
+c3661096b09b7ebc65afda7efa30387b0650c66a95b9912e8f05fdecea5c092b
+
+
+<<< Terminal 4 >>>
+
+jeff@jeff-VirtualBox:~$ docker ps -a
+CONTAINER ID        IMAGE                              COMMAND                  CREATED              STATUS                     PORTS                  NAMES
+56084054ce04        mariadb:10.1                       "docker-entrypoint.s…"   About a minute ago   Up About a minute          3306/tcp               korea2
+f7dfd7c2645e        mariadb:10.1                       "docker-entrypoint.s…"   2 minutes ago        Up 2 minutes               3306/tcp               korea1
+22596020c60d        mariadb:10.1                       "docker-entrypoint.s…"   12 minutes ago       Up 12 minutes              3306/tcp               spider
+2e92886264b2        wordpress                          "docker-entrypoint.s…"   About an hour ago    Up About an hour           0.0.0.0:8080->80/tcp   wp2
+42a918416620        mysql:5.7                          "docker-entrypoint.s…"   About an hour ago    Up About an hour           3306/tcp, 33060/tcp    wp-db2
+13c90f37879d        nginx                              "nginx -g 'daemon of…"   3 hours ago          Exited (0) 3 hours ago                            webserver
+d962d6b7896b        centos:6                           "bash"                   4 hours ago          Exited (137) 3 hours ago                          centos6_test
+615ca25e6790        centos:7                           "bash"                   4 hours ago          Exited (137) 3 hours ago                          cranky_proskuriakova
+6a395b126fd1        centos:7                           "bash"                   4 hours ago          Exited (137) 3 hours ago                          lucid_wu
+66f77750e28f        ubuntu                             "/bin/bash"              5 hours ago          Exited (0) 3 hours ago                            frosty_lalande
+b834c901f733        ubuntu                             "/bin/bash"              5 hours ago          Exited (0) 4 hours ago                            suspicious_hamilton
+37919df107b4        ubuntu:16.04                       "/bin/bash"              5 hours ago          Exited (0) 3 hours ago                            ubuntu_volume
+afce815e0af6        alicek106/stress                   "stress --cpu 2"         5 hours ago          Exited (137) 5 hours ago                          cpuset_2
+5d084b306d1b        alicek106/stress                   "stress --cpu 1"         5 hours ago          Exited (137) 5 hours ago                          cpuset_1
+a2525e88b979        google/cadvisor:latest             "/usr/bin/cadvisor -…"   6 hours ago          Exited (0) 3 hours ago                            cadvisor
+165ced5dd18b        nginx                              "nginx -g 'daemon of…"   6 hours ago          Exited (0) 3 hours ago                            ngninx_mem_1g
+276af4c95f95        ssh-test-image:0.0                 "/bin/bash"              6 days ago           Exited (137) 6 days ago                           c7_ssh_test2
+8f15500fb721        ssh-test-image:0.0                 "/bin/bash"              6 days ago           Exited (137) 6 days ago                           c7_ssh_test1
+51fcf4c0e296        centos:7                           "/bin/bash"              6 days ago           Exited (137) 6 days ago                           c7_ssh
+ce4ea61ce07d        ubuntu:16.04                       "/bin/bash"              6 days ago           Exited (0) 6 days ago                             ubuntu2
+aa03a55f91e5        ubuntu:16.04                       "/bin/bash"              6 days ago           Exited (0) 6 days ago                             ubuntu1
+35084c856a03        centos                             "/bin/bash"              6 days ago           Exited (0) 6 days ago                             fervent_noyce
+2930e2b910e1        ubuntu:14.04                       "/bin/bash"              7 days ago           Exited (0) 6 days ago                             mywebserver
+9413f299c0a1        my-nginx-image:latest              "bash"                   7 days ago           Exited (0) 6 days ago                             wonderful_thompson
+c8f8178c72ab        centos                             "/bin/ping 192.168.5…"   7 days ago           Exited (137) 7 days ago                           jolly_khayyam
+0a0de5dbe518        centos                             "/bin/ping localhost"    7 days ago           Exited (137) 7 days ago                           infallible_hermann
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              7 days ago           Exited (0) 6 days ago                             hardcore_leavitt
+cef84e3d19b0        orangehrm/oracle-xe-11g:latest     "bash"                   7 days ago           Created                                           nostalgic_visvesvaraya
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   7 days ago           Exited (137) 6 days ago                           silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   7 days ago           Exited (0) 6 days ago                             musing_blackburn
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   7 days ago           Exited (0) 6 days ago                             inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   7 days ago           Exited (0) 6 days ago                             romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              7 days ago           Exited (137) 6 days ago                           cocky_leakey
+
+<<< Terminal 2, 3 >>>
+jeff@jeff-VirtualBox:~$ docker exec -it korea2 bash
+Error response from daemon: Container c3661096b09b7ebc65afda7efa30387b0650c66a95b9912e8f05fdecea5c092b is not running
+jeff@jeff-VirtualBox:~$ docker rm c3661
+c3661
+
+<<< Terminal 1 >>>
+
+MariaDB [(none)]> quit;
+Bye
+root@22596020c60d:/# read escape sequence
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+22596020c60d        mariadb:10.1        "docker-entrypoint.s…"   23 minutes ago      Up 23 minutes       3306/tcp               spider
+2e92886264b2        wordpress           "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:8080->80/tcp   wp2
+42a918416620        mysql:5.7           "docker-entrypoint.s…"   About an hour ago   Up About an hour    3306/tcp, 33060/tcp    wp-db2
+jeff@jeff-VirtualBox:~$ docker container stop spider
+spider
+jeff@jeff-VirtualBox:~$ docker rm spider
+spider
+
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+2e92886264b2        wordpress           "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:8080->80/tcp   wp2
+42a918416620        mysql:5.7           "docker-entrypoint.s…"   About an hour ago   Up About an hour    3306/tcp, 33060/tcp    wp-db2
+jeff@jeff-VirtualBox:~$ docker container stop wp2
+wp2
+jeff@jeff-VirtualBox:~$ docker container stop wp-db2
+wp-db2
+jeff@jeff-VirtualBox:~$ docker rm wp2
+wp2
+jeff@jeff-VirtualBox:~$ docker rm wp-db2
+wp-db2
+
+
+
+

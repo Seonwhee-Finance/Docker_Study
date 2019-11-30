@@ -1,0 +1,939 @@
+jeff@jeff-VirtualBox:~$ sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+[sudo] password for jeff:
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   617    0   617    0     0   1252      0 --:--:-- --:--:-- --:--:--  1254
+100 10.3M  100 10.3M    0     0  2175k      0  0:00:04  0:00:04 --:--:-- 2582k
+
+jeff@jeff-VirtualBox:~$ sudo chmod +x /usr/local/bin/docker-compose
+
+jeff@jeff-VirtualBox:~$ sudo chown jeff /usr/local/bin/docker-compose
+
+jeff@jeff-VirtualBox:~$ /usr/local/bin/docker-compose -v
+docker-compose version 1.21.0, build 5920eb0
+
+
+jeff@jeff-VirtualBox:~/my_wp$ vi docker-compose.yml
+
+jeff@jeff-VirtualBox:~/my_wp$ docker-compose up
+Creating network "my_wp_default" with the default driver
+Creating my_wp_db_1        ... done
+Creating my_wp_wordpress_1 ... done
+Attaching to my_wp_db_1, my_wp_wordpress_1
+db_1         | 2019-11-30 07:03:44+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.28-1debian9 started.
+wordpress_1  | WordPress not found in /var/www/html - copying now...
+db_1         | 2019-11-30 07:03:44+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+db_1         | 2019-11-30 07:03:44+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.28-1debian9 started.
+wordpress_1  | Complete! WordPress has been successfully copied to /var/www/html
+db_1         | 2019-11-30 07:03:44+00:00 [Note] [Entrypoint]: Initializing database files
+db_1         | 2019-11-30T07:03:44.745657Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+db_1         | 2019-11-30T07:03:45.523557Z 0 [Warning] InnoDB: New log files created, LSN=45790
+db_1         | 2019-11-30T07:03:45.638234Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+db_1         | 2019-11-30T07:03:45.725608Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 8cf99649-133f-11ea-9900-0242ac150002.
+db_1         | 2019-11-30T07:03:45.730408Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+db_1         | 2019-11-30T07:03:45.963845Z 0 [Warning] CA certificate ca.pem is self signed.
+wordpress_1  | [30-Nov-2019 07:03:46 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): Connection refused in Standard input code on line 22
+wordpress_1  |
+wordpress_1  | MySQL Connection Error: (2002) Connection refused
+db_1         | 2019-11-30T07:03:46.053935Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+wordpress_1  |
+wordpress_1  | MySQL Connection Error: (2002) Connection refused
+db_1         | 2019-11-30 07:03:49+00:00 [Note] [Entrypoint]: Database files initialized
+db_1         | 2019-11-30 07:03:49+00:00 [Note] [Entrypoint]: Starting temporary server
+db_1         | 2019-11-30 07:03:49+00:00 [Note] [Entrypoint]: Waiting for server startup
+db_1         | 2019-11-30T07:03:50.014183Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+db_1         | 2019-11-30T07:03:50.015022Z 0 [Note] mysqld (mysqld 5.7.28) starting as process 80 ...
+db_1         | 2019-11-30T07:03:50.019180Z 0 [Note] InnoDB: PUNCH HOLE support available
+db_1         | 2019-11-30T07:03:50.019196Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+db_1         | 2019-11-30T07:03:50.019200Z 0 [Note] InnoDB: Uses event mutexes
+db_1         | 2019-11-30T07:03:50.019222Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+db_1         | 2019-11-30T07:03:50.019225Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+db_1         | 2019-11-30T07:03:50.019229Z 0 [Note] InnoDB: Using Linux native AIO
+db_1         | 2019-11-30T07:03:50.019472Z 0 [Note] InnoDB: Number of pools: 1
+db_1         | 2019-11-30T07:03:50.019571Z 0 [Note] InnoDB: Using CPU crc32 instructions
+db_1         | 2019-11-30T07:03:50.021372Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+db_1         | 2019-11-30T07:03:50.031382Z 0 [Note] InnoDB: Completed initialization of buffer pool
+db_1         | 2019-11-30T07:03:50.033375Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+db_1         | 2019-11-30T07:03:50.045286Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+db_1         | 2019-11-30T07:03:50.055156Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+db_1         | 2019-11-30T07:03:50.055223Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+db_1         | 2019-11-30T07:03:50.131055Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+db_1         | 2019-11-30T07:03:50.134771Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+db_1         | 2019-11-30T07:03:50.134829Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+db_1         | 2019-11-30T07:03:50.135713Z 0 [Note] InnoDB: Waiting for purge to start
+db_1         | 2019-11-30T07:03:50.185995Z 0 [Note] InnoDB: 5.7.28 started; log sequence number 2628227
+db_1         | 2019-11-30T07:03:50.186426Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+db_1         | 2019-11-30T07:03:50.186965Z 0 [Note] Plugin 'FEDERATED' is disabled.
+db_1         | 2019-11-30T07:03:50.188383Z 0 [Note] InnoDB: Buffer pool(s) load completed at 191130  7:03:50
+db_1         | 2019-11-30T07:03:50.192163Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+db_1         | 2019-11-30T07:03:50.192265Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+db_1         | 2019-11-30T07:03:50.193421Z 0 [Warning] CA certificate ca.pem is self signed.
+db_1         | 2019-11-30T07:03:50.193528Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+db_1         | 2019-11-30T07:03:50.199007Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db_1         | 2019-11-30T07:03:50.206078Z 0 [Note] Event Scheduler: Loaded 0 events
+db_1         | 2019-11-30T07:03:50.206354Z 0 [Note] mysqld: ready for connections.
+db_1         | Version: '5.7.28'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server (GPL)
+db_1         | 2019-11-30 07:03:50+00:00 [Note] [Entrypoint]: Temporary server started.
+db_1         | Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+db_1         | Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+wordpress_1  |
+wordpress_1  | MySQL Connection Error: (2002) Connection refused
+db_1         | Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+db_1         | Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+db_1         | 2019-11-30 07:03:53+00:00 [Note] [Entrypoint]: Creating database wordpress
+db_1         | 2019-11-30 07:03:53+00:00 [Note] [Entrypoint]: Creating user wordpress
+db_1         | 2019-11-30 07:03:53+00:00 [Note] [Entrypoint]: Giving user wordpress access to schema wordpress
+db_1         |
+db_1         | 2019-11-30 07:03:53+00:00 [Note] [Entrypoint]: Stopping temporary server
+db_1         | 2019-11-30T07:03:53.373994Z 0 [Note] Giving 0 client threads a chance to die gracefully
+db_1         | 2019-11-30T07:03:53.374151Z 0 [Note] Shutting down slave threads
+db_1         | 2019-11-30T07:03:53.374191Z 0 [Note] Forcefully disconnecting 0 remaining clients
+db_1         | 2019-11-30T07:03:53.374265Z 0 [Note] Event Scheduler: Purging the queue. 0 events
+db_1         | 2019-11-30T07:03:53.374658Z 0 [Note] Binlog end
+db_1         | 2019-11-30T07:03:53.376762Z 0 [Note] Shutting down plugin 'ngram'
+db_1         | 2019-11-30T07:03:53.376898Z 0 [Note] Shutting down plugin 'partition'
+db_1         | 2019-11-30T07:03:53.376936Z 0 [Note] Shutting down plugin 'BLACKHOLE'
+db_1         | 2019-11-30T07:03:53.377007Z 0 [Note] Shutting down plugin 'ARCHIVE'
+db_1         | 2019-11-30T07:03:53.377075Z 0 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+db_1         | 2019-11-30T07:03:53.377658Z 0 [Note] Shutting down plugin 'MRG_MYISAM'
+db_1         | 2019-11-30T07:03:53.377823Z 0 [Note] Shutting down plugin 'MyISAM'
+db_1         | 2019-11-30T07:03:53.377881Z 0 [Note] Shutting down plugin 'INNODB_SYS_VIRTUAL'
+db_1         | 2019-11-30T07:03:53.377958Z 0 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+db_1         | 2019-11-30T07:03:53.378007Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+db_1         | 2019-11-30T07:03:53.378063Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+db_1         | 2019-11-30T07:03:53.378126Z 0 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+db_1         | 2019-11-30T07:03:53.378193Z 0 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+db_1         | 2019-11-30T07:03:53.378228Z 0 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+db_1         | 2019-11-30T07:03:53.378310Z 0 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+db_1         | 2019-11-30T07:03:53.378382Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+db_1         | 2019-11-30T07:03:53.378453Z 0 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+db_1         | 2019-11-30T07:03:53.378508Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+db_1         | 2019-11-30T07:03:53.378541Z 0 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+db_1         | 2019-11-30T07:03:53.378646Z 0 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+db_1         | 2019-11-30T07:03:53.378745Z 0 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+db_1         | 2019-11-30T07:03:53.378814Z 0 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+db_1         | 2019-11-30T07:03:53.378848Z 0 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+db_1         | 2019-11-30T07:03:53.379327Z 0 [Note] Shutting down plugin 'INNODB_METRICS'
+db_1         | 2019-11-30T07:03:53.379363Z 0 [Note] Shutting down plugin 'INNODB_TEMP_TABLE_INFO'
+db_1         | 2019-11-30T07:03:53.379474Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+db_1         | 2019-11-30T07:03:53.379525Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+db_1         | 2019-11-30T07:03:53.379642Z 0 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+db_1         | 2019-11-30T07:03:53.379759Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+db_1         | 2019-11-30T07:03:53.379809Z 0 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+db_1         | 2019-11-30T07:03:53.379916Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+db_1         | 2019-11-30T07:03:53.379950Z 0 [Note] Shutting down plugin 'INNODB_CMPMEM'
+db_1         | 2019-11-30T07:03:53.380761Z 0 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+db_1         | 2019-11-30T07:03:53.381039Z 0 [Note] Shutting down plugin 'INNODB_CMP'
+db_1         | 2019-11-30T07:03:53.381220Z 0 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+db_1         | 2019-11-30T07:03:53.381279Z 0 [Note] Shutting down plugin 'INNODB_LOCKS'
+db_1         | 2019-11-30T07:03:53.381342Z 0 [Note] Shutting down plugin 'INNODB_TRX'
+db_1         | 2019-11-30T07:03:53.381408Z 0 [Note] Shutting down plugin 'InnoDB'
+db_1         | 2019-11-30T07:03:53.382013Z 0 [Note] InnoDB: FTS optimize thread exiting.
+db_1         | 2019-11-30T07:03:53.384196Z 0 [Note] InnoDB: Starting shutdown...
+db_1         | 2019-11-30T07:03:53.486121Z 0 [Note] InnoDB: Dumping buffer pool(s) to /var/lib/mysql/ib_buffer_pool
+db_1         | 2019-11-30T07:03:53.487152Z 0 [Note] InnoDB: Buffer pool(s) dump completed at 191130  7:03:53
+wordpress_1  |
+wordpress_1  | MySQL Connection Error: (2002) Connection refused
+db_1         | 2019-11-30T07:03:55.266682Z 0 [Note] InnoDB: Shutdown completed; log sequence number 12440250
+db_1         | 2019-11-30T07:03:55.268403Z 0 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+db_1         | 2019-11-30T07:03:55.268418Z 0 [Note] Shutting down plugin 'MEMORY'
+db_1         | 2019-11-30T07:03:55.268440Z 0 [Note] Shutting down plugin 'CSV'
+db_1         | 2019-11-30T07:03:55.268443Z 0 [Note] Shutting down plugin 'sha256_password'
+db_1         | 2019-11-30T07:03:55.268445Z 0 [Note] Shutting down plugin 'mysql_native_password'
+db_1         | 2019-11-30T07:03:55.269040Z 0 [Note] Shutting down plugin 'binlog'
+db_1         | 2019-11-30T07:03:55.270581Z 0 [Note] mysqld: Shutdown complete
+db_1         |
+db_1         | 2019-11-30 07:03:55+00:00 [Note] [Entrypoint]: Temporary server stopped
+db_1         |
+db_1         | 2019-11-30 07:03:55+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+db_1         |
+db_1         | 2019-11-30T07:03:55.628642Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+db_1         | 2019-11-30T07:03:55.629629Z 0 [Note] mysqld (mysqld 5.7.28) starting as process 1 ...
+db_1         | 2019-11-30T07:03:55.633689Z 0 [Note] InnoDB: PUNCH HOLE support available
+db_1         | 2019-11-30T07:03:55.633865Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+db_1         | 2019-11-30T07:03:55.633918Z 0 [Note] InnoDB: Uses event mutexes
+db_1         | 2019-11-30T07:03:55.634014Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+db_1         | 2019-11-30T07:03:55.634112Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+db_1         | 2019-11-30T07:03:55.634151Z 0 [Note] InnoDB: Using Linux native AIO
+db_1         | 2019-11-30T07:03:55.634772Z 0 [Note] InnoDB: Number of pools: 1
+db_1         | 2019-11-30T07:03:55.635106Z 0 [Note] InnoDB: Using CPU crc32 instructions
+db_1         | 2019-11-30T07:03:55.636447Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+db_1         | 2019-11-30T07:03:55.646487Z 0 [Note] InnoDB: Completed initialization of buffer pool
+db_1         | 2019-11-30T07:03:55.648437Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+db_1         | 2019-11-30T07:03:55.667383Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+db_1         | 2019-11-30T07:03:55.677666Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+db_1         | 2019-11-30T07:03:55.677843Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+db_1         | 2019-11-30T07:03:55.754476Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+db_1         | 2019-11-30T07:03:55.756446Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+db_1         | 2019-11-30T07:03:55.756661Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+db_1         | 2019-11-30T07:03:55.757280Z 0 [Note] InnoDB: Waiting for purge to start
+db_1         | 2019-11-30T07:03:55.812761Z 0 [Note] InnoDB: 5.7.28 started; log sequence number 12440250
+db_1         | 2019-11-30T07:03:55.813728Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+db_1         | 2019-11-30T07:03:55.814319Z 0 [Note] Plugin 'FEDERATED' is disabled.
+db_1         | 2019-11-30T07:03:55.820401Z 0 [Note] InnoDB: Buffer pool(s) load completed at 191130  7:03:55
+db_1         | 2019-11-30T07:03:55.822440Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+db_1         | 2019-11-30T07:03:55.822501Z 0 [Note] Skipping generation of SSL certificates as certificate files are present in data directory.
+db_1         | 2019-11-30T07:03:55.823763Z 0 [Warning] CA certificate ca.pem is self signed.
+db_1         | 2019-11-30T07:03:55.823831Z 0 [Note] Skipping generation of RSA key pair as key files are present in data directory.
+db_1         | 2019-11-30T07:03:55.824708Z 0 [Note] Server hostname (bind-address): '*'; port: 3306
+db_1         | 2019-11-30T07:03:55.824844Z 0 [Note] IPv6 is available.
+db_1         | 2019-11-30T07:03:55.824885Z 0 [Note]   - '::' resolves to '::';
+db_1         | 2019-11-30T07:03:55.824914Z 0 [Note] Server socket created on IP: '::'.
+db_1         | 2019-11-30T07:03:55.830023Z 0 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db_1         | 2019-11-30T07:03:55.836483Z 0 [Note] Event Scheduler: Loaded 0 events
+db_1         | 2019-11-30T07:03:55.837089Z 0 [Note] mysqld: ready for connections.
+db_1         | Version: '5.7.28'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+wordpress_1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress_1  | AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.3. Set the 'ServerName' directive globally to suppress this message
+wordpress_1  | [Sat Nov 30 07:03:58.220066 2019] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/7.3.12 configured -- resuming normal operations
+wordpress_1  | [Sat Nov 30 07:03:58.220127 2019] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+
+jeff@jeff-VirtualBox:~/my_wp$ docker-compose down
+Stopping my_wp_wordpress_1 ... done
+Stopping my_wp_db_1        ... done
+Removing my_wp_wordpress_1 ... done
+Removing my_wp_db_1        ... done
+Removing network my_wp_default
+jeff@jeff-VirtualBox:~/my_wp$
+
+
+=============================================================================================================
+
+jeff@jeff-VirtualBox:~$ sudo sysctl -w vm.max_map_count=262144
+[sudo] password for jeff:
+vm.max_map_count = 262144
+
+jeff@jeff-VirtualBox:~$ sudo service docker restart
+
+jeff@jeff-VirtualBox:~$ sudo apt-get update
+Hit:1 https://download.docker.com/linux/ubuntu xenial InRelease
+Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+Hit:3 http://kr.archive.ubuntu.com/ubuntu xenial InRelease
+Get:4 http://kr.archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+Get:5 http://security.ubuntu.com/ubuntu xenial-security/main amd64 DEP-11 Metadata [74.8 kB]
+Get:6 http://kr.archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+Get:7 http://security.ubuntu.com/ubuntu xenial-security/main DEP-11 64x64 Icons [83.8 kB]
+Get:8 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 DEP-11 Metadata [124 kB]
+Get:9 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 DEP-11 Metadata [322 kB]
+Get:10 http://security.ubuntu.com/ubuntu xenial-security/universe DEP-11 64x64 Icons [194 kB]
+Get:11 http://security.ubuntu.com/ubuntu xenial-security/multiverse amd64 DEP-11 Metadata [2,464 B]
+Get:12 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main DEP-11 64x64 Icons [233 kB]
+Get:13 http://kr.archive.ubuntu.com/ubuntu xenial-updates/universe amd64 DEP-11 Metadata [274 kB]
+Get:14 http://kr.archive.ubuntu.com/ubuntu xenial-updates/universe DEP-11 64x64 Icons [406 kB]
+Get:15 http://kr.archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 DEP-11 Metadata [5,964 B]
+Get:16 http://kr.archive.ubuntu.com/ubuntu xenial-backports/main amd64 DEP-11 Metadata [3,328 B]
+Get:17 http://kr.archive.ubuntu.com/ubuntu xenial-backports/universe amd64 DEP-11 Metadata [5,328 B]
+Fetched 2,053 kB in 7s (259 kB/s)
+AppStream cache update completed, but some metadata was ignored due to errors.
+Reading package lists... Done
+
+
+jeff@jeff-VirtualBox:~$ sudo apt-get install openjdk-8-jdk
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libdbusmenu-gtk4 libmircommon5 libqpdf17 ubuntu-core-launcher
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  ca-certificates-java fonts-dejavu-extra java-common libgif7 libice-dev libpthread-stubs0-dev libsm-dev libx11-dev libx11-doc libxau-dev libxcb1-dev libxdmcp-dev libxt-dev
+  openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless x11proto-core-dev x11proto-input-dev x11proto-kb-dev xorg-sgml-doctools xtrans-dev
+Suggested packages:
+  default-jre libice-doc libsm-doc libxcb-doc libxt-doc openjdk-8-demo openjdk-8-source visualvm icedtea-8-plugin fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei
+  fonts-wqy-zenhei fonts-indic
+The following NEW packages will be installed:
+  ca-certificates-java fonts-dejavu-extra java-common libgif7 libice-dev libpthread-stubs0-dev libsm-dev libx11-dev libx11-doc libxau-dev libxcb1-dev libxdmcp-dev libxt-dev
+  openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless x11proto-core-dev x11proto-input-dev x11proto-kb-dev xorg-sgml-doctools xtrans-dev
+0 upgraded, 22 newly installed, 0 to remove and 311 not upgraded.
+Need to get 42.2 MB of archives.
+After this operation, 167 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 java-common all 0.56ubuntu2 [7,742 B]
+Get:2 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 openjdk-8-jre-headless amd64 8u222-b10-1ubuntu1~16.04.1 [27.1 MB]
+Get:3 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 ca-certificates-java all 20160321ubuntu1 [12.5 kB]
+Get:4 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 fonts-dejavu-extra all 2.35-1 [1,749 kB]
+Get:5 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 libgif7 amd64 5.1.4-0.3~16.04.1 [30.5 kB]
+Get:6 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 xorg-sgml-doctools all 1:1.11-1 [12.9 kB]
+Get:7 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 x11proto-core-dev all 7.0.31-1~ubuntu16.04.2 [254 kB]
+Get:8 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libice-dev amd64 2:1.0.9-1 [44.9 kB]
+Get:9 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libpthread-stubs0-dev amd64 0.3-4 [4,068 B]
+Get:10 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libsm-dev amd64 2:1.2.2-1 [16.2 kB]
+Get:11 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libxau-dev amd64 1:1.0.8-1 [11.1 kB]
+Get:12 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libxdmcp-dev amd64 1:1.1.2-1.1 [25.1 kB]
+Get:13 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 x11proto-input-dev all 2.3.1-1 [118 kB]
+Get:14 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 x11proto-kb-dev all 1.0.7-0ubuntu1 [224 kB]
+Get:15 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 xtrans-dev all 1.3.5-1 [70.5 kB]
+Get:16 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libxcb1-dev amd64 1.11.1-1ubuntu1 [74.2 kB]
+Get:17 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 libx11-dev amd64 2:1.6.3-1ubuntu2.1 [640 kB]
+Get:18 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 libx11-doc all 2:1.6.3-1ubuntu2.1 [1,470 kB]
+Get:19 http://kr.archive.ubuntu.com/ubuntu xenial/main amd64 libxt-dev amd64 1:1.1.5-0ubuntu1 [394 kB]
+Get:20 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 openjdk-8-jre amd64 8u222-b10-1ubuntu1~16.04.1 [68.8 kB]
+Get:21 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 openjdk-8-jdk-headless amd64 8u222-b10-1ubuntu1~16.04.1 [8,212 kB]
+Get:22 http://kr.archive.ubuntu.com/ubuntu xenial-updates/main amd64 openjdk-8-jdk amd64 8u222-b10-1ubuntu1~16.04.1 [1,607 kB]
+Fetched 42.2 MB in 2min 49s (249 kB/s)
+Selecting previously unselected package java-common.
+(Reading database ... 210111 files and directories currently installed.)
+Preparing to unpack .../java-common_0.56ubuntu2_all.deb ...
+Unpacking java-common (0.56ubuntu2) ...
+Selecting previously unselected package openjdk-8-jre-headless:amd64.
+Preparing to unpack .../openjdk-8-jre-headless_8u222-b10-1ubuntu1~16.04.1_amd64.deb ...
+Unpacking openjdk-8-jre-headless:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+Selecting previously unselected package ca-certificates-java.
+Preparing to unpack .../ca-certificates-java_20160321ubuntu1_all.deb ...
+Unpacking ca-certificates-java (20160321ubuntu1) ...
+Selecting previously unselected package fonts-dejavu-extra.
+Preparing to unpack .../fonts-dejavu-extra_2.35-1_all.deb ...
+Unpacking fonts-dejavu-extra (2.35-1) ...
+Selecting previously unselected package libgif7:amd64.
+Preparing to unpack .../libgif7_5.1.4-0.3~16.04.1_amd64.deb ...
+Unpacking libgif7:amd64 (5.1.4-0.3~16.04.1) ...
+Selecting previously unselected package xorg-sgml-doctools.
+Preparing to unpack .../xorg-sgml-doctools_1%3a1.11-1_all.deb ...
+Unpacking xorg-sgml-doctools (1:1.11-1) ...
+Selecting previously unselected package x11proto-core-dev.
+Preparing to unpack .../x11proto-core-dev_7.0.31-1~ubuntu16.04.2_all.deb ...
+Unpacking x11proto-core-dev (7.0.31-1~ubuntu16.04.2) ...
+Selecting previously unselected package libice-dev:amd64.
+Preparing to unpack .../libice-dev_2%3a1.0.9-1_amd64.deb ...
+Unpacking libice-dev:amd64 (2:1.0.9-1) ...
+Selecting previously unselected package libpthread-stubs0-dev:amd64.
+Preparing to unpack .../libpthread-stubs0-dev_0.3-4_amd64.deb ...
+Unpacking libpthread-stubs0-dev:amd64 (0.3-4) ...
+Selecting previously unselected package libsm-dev:amd64.
+Preparing to unpack .../libsm-dev_2%3a1.2.2-1_amd64.deb ...
+Unpacking libsm-dev:amd64 (2:1.2.2-1) ...
+Selecting previously unselected package libxau-dev:amd64.
+Preparing to unpack .../libxau-dev_1%3a1.0.8-1_amd64.deb ...
+Unpacking libxau-dev:amd64 (1:1.0.8-1) ...
+Selecting previously unselected package libxdmcp-dev:amd64.
+Preparing to unpack .../libxdmcp-dev_1%3a1.1.2-1.1_amd64.deb ...
+Unpacking libxdmcp-dev:amd64 (1:1.1.2-1.1) ...
+Selecting previously unselected package x11proto-input-dev.
+Preparing to unpack .../x11proto-input-dev_2.3.1-1_all.deb ...
+Unpacking x11proto-input-dev (2.3.1-1) ...
+Selecting previously unselected package x11proto-kb-dev.
+Preparing to unpack .../x11proto-kb-dev_1.0.7-0ubuntu1_all.deb ...
+Unpacking x11proto-kb-dev (1.0.7-0ubuntu1) ...
+Selecting previously unselected package xtrans-dev.
+Preparing to unpack .../xtrans-dev_1.3.5-1_all.deb ...
+Unpacking xtrans-dev (1.3.5-1) ...
+Selecting previously unselected package libxcb1-dev:amd64.
+Preparing to unpack .../libxcb1-dev_1.11.1-1ubuntu1_amd64.deb ...
+Unpacking libxcb1-dev:amd64 (1.11.1-1ubuntu1) ...
+Selecting previously unselected package libx11-dev:amd64.
+Preparing to unpack .../libx11-dev_2%3a1.6.3-1ubuntu2.1_amd64.deb ...
+Unpacking libx11-dev:amd64 (2:1.6.3-1ubuntu2.1) ...
+Selecting previously unselected package libx11-doc.
+Preparing to unpack .../libx11-doc_2%3a1.6.3-1ubuntu2.1_all.deb ...
+Unpacking libx11-doc (2:1.6.3-1ubuntu2.1) ...
+Selecting previously unselected package libxt-dev:amd64.
+Preparing to unpack .../libxt-dev_1%3a1.1.5-0ubuntu1_amd64.deb ...
+Unpacking libxt-dev:amd64 (1:1.1.5-0ubuntu1) ...
+Selecting previously unselected package openjdk-8-jre:amd64.
+Preparing to unpack .../openjdk-8-jre_8u222-b10-1ubuntu1~16.04.1_amd64.deb ...
+Unpacking openjdk-8-jre:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+Selecting previously unselected package openjdk-8-jdk-headless:amd64.
+Preparing to unpack .../openjdk-8-jdk-headless_8u222-b10-1ubuntu1~16.04.1_amd64.deb ...
+Unpacking openjdk-8-jdk-headless:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+Selecting previously unselected package openjdk-8-jdk:amd64.
+Preparing to unpack .../openjdk-8-jdk_8u222-b10-1ubuntu1~16.04.1_amd64.deb ...
+Unpacking openjdk-8-jdk:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Processing triggers for ca-certificates (20170717~16.04.2) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+Processing triggers for fontconfig (2.11.94-0ubuntu1.1) ...
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+Processing triggers for hicolor-icon-theme (0.15-0ubuntu1) ...
+Processing triggers for gnome-menus (3.13.3-6ubuntu3.1) ...
+Processing triggers for desktop-file-utils (0.22-1ubuntu5) ...
+Processing triggers for bamfdaemon (0.5.3~bzr0+16.04.20160701-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for mime-support (3.59ubuntu1) ...
+Setting up java-common (0.56ubuntu2) ...
+Setting up fonts-dejavu-extra (2.35-1) ...
+Setting up libgif7:amd64 (5.1.4-0.3~16.04.1) ...
+Setting up xorg-sgml-doctools (1:1.11-1) ...
+Setting up x11proto-core-dev (7.0.31-1~ubuntu16.04.2) ...
+Setting up libice-dev:amd64 (2:1.0.9-1) ...
+Setting up libpthread-stubs0-dev:amd64 (0.3-4) ...
+Setting up libsm-dev:amd64 (2:1.2.2-1) ...
+Setting up libxau-dev:amd64 (1:1.0.8-1) ...
+Setting up libxdmcp-dev:amd64 (1:1.1.2-1.1) ...
+Setting up x11proto-input-dev (2.3.1-1) ...
+Setting up x11proto-kb-dev (1.0.7-0ubuntu1) ...
+Setting up xtrans-dev (1.3.5-1) ...
+Setting up libxcb1-dev:amd64 (1.11.1-1ubuntu1) ...
+Setting up libx11-dev:amd64 (2:1.6.3-1ubuntu2.1) ...
+Setting up libx11-doc (2:1.6.3-1ubuntu2.1) ...
+Setting up libxt-dev:amd64 (1:1.1.5-0ubuntu1) ...
+Setting up openjdk-8-jre-headless:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmid to provide /usr/bin/rmid (rmid) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/hsdb to provide /usr/bin/hsdb (hsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java to provide /usr/bin/java (java) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/clhsdb to provide /usr/bin/clhsdb (clhsdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/keytool to provide /usr/bin/keytool (keytool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jjs to provide /usr/bin/jjs (jjs) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/pack200 to provide /usr/bin/pack200 (pack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/rmiregistry to provide /usr/bin/rmiregistry (rmiregistry) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/unpack200 to provide /usr/bin/unpack200 (unpack200) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/orbd to provide /usr/bin/orbd (orbd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/servertool to provide /usr/bin/servertool (servertool) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/tnameserv to provide /usr/bin/tnameserv (tnameserv) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jexec to provide /usr/bin/jexec (jexec) in auto mode
+Setting up ca-certificates-java (20160321ubuntu1) ...
+Adding debian:Izenpe.com.pem
+Adding debian:USERTrust_ECC_Certification_Authority.pem
+Adding debian:thawte_Primary_Root_CA.pem
+Adding debian:CNNIC_ROOT.pem
+Adding debian:OpenTrust_Root_CA_G2.pem
+Adding debian:Certplus_Class_2_Primary_CA.pem
+Adding debian:Staat_der_Nederlanden_Root_CA_-_G3.pem
+Adding debian:Buypass_Class_2_Root_CA.pem
+Adding debian:ACCVRAIZ1.pem
+Adding debian:D-TRUST_Root_Class_3_CA_2_2009.pem
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G5.pem
+Adding debian:Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+Adding debian:Amazon_Root_CA_3.pem
+Adding debian:Staat_der_Nederlanden_Root_CA_-_G2.pem
+Adding debian:TÜBİTAK_UEKAE_Kök_Sertifika_Hizmet_Sağlayıcısı_-_Sürüm_3.pem
+Adding debian:GlobalSign_Root_CA.pem
+Adding debian:AffirmTrust_Commercial.pem
+Adding debian:ACEDICOM_Root.pem
+Adding debian:COMODO_ECC_Certification_Authority.pem
+Adding debian:Amazon_Root_CA_2.pem
+Adding debian:ssl-cert-snakeoil.pem
+Adding debian:CA_Disig_Root_R2.pem
+Adding debian:Certigna.pem
+Adding debian:Comodo_Trusted_Services_root.pem
+Adding debian:CA_Disig_Root_R1.pem
+Adding debian:certSIGN_ROOT_CA.pem
+Adding debian:Trustis_FPS_Root_CA.pem
+Adding debian:EE_Certification_Centre_Root_CA.pem
+Adding debian:Certum_Trusted_Network_CA_2.pem
+Adding debian:QuoVadis_Root_CA_3.pem
+Adding debian:CFCA_EV_ROOT.pem
+Adding debian:T-TeleSec_GlobalRoot_Class_3.pem
+Adding debian:Swisscom_Root_CA_1.pem
+Adding debian:Secure_Global_CA.pem
+Adding debian:COMODO_Certification_Authority.pem
+Adding debian:Swisscom_Root_CA_2.pem
+Adding debian:QuoVadis_Root_CA_1_G3.pem
+Adding debian:E-Tugra_Certification_Authority.pem
+Adding debian:thawte_Primary_Root_CA_-_G2.pem
+Adding debian:D-TRUST_Root_Class_3_CA_2_EV_2009.pem
+Adding debian:Starfield_Services_Root_Certificate_Authority_-_G2.pem
+Adding debian:Entrust_Root_Certification_Authority_-_EC1.pem
+Adding debian:Certplus_Root_CA_G2.pem
+Adding debian:DigiCert_Assured_ID_Root_G2.pem
+Adding debian:Camerfirma_Global_Chambersign_Root.pem
+Adding debian:T-TeleSec_GlobalRoot_Class_2.pem
+Adding debian:Microsec_e-Szigno_Root_CA_2009.pem
+Adding debian:Baltimore_CyberTrust_Root.pem
+Adding debian:VeriSign_Class_3_Public_Primary_Certification_Authority_-_G4.pem
+Adding debian:DigiCert_Assured_ID_Root_G3.pem
+Adding debian:GeoTrust_Universal_CA_2.pem
+Adding debian:OISTE_WISeKey_Global_Root_GA_CA.pem
+Adding debian:XRamp_Global_CA_Root.pem
+Adding debian:COMODO_RSA_Certification_Authority.pem
+Adding debian:Chambers_of_Commerce_Root_-_2008.pem
+Adding debian:Deutsche_Telekom_Root_CA_2.pem
+Adding debian:GeoTrust_Global_CA_2.pem
+Adding debian:ePKI_Root_Certification_Authority.pem
+Adding debian:PSCProcert.pem
+Adding debian:Sonera_Class_2_Root_CA.pem
+Adding debian:thawte_Primary_Root_CA_-_G3.pem
+Adding debian:GeoTrust_Primary_Certification_Authority.pem
+Adding debian:DigiCert_High_Assurance_EV_Root_CA.pem
+Adding debian:AddTrust_Qualified_Certificates_Root.pem
+Adding debian:TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem
+Adding debian:OISTE_WISeKey_Global_Root_GB_CA.pem
+Adding debian:AC_RAIZ_FNMT-RCM.pem
+Adding debian:NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+Adding debian:Amazon_Root_CA_1.pem
+Adding debian:Hongkong_Post_Root_CA_1.pem
+Adding debian:DigiCert_Global_Root_G2.pem
+Adding debian:DigiCert_Global_Root_G3.pem
+Adding debian:Certum_Root_CA.pem
+Adding debian:AddTrust_Low-Value_Services_Root.pem
+Adding debian:TeliaSonera_Root_CA_v1.pem
+Adding debian:Starfield_Class_2_CA.pem
+Adding debian:IdenTrust_Commercial_Root_CA_1.pem
+Adding debian:SwissSign_Gold_CA_-_G2.pem
+Adding debian:Amazon_Root_CA_4.pem
+Adding debian:Visa_eCommerce_Root.pem
+Adding debian:AffirmTrust_Networking.pem
+Adding debian:Go_Daddy_Class_2_CA.pem
+Adding debian:SZAFIR_ROOT_CA2.pem
+Adding debian:GlobalSign_Root_CA_-_R3.pem
+Adding debian:AddTrust_External_Root.pem
+Adding debian:DST_ACES_CA_X6.pem
+Adding debian:OpenTrust_Root_CA_G1.pem
+Adding debian:Staat_der_Nederlanden_EV_Root_CA.pem
+Adding debian:TURKTRUST_Certificate_Services_Provider_Root_2007.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2011.pem
+Adding debian:QuoVadis_Root_CA_3_G3.pem
+Adding debian:Certum_Trusted_Network_CA.pem
+Adding debian:Comodo_Secure_Services_root.pem
+Adding debian:Go_Daddy_Root_Certificate_Authority_-_G2.pem
+Adding debian:Cybertrust_Global_Root.pem
+Adding debian:EC-ACC.pem
+Adding debian:DigiCert_Global_Root_CA.pem
+Adding debian:Security_Communication_EV_RootCA1.pem
+Adding debian:USERTrust_RSA_Certification_Authority.pem
+Adding debian:Entrust_Root_Certification_Authority.pem
+Adding debian:UTN_USERFirst_Hardware_Root_CA.pem
+Adding debian:China_Internet_Network_Information_Center_EV_Certificates_Root.pem
+Adding debian:Certinomis_-_Autorité_Racine.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem
+Adding debian:IdenTrust_Public_Sector_Root_CA_1.pem
+Adding debian:DST_Root_CA_X3.pem
+Adding debian:Network_Solutions_Certificate_Authority.pem
+Adding debian:Security_Communication_Root_CA.pem
+Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem
+Adding debian:QuoVadis_Root_CA_2_G3.pem
+Adding debian:GlobalSign_ECC_Root_CA_-_R4.pem
+Adding debian:Comodo_AAA_Services_root.pem
+Adding debian:QuoVadis_Root_CA.pem
+Adding debian:TWCA_Root_Certification_Authority.pem
+Adding debian:Buypass_Class_3_Root_CA.pem
+Adding debian:TÜRKTRUST_Elektronik_Sertifika_Hizmet_Sağlayıcısı_H5.pem
+Adding debian:QuoVadis_Root_CA_2.pem
+Adding debian:Taiwan_GRCA.pem
+Adding debian:DigiCert_Assured_ID_Root_CA.pem
+Adding debian:Verisign_Class_3_Public_Primary_Certification_Authority_-_G3.pem
+Adding debian:Entrust_Root_Certification_Authority_-_G2.pem
+Adding debian:SecureSign_RootCA11.pem
+Adding debian:AffirmTrust_Premium_ECC.pem
+Adding debian:Certplus_Root_CA_G1.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G2.pem
+Adding debian:Atos_TrustedRoot_2011.pem
+Adding debian:Starfield_Root_Certificate_Authority_-_G2.pem
+Adding debian:Security_Communication_RootCA2.pem
+Adding debian:Camerfirma_Chambers_of_Commerce_Root.pem
+Adding debian:GlobalSign_Root_CA_-_R2.pem
+Adding debian:GeoTrust_Global_CA.pem
+Adding debian:Entrust.net_Premium_2048_Secure_Server_CA.pem
+Adding debian:AddTrust_Public_Services_Root.pem
+Adding debian:AffirmTrust_Premium.pem
+Adding debian:GeoTrust_Primary_Certification_Authority_-_G3.pem
+Adding debian:GeoTrust_Universal_CA.pem
+Adding debian:GlobalSign_ECC_Root_CA_-_R5.pem
+Adding debian:LuxTrust_Global_Root_2.pem
+Adding debian:TWCA_Global_Root_CA.pem
+Adding debian:DigiCert_Trusted_Root_G4.pem
+Adding debian:Swisscom_Root_EV_CA_2.pem
+Adding debian:SwissSign_Silver_CA_-_G2.pem
+Adding debian:VeriSign_Universal_Root_Certification_Authority.pem
+Adding debian:Certinomis_-_Root_CA.pem
+Adding debian:Actalis_Authentication_Root_CA.pem
+Adding debian:Global_Chambersign_Root_-_2008.pem
+Adding debian:SecureTrust_CA.pem
+Adding debian:OpenTrust_Root_CA_G3.pem
+Adding debian:ISRG_Root_X1.pem
+done.
+Setting up openjdk-8-jre:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/policytool to provide /usr/bin/policytool (policytool) in auto mode
+Setting up openjdk-8-jdk-headless:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/idlj to provide /usr/bin/idlj (idlj) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jdeps to provide /usr/bin/jdeps (jdeps) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/wsimport to provide /usr/bin/wsimport (wsimport) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jinfo to provide /usr/bin/jinfo (jinfo) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jsadebugd to provide /usr/bin/jsadebugd (jsadebugd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/native2ascii to provide /usr/bin/native2ascii (native2ascii) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jstat to provide /usr/bin/jstat (jstat) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/javadoc to provide /usr/bin/javadoc (javadoc) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/javah to provide /usr/bin/javah (javah) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jstack to provide /usr/bin/jstack (jstack) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jrunscript to provide /usr/bin/jrunscript (jrunscript) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/javac to provide /usr/bin/javac (javac) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jhat to provide /usr/bin/jhat (jhat) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/javap to provide /usr/bin/javap (javap) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jar to provide /usr/bin/jar (jar) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/extcheck to provide /usr/bin/extcheck (extcheck) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/schemagen to provide /usr/bin/schemagen (schemagen) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jps to provide /usr/bin/jps (jps) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/xjc to provide /usr/bin/xjc (xjc) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/rmic to provide /usr/bin/rmic (rmic) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jstatd to provide /usr/bin/jstatd (jstatd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jdb to provide /usr/bin/jdb (jdb) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/serialver to provide /usr/bin/serialver (serialver) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/wsgen to provide /usr/bin/wsgen (wsgen) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jcmd to provide /usr/bin/jcmd (jcmd) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jarsigner to provide /usr/bin/jarsigner (jarsigner) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jmap to provide /usr/bin/jmap (jmap) in auto mode
+Setting up openjdk-8-jdk:amd64 (8u222-b10-1ubuntu1~16.04.1) ...
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/appletviewer to provide /usr/bin/appletviewer (appletviewer) in auto mode
+update-alternatives: using /usr/lib/jvm/java-8-openjdk-amd64/bin/jconsole to provide /usr/bin/jconsole (jconsole) in auto mode
+Processing triggers for libc-bin (2.23-0ubuntu10) ...
+Processing triggers for ca-certificates (20170717~16.04.2) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+
+done.
+done.
+
+jeff@jeff-VirtualBox:~$ java -version
+openjdk version "1.8.0_222"
+OpenJDK Runtime Environment (build 1.8.0_222-8u222-b10-1ubuntu1~16.04.1-b10)
+OpenJDK 64-Bit Server VM (build 25.222-b10, mixed mode)
+
+jeff@jeff-VirtualBox:~/elk$ vi docker-compose.yml
+jeff@jeff-VirtualBox:~/elk$ ls
+docker-compose.yml
+jeff@jeff-VirtualBox:~/elk$ docker-compose up -d
+Creating network "elk_esnet" with the default driver
+Creating volume "elk_es1" with local driver
+Creating volume "elk_es2" with local driver
+Creating volume "elk_es3" with local driver
+Pulling elasticsearch (elasticsearch:6.5.3)...
+6.5.3: Pulling from library/elasticsearch
+a02a4930cb5d: Pull complete
+be45049b8682: Pull complete
+ecc41567a2a1: Pull complete
+cace8b63b322: Pull complete
+612255c52193: Pull complete
+288443200e8a: Pull complete
+d0a09dbf50fd: Pull complete
+4fc86479577b: Pull complete
+Digest: sha256:697620435a3a4266f7ed4ee23ddbe21eb6ed91bc27583134fe6b19af40af721d
+Status: Downloaded newer image for elasticsearch:6.5.3
+Pulling kibana (kibana:6.5.3)...
+6.5.3: Pulling from library/kibana
+a02a4930cb5d: Already exists
+33737d3fb6b7: Pull complete
+6bbec7111352: Pull complete
+1acb9782a927: Pull complete
+71441fabd3da: Pull complete
+2d1d1dc7326b: Pull complete
+432cf82d78e6: Pull complete
+156a28089caa: Pull complete
+21859307527d: Pull complete
+Digest: sha256:0f48135e3ae113dbce7a6c07504557ddcaa6db9db940763c5c2c30343a6691d6
+Status: Downloaded newer image for kibana:6.5.3
+Creating elk_m ... done
+Creating elk_d2 ... done
+Creating elk_d1 ... done
+Creating kibana ... done
+
+<< 다른 터미널 >>
+jeff@jeff-VirtualBox:~/elk$ docker-compose logs -f
+Attaching to kibana, elk_d1, elk_d2, elk_m
+elk_d1            | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_d1            | [2019-11-30T07:35:58,952][INFO ][o.e.e.NodeEnvironment    ] [data-node1] using [1] data paths, mounts [[/usr/share/elasticsearch/data (/dev/sda1)]], net usable_space [28.3gb], net total_space [47.1gb], types [ext4]
+elk_d1            | [2019-11-30T07:35:59,003][INFO ][o.e.e.NodeEnvironment    ] [data-node1] heap size [495.3mb], compressed ordinary object pointers [true]
+elk_d2            | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_d2            | [2019-11-30T07:35:58,951][INFO ][o.e.e.NodeEnvironment    ] [data-node2] using [1] data paths, mounts [[/usr/share/elasticsearch/data (/dev/sda1)]], net usable_space [28.3gb], net total_space [47.1gb], types [ext4]
+elk_d2            | [2019-11-30T07:35:59,003][INFO ][o.e.e.NodeEnvironment    ] [data-node2] heap size [495.3mb], compressed ordinary object pointers [true]
+elk_d1            | [2019-11-30T07:35:59,005][INFO ][o.e.n.Node               ] [data-node1] node name [data-node1], node ID [ETO2sLVpQnmr7XqbVmCdAQ]
+elk_d1            | [2019-11-30T07:35:59,006][INFO ][o.e.n.Node               ] [data-node1] version[6.5.3], pid[1], build[default/tar/159a78a/2018-12-06T20:11:28.826501Z], OS[Linux/4.4.0-169-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/11.0.1/11.0.1+13]
+elk_d2            | [2019-11-30T07:35:59,009][INFO ][o.e.n.Node               ] [data-node2] node name [data-node2], node ID [aup3YbTSRJSmPos7ueyJoQ]
+elk_d2            | [2019-11-30T07:35:59,009][INFO ][o.e.n.Node               ] [data-node2] version[6.5.3], pid[1], build[default/tar/159a78a/2018-12-06T20:11:28.826501Z], OS[Linux/4.4.0-169-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/11.0.1/11.0.1+13]
+elk_d1            | [2019-11-30T07:35:59,006][INFO ][o.e.n.Node               ] [data-node1] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.S5CSJPEO, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Xms512m, -Xmx512m, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [aggs-matrix-stats]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [analysis-common]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [ingest-common]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-expression]
+elk_d2            | [2019-11-30T07:35:59,010][INFO ][o.e.n.Node               ] [data-node2] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.ayqaGZsY, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Xms512m, -Xmx512m, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [aggs-matrix-stats]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [analysis-common]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [ingest-common]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-expression]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-mustache]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-painless]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [mapper-extras]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [parent-join]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [percolator]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [rank-eval]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [reindex]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [repository-url]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [transport-netty4]
+elk_d2            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [tribe]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-ccr]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-core]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-deprecation]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-graph]
+elk_d2            | [2019-11-30T07:36:11,122][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-logstash]
+elk_d2            | [2019-11-30T07:36:11,122][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-ml]
+elk_d2            | [2019-11-30T07:36:11,123][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-monitoring]
+elk_d2            | [2019-11-30T07:36:11,123][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-rollup]
+elk_d2            | [2019-11-30T07:36:11,124][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-security]
+elk_d2            | [2019-11-30T07:36:11,124][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-sql]
+elk_d2            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-upgrade]
+elk_d2            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-watcher]
+elk_d2            | [2019-11-30T07:36:11,128][INFO ][o.e.p.PluginsService     ] [data-node2] loaded plugin [ingest-geoip]
+elk_d2            | [2019-11-30T07:36:11,128][INFO ][o.e.p.PluginsService     ] [data-node2] loaded plugin [ingest-user-agent]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-mustache]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-painless]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [mapper-extras]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [parent-join]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [percolator]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [rank-eval]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [reindex]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [repository-url]
+elk_d1            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [transport-netty4]
+elk_d1            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [tribe]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-ccr]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-core]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-deprecation]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-graph]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-logstash]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-ml]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-monitoring]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-rollup]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-security]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-sql]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-upgrade]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-watcher]
+elk_d1            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node1] loaded plugin [ingest-geoip]
+elk_d1            | [2019-11-30T07:36:11,126][INFO ][o.e.p.PluginsService     ] [data-node1] loaded plugin [ingest-user-agent]
+elk_m             | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_m exited with code 137
+elk_d2            | [2019-11-30T07:36:28,349][INFO ][o.e.x.s.a.s.FileRolesStore] [data-node2] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+elk_d1            | [2019-11-30T07:36:28,351][INFO ][o.e.x.s.a.s.FileRolesStore] [data-node1] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+elk_d2            | [2019-11-30T07:36:31,300][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [data-node2] [controller/72] [Main.cc@109] controller (64 bit): Version 6.5.3 (Build f418a701d70c6e) Copyright (c) 2018 Elasticsearch BV
+elk_d1            | [2019-11-30T07:36:31,301][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [data-node1] [controller/72] [Main.cc@109] controller (64 bit): Version 6.5.3 (Build f418a701d70c6e) Copyright (c) 2018 Elasticsearch BV
+elk_d2            | [2019-11-30T07:36:33,466][INFO ][o.e.d.DiscoveryModule    ] [data-node2] using discovery type [zen] and host providers [settings]
+elk_d1            | [2019-11-30T07:36:33,474][INFO ][o.e.d.DiscoveryModule    ] [data-node1] using discovery type [zen] and host providers [settings]
+elk_d1            | [2019-11-30T07:36:37,035][INFO ][o.e.n.Node               ] [data-node1] initialized
+elk_d1            | [2019-11-30T07:36:37,040][INFO ][o.e.n.Node               ] [data-node1] starting ...
+elk_d2            | [2019-11-30T07:36:37,042][INFO ][o.e.n.Node               ] [data-node2] initialized
+elk_d2            | [2019-11-30T07:36:37,042][INFO ][o.e.n.Node               ] [data-node2] starting ...
+
+
+jeff@jeff-VirtualBox:~/elk$ docker-compose logs -f
+Attaching to kibana, elk_d1, elk_d2, elk_m
+elk_d1            | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_d2            | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_d2            | [2019-11-30T07:35:58,951][INFO ][o.e.e.NodeEnvironment    ] [data-node2] using [1] data paths, mounts [[/usr/share/elasticsearch/data (/dev/sda1)]], net usable_space [28.3gb], net total_space [47.1gb], types [ext4]
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:51Z","tags":["status","plugin:kibana@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:elasticsearch@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:xpack_main@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:searchprofiler@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:ml@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:tilemap@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:watcher@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:license_management@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:index_management@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:52Z","tags":["status","plugin:rollup@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:timelion@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:graph@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:monitoring@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:spaces@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["security","warning"],"pid":1,"message":"Generating a random key for xpack.security.encryptionKey. To prevent sessions from being invalidated on restart, please set xpack.security.encryptionKey in kibana.yml"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["security","warning"],"pid":1,"message":"Session cookies will be transmitted over insecure connections. This is not recommended."}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:security@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:grokdebugger@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:dashboard_mode@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:logstash@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:beats_management@6.5.3","info"],"pid":1,"state":"yellow","message":"Status changed from uninitialized to yellow - Waiting for Elasticsearch","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:37:53Z","tags":["status","plugin:apm@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | [BABEL] Note: The code generator has deoptimised the styling of "/usr/share/kibana/node_modules/x-pack/plugins/canvas/canvas_plugin/types/all.js" as it exceeds the max of "500KB".
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:23Z","tags":["error","elasticsearch","admin"],"pid":1,"message":"Request error, retrying\nPUT http://elasticsearch:9200/_template/.management-beats => getaddrinfo ENOTFOUND elasticsearch elasticsearch:9200"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:xpack_main@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:searchprofiler@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:ml@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+elk_d1            | [2019-11-30T07:35:58,952][INFO ][o.e.e.NodeEnvironment    ] [data-node1] using [1] data paths, mounts [[/usr/share/elasticsearch/data (/dev/sda1)]], net usable_space [28.3gb], net total_space [47.1gb], types [ext4]
+elk_d1            | [2019-11-30T07:35:59,003][INFO ][o.e.e.NodeEnvironment    ] [data-node1] heap size [495.3mb], compressed ordinary object pointers [true]
+elk_d1            | [2019-11-30T07:35:59,005][INFO ][o.e.n.Node               ] [data-node1] node name [data-node1], node ID [ETO2sLVpQnmr7XqbVmCdAQ]
+elk_d1            | [2019-11-30T07:35:59,006][INFO ][o.e.n.Node               ] [data-node1] version[6.5.3], pid[1], build[default/tar/159a78a/2018-12-06T20:11:28.826501Z], OS[Linux/4.4.0-169-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/11.0.1/11.0.1+13]
+elk_d1            | [2019-11-30T07:35:59,006][INFO ][o.e.n.Node               ] [data-node1] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.S5CSJPEO, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Xms512m, -Xmx512m, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [aggs-matrix-stats]
+elk_d2            | [2019-11-30T07:35:59,003][INFO ][o.e.e.NodeEnvironment    ] [data-node2] heap size [495.3mb], compressed ordinary object pointers [true]
+elk_d2            | [2019-11-30T07:35:59,009][INFO ][o.e.n.Node               ] [data-node2] node name [data-node2], node ID [aup3YbTSRJSmPos7ueyJoQ]
+elk_d2            | [2019-11-30T07:35:59,009][INFO ][o.e.n.Node               ] [data-node2] version[6.5.3], pid[1], build[default/tar/159a78a/2018-12-06T20:11:28.826501Z], OS[Linux/4.4.0-169-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/11.0.1/11.0.1+13]
+elk_d2            | [2019-11-30T07:35:59,010][INFO ][o.e.n.Node               ] [data-node2] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.ayqaGZsY, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Xms512m, -Xmx512m, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [aggs-matrix-stats]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [analysis-common]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [ingest-common]
+elk_d2            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-expression]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-mustache]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [analysis-common]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [ingest-common]
+elk_d1            | [2019-11-30T07:36:11,115][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-expression]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-mustache]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [lang-painless]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [mapper-extras]
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:tilemap@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:watcher@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:index_management@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:rollup@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:graph@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:spaces@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:security@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:grokdebugger@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:logstash@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:beats_management@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["status","plugin:elasticsearch@6.5.3","error"],"pid":1,"state":"red","message":"Status changed from yellow to red - Request Timeout after 3000ms","prevState":"yellow","prevMsg":"Waiting for Elasticsearch"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:24Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [lang-painless]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [mapper-extras]
+elk_d2            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [parent-join]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [percolator]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [rank-eval]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [reindex]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [repository-url]
+elk_d2            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [transport-netty4]
+elk_d2            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [tribe]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-ccr]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-core]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-deprecation]
+elk_d2            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-graph]
+elk_d2            | [2019-11-30T07:36:11,122][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-logstash]
+elk_d2            | [2019-11-30T07:36:11,122][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-ml]
+elk_d2            | [2019-11-30T07:36:11,123][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-monitoring]
+elk_d2            | [2019-11-30T07:36:11,123][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-rollup]
+elk_d2            | [2019-11-30T07:36:11,124][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-security]
+elk_d1            | [2019-11-30T07:36:11,116][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [parent-join]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [percolator]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [rank-eval]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [reindex]
+elk_d2            | [2019-11-30T07:36:11,124][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-sql]
+elk_d2            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-upgrade]
+elk_d2            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node2] loaded module [x-pack-watcher]
+elk_d1            | [2019-11-30T07:36:11,117][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [repository-url]
+elk_d1            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [transport-netty4]
+elk_d1            | [2019-11-30T07:36:11,118][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [tribe]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-ccr]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-core]
+elk_d2            | [2019-11-30T07:36:11,128][INFO ][o.e.p.PluginsService     ] [data-node2] loaded plugin [ingest-geoip]
+elk_d2            | [2019-11-30T07:36:11,128][INFO ][o.e.p.PluginsService     ] [data-node2] loaded plugin [ingest-user-agent]
+elk_d2            | [2019-11-30T07:36:28,349][INFO ][o.e.x.s.a.s.FileRolesStore] [data-node2] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+elk_d1            | [2019-11-30T07:36:11,119][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-deprecation]
+kibana            | {"type":"error","@timestamp":"2019-11-30T07:38:25Z","tags":["warning","process"],"pid":1,"level":"error","error":{"message":"Error: Request Timeout after 30000ms\n    at /usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:355:15\n    at Timeout.<anonymous> (/usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:384:7)\n    at ontimeout (timers.js:498:11)\n    at tryOnTimeout (timers.js:323:5)\n    at Timer.listOnTimeout (timers.js:290:5)","name":"UnhandledPromiseRejectionWarning","stack":"UnhandledPromiseRejectionWarning: Error: Request Timeout after 30000ms\n    at /usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:355:15\n    at Timeout.<anonymous> (/usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:384:7)\n    at ontimeout (timers.js:498:11)\n    at tryOnTimeout (timers.js:323:5)\n    at Timer.listOnTimeout (timers.js:290:5)\n    at emitWarning (internal/process/promises.js:65:17)\n    at emitPendingUnhandledRejections (internal/process/promises.js:109:11)\n    at runMicrotasksCallback (internal/process/next_tick.js:125:9)\n    at _combinedTickCallback (internal/process/next_tick.js:132:7)\n    at process._tickCallback (internal/process/next_tick.js:181:9)"},"message":"Error: Request Timeout after 30000ms\n    at /usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:355:15\n    at Timeout.<anonymous> (/usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:384:7)\n    at ontimeout (timers.js:498:11)\n    at tryOnTimeout (timers.js:323:5)\n    at Timer.listOnTimeout (timers.js:290:5)"}
+elk_d2            | [2019-11-30T07:36:31,300][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [data-node2] [controller/72] [Main.cc@109] controller (64 bit): Version 6.5.3 (Build f418a701d70c6e) Copyright (c) 2018 Elasticsearch BV
+elk_d2            | [2019-11-30T07:36:33,466][INFO ][o.e.d.DiscoveryModule    ] [data-node2] using discovery type [zen] and host providers [settings]
+elk_d2            | [2019-11-30T07:36:37,042][INFO ][o.e.n.Node               ] [data-node2] initialized
+elk_d2            | [2019-11-30T07:36:37,042][INFO ][o.e.n.Node               ] [data-node2] starting ...
+elk_d2            | [2019-11-30T07:36:37,601][INFO ][o.e.t.TransportService   ] [data-node2] publish_address {172.21.0.4:9300}, bound_addresses {0.0.0.0:9300}
+elk_d2            | [2019-11-30T07:36:37,684][INFO ][o.e.b.BootstrapChecks    ] [data-node2] bound or publishing to a non-loopback address, enforcing bootstrap checks
+elk_d2            | [2019-11-30T07:36:44,798][INFO ][o.e.c.s.ClusterApplierService] [data-node2] detected_master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}, added {{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true},}, reason: apply cluster state (from master [master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true} committed version [2]])
+elk_d2            | [2019-11-30T07:36:46,172][INFO ][o.e.m.j.JvmGcMonitorService] [data-node2] [gc][young][8][10] duration [794ms], collections [1]/[1.1s], total [794ms]/[1.4s], memory [190.8mb]->[128.5mb]/[495.3mb], all_pools {[young] [131.5mb]->[20.8mb]/[133.1mb]}{[survivor] [10mb]->[10.3mb]/[16.6mb]}{[old] [49.3mb]->[97.3mb]/[345.6mb]}
+elk_d2            | [2019-11-30T07:36:46,172][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [data-node2] publish_address {172.21.0.4:9200}, bound_addresses {0.0.0.0:9200}
+elk_d2            | [2019-11-30T07:36:46,174][WARN ][o.e.m.j.JvmGcMonitorService] [data-node2] [gc][8] overhead, spent [794ms] collecting in the last [1.1s]
+elk_d2            | [2019-11-30T07:36:46,186][INFO ][o.e.n.Node               ] [data-node2] started
+elk_d2            | [2019-11-30T07:36:46,916][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [data-node2] Failed to clear cache for realms [[]]
+kibana            | {"type":"error","@timestamp":"2019-11-30T07:38:26Z","tags":["warning","process"],"pid":1,"level":"error","error":{"message":"Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)","name":"UnhandledPromiseRejectionWarning","stack":"Error: Request Timeout after 30000ms\n    at /usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:355:15\n    at Timeout.<anonymous> (/usr/share/kibana/node_modules/elasticsearch/src/lib/transport.js:384:7)\n    at ontimeout (timers.js:498:11)\n    at tryOnTimeout (timers.js:323:5)\n    at Timer.listOnTimeout (timers.js:290:5)"},"message":"Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:32Z","tags":["status","plugin:canvas@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:33Z","tags":["status","plugin:console@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:33Z","tags":["status","plugin:console_extensions@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:33Z","tags":["status","plugin:notifications@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:35Z","tags":["status","plugin:infra@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:38:35Z","tags":["status","plugin:metrics@6.5.3","info"],"pid":1,"state":"green","message":"Status changed from uninitialized to green - Ready","prevState":"uninitialized","prevMsg":"uninitialized"}
+elk_d2            | [2019-11-30T07:36:49,519][INFO ][o.e.x.s.a.TokenService   ] [data-node2] refresh keys
+elk_d2            | [2019-11-30T07:36:49,891][INFO ][o.e.x.s.a.TokenService   ] [data-node2] refreshed keys
+elk_d2            | [2019-11-30T07:36:49,902][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:52,970][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:53,595][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-graph]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-logstash]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-ml]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-monitoring]
+elk_d1            | [2019-11-30T07:36:11,120][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-rollup]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-security]
+elk_d2            | [2019-11-30T07:36:54,339][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:54,927][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-sql]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-upgrade]
+elk_d1            | [2019-11-30T07:36:11,121][INFO ][o.e.p.PluginsService     ] [data-node1] loaded module [x-pack-watcher]
+elk_d1            | [2019-11-30T07:36:11,125][INFO ][o.e.p.PluginsService     ] [data-node1] loaded plugin [ingest-geoip]
+elk_d1            | [2019-11-30T07:36:11,126][INFO ][o.e.p.PluginsService     ] [data-node1] loaded plugin [ingest-user-agent]
+elk_d1            | [2019-11-30T07:36:28,351][INFO ][o.e.x.s.a.s.FileRolesStore] [data-node1] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+elk_d1            | [2019-11-30T07:36:31,301][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [data-node1] [controller/72] [Main.cc@109] controller (64 bit): Version 6.5.3 (Build f418a701d70c6e) Copyright (c) 2018 Elasticsearch BV
+elk_d1            | [2019-11-30T07:36:33,474][INFO ][o.e.d.DiscoveryModule    ] [data-node1] using discovery type [zen] and host providers [settings]
+elk_d1            | [2019-11-30T07:36:37,035][INFO ][o.e.n.Node               ] [data-node1] initialized
+elk_d1            | [2019-11-30T07:36:37,040][INFO ][o.e.n.Node               ] [data-node1] starting ...
+elk_d1            | [2019-11-30T07:36:37,594][INFO ][o.e.t.TransportService   ] [data-node1] publish_address {172.21.0.3:9300}, bound_addresses {0.0.0.0:9300}
+elk_d1            | [2019-11-30T07:36:37,684][INFO ][o.e.b.BootstrapChecks    ] [data-node1] bound or publishing to a non-loopback address, enforcing bootstrap checks
+elk_d1            | [2019-11-30T07:36:38,363][WARN ][o.e.d.z.UnicastZenPing   ] [data-node1] failed to resolve host [elasticsearch]
+elk_d1            | java.net.UnknownHostException: elasticsearch: Name or service not known
+elk_d1            |     at java.net.Inet4AddressImpl.lookupAllHostAddr(Native Method) ~[?:?]
+elk_d1            |     at java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:929) ~[?:?]
+elk_d1            |     at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1515) ~[?:?]
+elk_d1            |     at java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:848) ~[?:?]
+elk_d2            | [2019-11-30T07:36:55,230][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:55,426][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:55,727][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d1            |     at java.net.InetAddress.getAllByName0(InetAddress.java:1505) ~[?:?]
+elk_d1            |     at java.net.InetAddress.getAllByName(InetAddress.java:1364) ~[?:?]
+elk_d1            |     at java.net.InetAddress.getAllByName(InetAddress.java:1298) ~[?:?]
+elk_d1            |     at org.elasticsearch.transport.TcpTransport.parse(TcpTransport.java:707) ~[elasticsearch-6.5.3.jar:6.5.3]
+elk_d1            |     at org.elasticsearch.transport.TcpTransport.addressesFromString(TcpTransport.java:662) ~[elasticsearch-6.5.3.jar:6.5.3]
+elk_d1            |     at org.elasticsearch.transport.TransportService.addressesFromString(TransportService.java:768) ~[elasticsearch-6.5.3.jar:6.5.3]
+elk_d1            |     at org.elasticsearch.discovery.zen.UnicastZenPing.lambda$resolveHostsLists$0(UnicastZenPing.java:184) ~[elasticsearch-6.5.3.jar:6.5.3]
+elk_d1            |     at java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[?:?]
+elk_d2            | [2019-11-30T07:36:55,889][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:57,243][INFO ][o.e.l.LicenseService     ] [data-node2] license [8c1e79ec-8367-42cc-a2de-96a7773f5c7b] mode [basic] - valid
+elk_d2            | [2019-11-30T07:36:57,303][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:36:58,136][INFO ][o.e.x.m.e.l.LocalExporter] [data-node2] waiting for elected master node [{data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}] to setup local exporter [default_local] (does it have x-pack installed?)
+elk_d2            | [2019-11-30T07:38:33,142][WARN ][o.e.m.j.JvmGcMonitorService] [data-node2] [gc][young][110][11] duration [3.2s], collections [1]/[3.9s], total [3.2s]/[4.7s], memory [239.9mb]->[127.8mb]/[495.3mb], all_pools {[young] [132.2mb]->[2mb]/[133.1mb]}{[survivor] [10.3mb]->[8.1mb]/[16.6mb]}{[old] [97.3mb]->[117.5mb]/[345.6mb]}
+elk_d2            | [2019-11-30T07:38:33,249][WARN ][o.e.m.j.JvmGcMonitorService] [data-node2] [gc][110] overhead, spent [3.2s] collecting in the last [3.9s]
+elk_d1            |     at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:624) [elasticsearch-6.5.3.jar:6.5.3]
+elk_d1            |     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]
+elk_d1            |     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]
+elk_d1            |     at java.lang.Thread.run(Thread.java:834) [?:?]
+elk_d1            | [2019-11-30T07:36:43,358][INFO ][o.e.c.s.MasterService    ] [data-node1] zen-disco-elected-as-master ([0] nodes joined), reason: new_master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}
+elk_d1            | [2019-11-30T07:36:43,587][INFO ][o.e.c.s.ClusterApplierService] [data-node1] new_master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}, reason: apply cluster state (from master [master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)]])
+elk_d1            | [2019-11-30T07:36:44,158][INFO ][o.e.c.s.MasterService    ] [data-node1] zen-disco-node-join[{data-node2}{aup3YbTSRJSmPos7ueyJoQ}{XPNpn-sESNqnCgdg-6_0bw}{172.21.0.4}{172.21.0.4:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}], reason: added {{data-node2}{aup3YbTSRJSmPos7ueyJoQ}{XPNpn-sESNqnCgdg-6_0bw}{172.21.0.4}{172.21.0.4:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true},}
+elk_d1            | [2019-11-30T07:36:44,604][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [data-node1] publish_address {172.21.0.3:9200}, bound_addresses {0.0.0.0:9200}
+elk_d1            | [2019-11-30T07:36:44,691][INFO ][o.e.n.Node               ] [data-node1] started
+elk_d1            | [2019-11-30T07:36:45,217][INFO ][o.e.c.s.ClusterApplierService] [data-node1] added {{data-node2}{aup3YbTSRJSmPos7ueyJoQ}{XPNpn-sESNqnCgdg-6_0bw}{172.21.0.4}{172.21.0.4:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true},}, reason: apply cluster state (from master [master {data-node1}{ETO2sLVpQnmr7XqbVmCdAQ}{fcd4OpsuRpiiYWdOFnCqUg}{172.21.0.3}{172.21.0.3:9300}{ml.machine_memory=2097086464, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true} committed version [2] source [zen-disco-node-join[{data-node2}{aup3YbTSRJSmPos7ueyJoQ}{XPNpn-sESNqnCgdg-6_0bw}{172.21.0.4}{172.21.0.4:9300}{ml.machine_memory=2097086464, ml.max_open_jobs=20, xpack.installed=true, ml.enabled=true}]]])
+elk_d1            | [2019-11-30T07:36:45,226][WARN ][o.e.d.z.ElectMasterService] [data-node1] value for setting "discovery.zen.minimum_master_nodes" is too low. This can result in data loss! Please set it to at least a quorum of master-eligible nodes (current value: [1], total number of master-eligible nodes used for publishing in this round: [2])
+elk_d1            | [2019-11-30T07:36:47,391][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [data-node1] Failed to clear cache for realms [[]]
+elk_d1            | [2019-11-30T07:36:48,086][INFO ][o.e.g.GatewayService     ] [data-node1] recovered [0] indices into cluster_state
+elk_d1            | [2019-11-30T07:36:52,825][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.triggered_watches] for index patterns [.triggered_watches*]
+elk_d1            | [2019-11-30T07:36:53,404][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.watches] for index patterns [.watches*]
+elk_d1            | [2019-11-30T07:36:54,108][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.watch-history-9] for index patterns [.watcher-history-9*]
+elk_d1            | [2019-11-30T07:36:54,624][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.monitoring-logstash] for index patterns [.monitoring-logstash-6-*]
+elk_m             | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+elk_d1            | [2019-11-30T07:36:55,142][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.monitoring-es] for index patterns [.monitoring-es-6-*]
+elk_d1            | [2019-11-30T07:36:55,310][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.monitoring-alerts] for index patterns [.monitoring-alerts-6]
+elk_m exited with code 137
+elk_d1            | [2019-11-30T07:36:55,559][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.monitoring-beats] for index patterns [.monitoring-beats-6-*]
+elk_d1            | [2019-11-30T07:36:55,796][INFO ][o.e.c.m.MetaDataIndexTemplateService] [data-node1] adding template [.monitoring-kibana] for index patterns [.monitoring-kibana-6-*]
+elk_d1            | [2019-11-30T07:36:57,602][INFO ][o.e.l.LicenseService     ] [data-node1] license [8c1e79ec-8367-42cc-a2de-96a7773f5c7b] mode [basic] - valid
+elk_d1            | [2019-11-30T07:38:10,662][WARN ][o.e.m.j.JvmGcMonitorService] [data-node1] [gc][young][90][11] duration [2s], collections [1]/[3s], total [2s]/[2.8s], memory [238.1mb]->[126.6mb]/[495.3mb], all_pools {[young] [131.9mb]->[1.9mb]/[133.1mb]}{[survivor] [9mb]->[7.4mb]/[16.6mb]}{[old] [97.1mb]->[117.1mb]/[345.6mb]}
+elk_d1            | [2019-11-30T07:38:10,739][WARN ][o.e.m.j.JvmGcMonitorService] [data-node1] [gc][90] overhead, spent [2s] collecting in the last [3s]
+
+
+
+
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:52:59Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:01Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:01Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:02Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:02Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:02Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:02Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:04Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:04Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:06Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:06Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:09Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:09Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:12Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:12Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:14Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:14Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:15Z","tags":["warning","elasticsearch","data"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:15Z","tags":["warning","elasticsearch","data"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:15Z","tags":["license","warning","xpack"],"pid":1,"message":"License information from the X-Pack plugin could not be obtained from Elasticsearch for the [data] cluster. Error: No Living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:17Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:17Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:19Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:19Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:22Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:22Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:24Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:24Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:27Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:27Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:29Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"Unable to revive connection: http://elasticsearch:9200/"}
+kibana            | {"type":"log","@timestamp":"2019-11-30T07:53:29Z","tags":["warning","elasticsearch","admin"],"pid":1,"message":"No living connections"}
+
+-------------------------------------------------------
+--- Chrome Store --> Elasticsearch head
+https://chrome.google.com/webstore/search/elasticsearch%20head?hl=ko

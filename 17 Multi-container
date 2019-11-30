@@ -131,3 +131,283 @@ mysql> SELECT * FROM wp_users;
 +----+------------+------------------------------------+---------------+--------------------+----------+---------------------+---------------------+-------------+--------------+
 1 row in set (0.00 sec)
 
+======================================================================================================
+
+jeff@jeff-VirtualBox:~$ docker container ps -a
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS                     PORTS               NAMES
+ec4f02389ee5        wordpress                          "docker-entrypoint.s…"   2 hours ago         Exited (0) 2 hours ago                         wordpress
+2742f6d085e7        mysql:5.7                          "docker-entrypoint.s…"   2 hours ago         Exited (0) 2 hours ago                         wordpressdb
+13c90f37879d        nginx                              "nginx -g 'daemon of…"   2 hours ago         Exited (0) 2 hours ago                         webserver
+d962d6b7896b        centos:6                           "bash"                   2 hours ago         Exited (137) 2 hours ago                       centos6_test
+615ca25e6790        centos:7                           "bash"                   3 hours ago         Exited (137) 2 hours ago                       cranky_proskuriakova
+6a395b126fd1        centos:7                           "bash"                   3 hours ago         Exited (137) 2 hours ago                       lucid_wu
+66f77750e28f        ubuntu                             "/bin/bash"              3 hours ago         Exited (0) 2 hours ago                         frosty_lalande
+b834c901f733        ubuntu                             "/bin/bash"              3 hours ago         Exited (0) 2 hours ago                         suspicious_hamilton
+37919df107b4        ubuntu:16.04                       "/bin/bash"              4 hours ago         Exited (0) 2 hours ago                         ubuntu_volume
+afce815e0af6        alicek106/stress                   "stress --cpu 2"         4 hours ago         Exited (137) 4 hours ago                       cpuset_2
+5d084b306d1b        alicek106/stress                   "stress --cpu 1"         4 hours ago         Exited (137) 4 hours ago                       cpuset_1
+a2525e88b979        google/cadvisor:latest             "/usr/bin/cadvisor -…"   4 hours ago         Exited (0) 2 hours ago                         cadvisor
+165ced5dd18b        nginx                              "nginx -g 'daemon of…"   4 hours ago         Exited (0) 2 hours ago                         ngninx_mem_1g
+276af4c95f95        ssh-test-image:0.0                 "/bin/bash"              6 days ago          Exited (137) 6 days ago                        c7_ssh_test2
+8f15500fb721        ssh-test-image:0.0                 "/bin/bash"              6 days ago          Exited (137) 6 days ago                        c7_ssh_test1
+51fcf4c0e296        centos:7                           "/bin/bash"              6 days ago          Exited (137) 6 days ago                        c7_ssh
+ce4ea61ce07d        ubuntu:16.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                          ubuntu2
+aa03a55f91e5        ubuntu:16.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                          ubuntu1
+35084c856a03        centos                             "/bin/bash"              6 days ago          Exited (0) 6 days ago                          fervent_noyce
+2930e2b910e1        ubuntu:14.04                       "/bin/bash"              6 days ago          Exited (0) 6 days ago                          mywebserver
+9413f299c0a1        my-nginx-image:latest              "bash"                   6 days ago          Exited (0) 6 days ago                          wonderful_thompson
+c8f8178c72ab        centos                             "/bin/ping 192.168.5…"   6 days ago          Exited (137) 6 days ago                        jolly_khayyam
+0a0de5dbe518        centos                             "/bin/ping localhost"    6 days ago          Exited (137) 6 days ago                        infallible_hermann
+3c50afdf9087        tensorflow/tensorflow:latest-py3   "/bin/bash"              7 days ago          Exited (0) 6 days ago                          hardcore_leavitt
+cef84e3d19b0        orangehrm/oracle-xe-11g:latest     "bash"                   7 days ago          Created                                        nostalgic_visvesvaraya
+c45ccd05d88f        orangehrm/oracle-xe-11g:latest     "bash"                   7 days ago          Exited (137) 6 days ago                        silly_swartz
+da331fd0b328        my-nginx-image:latest              "nginx -g 'daemon of…"   7 days ago          Exited (0) 6 days ago                          musing_blackburn
+c17ff1f969d0        mysql:5.7                          "docker-entrypoint.s…"   7 days ago          Exited (0) 6 days ago                          inspiring_carson
+a8a8e6dc1c2a        ubuntu:latest                      "bash"                   7 days ago          Exited (0) 6 days ago                          romantic_fermi
+3f77eb79192d        centos:7                           "/bin/bash"              7 days ago          Exited (137) 6 days ago                        cocky_leakey
+
+jeff@jeff-VirtualBox:~$ docker rm wordpress
+wordpress
+jeff@jeff-VirtualBox:~$ docker rm wordpressdb
+wordpressdb
+
+
+jeff@jeff-VirtualBox:~$ docker network create --driver=bridge wp-network
+8bc9117e61393ae797496ada6298f35fe7958f81f989694b15f2e85965e23666
+
+jeff@jeff-VirtualBox:~$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+073ebc8accf2        appdb-net           bridge              local
+85f1698b9ee7        bridge              bridge              local
+ccad6a98a769        host                host                local
+b438bf2284c6        none                null                local
+2525d7864284        webap-net           bridge              local
+8bc9117e6139        wp-network          bridge              local
+
+jeff@jeff-VirtualBox:~$ docker run -d --name wp-db --network wp-network -e MYSQL_ROOT_PASSWORD=password1 -e MYSQL_DATABASE=wp -v `pwd`/wp_db:/var/lib/mysql mysql:5.7
+46578a752db435009af5fb9672a80e0cdb6407efdaa048da94421b5cc6718aa3
+
+jeff@jeff-VirtualBox:~$ docker run -d --name wp --network wp-network -e WORDPRESS_DB_PASSWORD=password1 -e WORDPRESS_DB_HOST=wp-db -p 8080:80 wordpress
+48c6ec42a1f8176cdd538b47c6c5a45d537a2b5d0ba718493dd3c099b7495d0f
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                  NAMES
+48c6ec42a1f8        wordpress           "docker-entrypoint.s…"   5 seconds ago        Up 3 seconds        0.0.0.0:8080->80/tcp   wp
+46578a752db4        mysql:5.7           "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp, 33060/tcp    wp-db
+
+jeff@jeff-VirtualBox:~$ docker exec -it wp-db bash
+
+root@46578a752db4:/# mysql -uroot -ppassword1
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.28 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| wordpress          |
+| wp                 |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE docker_testdb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| docker_testdb      |
+| mysql              |
+| performance_schema |
+| sys                |
+| wordpress          |
+| wp                 |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> quit;
+Bye
+
+----만든 DB가 외부에서도 확인된다 ------
+root@46578a752db4:/# ls /var/lib/mysql
+auto.cnf    ca.pem           client-key.pem  ib_buffer_pool  ib_logfile1  ibtmp1  performance_schema  public_key.pem   server-key.pem  wordpress
+ca-key.pem  client-cert.pem  docker_testdb   ib_logfile0     ibdata1      mysql   private_key.pem     server-cert.pem  sys             wp
+
+root@46578a752db4:/#
+root@46578a752db4:/# read escape sequence
+
+
+jeff@jeff-VirtualBox:~$ ls wp_db/
+auto.cnf    ca.pem           client-key.pem  ib_buffer_pool  ib_logfile0  ibtmp1  performance_schema  public_key.pem   server-key.pem  wordpress
+ca-key.pem  client-cert.pem  docker_testdb   ibdata1         ib_logfile1  mysql   private_key.pem     server-cert.pem  sys             wp
+
+-------------------- Another Terminal ------bind mount 확인 -------
+jeff@jeff-VirtualBox:~$ docker inspect --format="{{ .HostConfig.Binds }}" wp-db
+[/home/jeff/wp_db:/var/lib/mysql]
+
+---------------------------------------------------------------------
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+48c6ec42a1f8        wordpress           "docker-entrypoint.s…"   13 minutes ago      Up 13 minutes       0.0.0.0:8080->80/tcp   wp
+46578a752db4        mysql:5.7           "docker-entrypoint.s…"   14 minutes ago      Up 14 minutes       3306/tcp, 33060/tcp    wp-db
+
+jeff@jeff-VirtualBox:~$ docker container stop wp
+wp
+jeff@jeff-VirtualBox:~$ docker container stop wp-db
+wp-db
+jeff@jeff-VirtualBox:~$ docker rm wp
+wp
+jeff@jeff-VirtualBox:~$ docker rm wp-db
+wp-db
+
+삭제해도 호스트 OS에 DB는 여전히 남아있다.
+jeff@jeff-VirtualBox:~$ ls wp_db/
+auto.cnf    ca.pem           client-key.pem  ib_buffer_pool  ib_logfile0  mysql               private_key.pem  server-cert.pem  sys        wp
+ca-key.pem  client-cert.pem  docker_testdb   ibdata1         ib_logfile1  performance_schema  public_key.pem   server-key.pem   wordpress
+
+
+=================================================================================
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+48c6ec42a1f8        wordpress           "docker-entrypoint.s…"   13 minutes ago      Up 13 minutes       0.0.0.0:8080->80/tcp   wp
+46578a752db4        mysql:5.7           "docker-entrypoint.s…"   14 minutes ago      Up 14 minutes       3306/tcp, 33060/tcp    wp-db
+jeff@jeff-VirtualBox:~$ docker container stop wp
+wp
+jeff@jeff-VirtualBox:~$ docker container stop wp-db
+wp-db
+jeff@jeff-VirtualBox:~$ docker rm wp
+wp
+jeff@jeff-VirtualBox:~$ docker rm wp-db
+wp-db
+
+jeff@jeff-VirtualBox:~$ ls wp_db/
+auto.cnf    ca.pem           client-key.pem  ib_buffer_pool  ib_logfile0  mysql               private_key.pem  server-cert.pem  sys        wp
+ca-key.pem  client-cert.pem  docker_testdb   ibdata1         ib_logfile1  performance_schema  public_key.pem   server-key.pem   wordpress
+
+jeff@jeff-VirtualBox:~$ docker volume create wp-db-volume
+wp-db-volume
+
+jeff@jeff-VirtualBox:~$ docker volume ls
+DRIVER              VOLUME NAME
+local               45e704918a02cc6bb10ee33324c912fccb43fdaa5cfa5711a52c18a048af0d71
+local               0513fe7905ec43ce84c594bc8f81990d90f22dedba6cdbf843c0445f14ca1f75
+local               0315539bb44f0544ce405bcad5a8e12be3286cdf8ab1bf0916c0bab4a4270aa3
+local               19783759be7c9d315a10d72717f7654e6a43f3c6c146b2e2cb3561b80dd4a66d
+local               bd38364c611b32802c22349ddd44ec7c54764b3cace5cdfb411233d8f5d3bcc4
+local               c0367ba4cdafb482d6c1b9a0f779b529c3d67af3e238ed5691963b8f8fe3d69a
+local               f6c0f23e26406760e57d76ae295f5fe9bfc22f64f3853a6ed19362dfa337b724
+local               fa8397d9969b66fb8f54b2411a39289f58ee971410656f784360be59174fee9b
+local               wp-db-volume
+
+jeff@jeff-VirtualBox:~$ docker run -d --name wp-db2 --network wp-network -e MYSQL_ROOT_PASSWORD=password1 -e MYSQL_DATABASE=wp -v /wp-db-volume:/var/lib/mysql mysql:5.7
+42a9184166200b5ab8666d48533ba0fafb19ee32d7604cfd4b302ff95bcc96fc
+
+jeff@jeff-VirtualBox:~$ docker run -d --name wp2 --network wp-network -e WORDPRESS_DB_PASSWORD=password1 -e WORDPRESS_DB_HOST=wp-db2 -p 8080:80 wordpress
+2e92886264b2105b467845e0e1aa49ffad65900d85e2440cada5b278836521f2
+
+jeff@jeff-VirtualBox:~$
+jeff@jeff-VirtualBox:~$ docker inspect --type volume wp-db-volume
+[
+    {
+        "CreatedAt": "2019-11-30T14:27:21+09:00",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/wp-db-volume/_data",
+        "Name": "wp-db-volume",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+
+jeff@jeff-VirtualBox:~$ sudo ls /var/lib/docker/volumes/wp-db-volume/
+_data
+
+jeff@jeff-VirtualBox:~$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+2e92886264b2        wordpress           "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        0.0.0.0:8080->80/tcp   wp2
+42a918416620        mysql:5.7           "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        3306/tcp, 33060/tcp    wp-db2
+
+jeff@jeff-VirtualBox:~$ docker exec -it wp-db2 bash
+
+root@42a918416620:/# mysql -uroot -ppassword1
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.28 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| wordpress          |
+| wp                 |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE docker_testdb2;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| docker_testdb2     |
+| mysql              |
+| performance_schema |
+| sys                |
+| wordpress          |
+| wp                 |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> quit;
+Bye
+
+root@42a918416620:/# ls /var/lib/mysql
+auto.cnf    ca.pem           client-key.pem  ib_buffer_pool  ib_logfile1  ibtmp1  performance_schema  public_key.pem   server-key.pem  wordpress
+ca-key.pem  client-cert.pem  docker_testdb2  ib_logfile0     ibdata1      mysql   private_key.pem     server-cert.pem  sys             wp
+root@42a918416620:/# read escape sequence
+jeff@jeff-VirtualBox:~$ sudo ls /var/lib/docker/volumes/wp-db-volume/_data
+jeff@jeff-VirtualBox:~$ docker volume rm wp-db-volume
+wp-db-volume
+
+
+
+
+
+
+---------------------------------------
+jeff@jeff-VirtualBox:~$ docker inspect --format="{{ .HostConfig.Binds }}" wp-db2
+[/wp-db-volume:/var/lib/mysql]
