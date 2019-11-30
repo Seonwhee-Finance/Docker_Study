@@ -1,0 +1,231 @@
+■ Docker를 이용한 MariaDB sharding 구축 
+(write 성능 향상, read 성능 향상은 replication)
+
+-- terminal 1(spider)		spider-db 	master
+-- terminal 2(korea1)		spider-client1 	slave1
+-- terminal 3(korea2)		spider-client2 	slave2
+-- terminal 4			image pull, docker monitoring
+
+
+-- terminal 4
+jeff@jeff-VirtualBox:~$ docker pull mariadb:10.1
+10.1: Pulling from library/mariadb
+898c46f3b1a1: Downloading [============================>                      ]  18.73MB/32.47MB
+63366dfa0a50: Download complete
+...
+
+
+
+-- terminal 1
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=spider mariadb:10.1
+25c64999c04b0005820397a8d3617e3c5cbbd906b8df7cecb2f46028da434ca7
+
+jeff@jeff-VirtualBox:~$ docker exec -it spider bash
+root@25c64999c04b:/#
+root@6c017597b562:/# apt-get update
+root@6c017597b562:/# apt-get install net-tools && ifconfig
+root@6c017597b562:/# apt-get install -y iputils-ping
+root@6c017597b562:/# ifconfig
+eth0: 172.17.0.4
+
+root@25c64999c04b:~# mysql -u root -p < /usr/share/mysql/install_spider.sql
+Enter password: (koreapass)
+
+root@25c64999c04b:~# mysql -uroot -p
+Enter password: (koreapass)
+MariaDB [(none)]> show engines\G;
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| SPIDER             | YES     | Spider storage engine                                                                            | YES          | YES  | NO         |
+
+
+
+-- terminal 2
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=korea1 mariadb:10.1
+b213421a26f857ed582f53b67d01172e0e22994d148ea186b7a9501f584354b6
+
+
+
+-- terminal 3
+jeff@jeff-VirtualBox:~$ docker run -d -e MYSQL_ROOT_PASSWORD=koreapass --name=korea2 mariadb:10.1
+2b14ce03d85de7b0acfd4caefd90efb9aaccfd5eacf165408fecabf6f67b5d6a
+
+
+
+-- terminal 4
+jeff@jeff-VirtualBox:~$ docker ps -a
+CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS                     PORTS                  NAMES
+2b14ce03d85d        mariadb:10.1                     "docker-entrypoint.s…"   22 seconds ago      Up 20 seconds              3306/tcp               korea2
+b213421a26f8        mariadb:10.1                     "docker-entrypoint.s…"   29 seconds ago      Up 28 seconds              3306/tcp               korea1
+25c64999c04b        mariadb:10.1                     "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes               3306/tcp               spider
+...
+
+
+
+-- terminal 2
+jeff@jeff-VirtualBox:~$ docker exec -it korea1 bash
+root@b213421a26f8:/#
+root@b213421a26f8:/# apt-get update
+root@b213421a26f8:/# apt-get install net-tools && ifconfig
+root@b213421a26f8:/# apt-get install -y iputils-ping
+root@b213421a26f8:/# ifconfig
+eth0: 172.17.0.5
+
+
+-- terminal 3
+jeff@jeff-VirtualBox:~$ docker exec -it korea2 bash
+root@2b14ce03d85d:/#
+root@2b14ce03d85d:/# apt-get update
+root@2b14ce03d85d:/# apt-get install net-tools && ifconfig
+root@2b14ce03d85d:/# apt-get install -y iputils-ping
+root@2b14ce03d85d:/# ifconfig
+eth0: 172.17.0.6
+
+
+-- terminal 4
+jeff@jeff-VirtualBox:~$ docker inspect spider | grep "IPAddress"
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.2",
+                    "IPAddress": "172.17.0.2",
+
+jeff@jeff-VirtualBox:~$ docker inspect korea1 | grep "IPAddress"
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.3",
+                    "IPAddress": "172.17.0.3",
+
+jeff@jeff-VirtualBox:~$ docker inspect korea2 | grep "IPAddress"
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.4",
+                    "IPAddress": "172.17.0.4",
+
+
+
+-- terminal 2~3 모두 수행
+root@b213421a26f8:/# cd /usr/share/mysql
+root@b213421a26f8:/usr/share/mysql# mysql -uroot -p < /usr/share/mysql/install_spider.sql
+Enter password:
+root@b213421a26f8:/usr/share/mysql# mysql -uroot -p
+MariaDB [(none)]> show databases;
+MariaDB [(none)]> show engines;
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| SPIDER             | YES     | Spider storage engine                                                                            | YES          | YES  | NO         |
+...
+
+
+
+-- terminal 1, 2, 3 에 모두 수행
+MariaDB [(none)]> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [mysql]> create user 'spider-user'@'%' identified by 'spiderpass';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [mysql]> grant all on *.* to 'spider-user'@'%' with grant option;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [mysql]> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> create database koreaDB;
+
+MariaDB [(koreaDB)]> 
+
+
+
+
+-- terminal 1 (mster)
+MariaDB [(none)]> use koreaDB;
+
+MariaDB [(koreaDB)]> create server korea1
+    ->  foreign data wrapper mysql
+    -> options(
+    ->  host '172.17.0.3',
+    ->  database 'koreaDB',
+    ->  user 'spider-user',
+    ->  password 'spiderpass',
+    ->  port 3306
+    -> );
+
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(koreaDB)]> create server korea2
+    ->  foreign data wrapper mysql
+    -> options(
+    ->  host '172.17.0.4',
+    ->  database 'koreaDB',
+    ->  user 'spider-user',
+    ->  password 'spiderpass',
+    ->  port 3306
+    -> );
+
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(koreaDB)]> select * from mysql.servers;
++-------------+------------+---------+-------------+-----------+------+--------+---------+-------+
+| Server_name | Host       | Db      | Username    | Password  | Port | Socket | Wrapper | Owner |
++-------------+------------+---------+-------------+-----------+------+--------+---------+-------+
+| korea1      | 172.17.0.3 | koreaDB | spider-user | koreapass | 3306 |        | mysql   |       |
+| korea2      | 172.17.0.4 | koreaDB | spider-user | koreapass | 3306 |        | mysql   |       |
++-------------+------------+---------+-------------+-----------+------+--------+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [koreaDB]>
+MariaDB [koreaDB]> create table shard_table
+    -> (id int not null auto_increment
+    -> , name varchar(255) not null
+    -> , address varchar(255) not null
+    -> , primary key(id))
+    -> engine=spider comment='wrapper "mysql", table "shard_table"'
+    -> partition by key(id)
+    -> ( partition korea1 comment = 'srv "korea1"'
+    -> , partition korea2 comment = 'srv "korea2"' );
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [koreaDB]> FLUSH TABLES;
+Query OK, 0 rows affected (0.03 sec)
+
+
+-- terminal 2~3
+
+root@2b14ce03d85d:~# mysql -uroot -p
+Enter password:
+
+MariaDB [(none)]> use koreaDB;
+MariaDB [koreaDB]> create table shard_table
+    -> (
+    ->  id int not null auto_increment,
+    ->  name varchar(255) not null,
+    ->  address varchar(255) not null,
+    ->  primary key(id)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+MariaDB [koreaDB]> select * from shard_table;
+Empty set (0.00 sec)
+
+MariaDB [koreaDB]> FLUSH TABLES;
+Query OK, 0 rows affected (0.03 sec)
+
+
+
+-- terminal 1 (spider-db)
+insert into shard_table(name, address) values ('kim', 'seoul');
+insert into shard_table(name, address) values ('lee', 'seoul');
+insert into shard_table(name, address) values ('park', 'seoul');
+insert into shard_table(name, address) values ('kim', 'busan');
+insert into shard_table(name, address) values ('lee', 'daegu');
+insert into shard_table(name, address) values ('park', 'jeju');
+...(여러번 수행)
+
+select * from shard_table;
+
+
+
+-- (Terminal 2, 3)_korea1,2에서도 각각 확인
+select * from shard_table;
+

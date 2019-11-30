@@ -1,0 +1,76 @@
+-- container SSH bypass
+
+# SSH 연습용 docker container 생성과 접속
+jeff@jeff-VirtualBox:~$ docker run -it --name c7_ssh centos:7
+[root@95a2ab13db06 /]#
+
+# SSH server & client 설치
+[root@95a2ab13db06 /]# yum install openssh-server openssh-clients -y
+
+# SSH key 생성
+[root@95a2ab13db06 /]# ssh-keygen -q -b 1024 -N '' -t rsa -f /etc/ssh/ssh_host_rsa_key && \
+> ssh-keygen -q -b 1024 -N '' -t dsa -f /etc/ssh/ssh_host_dsa_key && \
+> ssh-keygen -q -b 521 -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key && \
+> ssh-keygen -q -b 521 -N '' -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+
+# ssh를 실행하도록 bashrc에 입력
+[root@95a2ab13db06 /]# echo /usr/sbin/sshd >> /root/.bashrc && source /root/.bashrc
+
+# 생성된 키를 인증할 수 있는 키 목록에 추가
+[root@95a2ab13db06 /]# mkdir ~/.ssh && \
+> cat /etc/ssh/ssh_host_rsa_key >> ~/.ssh/id_rsa && \
+> cat /etc/ssh/ssh_host_rsa_key.pub >> ~/.ssh/authorized_keys
+
+# ssh의 설정 파일을 새로 만들고 아래 내용을 넣으면 ssh 접속 시 yes/or 질문을 차단
+[root@95a2ab13db06 /]# vi /root/.ssh/config
+Host *
+        StrictHostKeyChecking no
+
+# 비밀번호 인증 비활성화
+[root@95a2ab13db06 /]# sed -i \
+> -e 's~^PasswordAuthentication yes~PasswordAuthentication no~g' \
+> /etc/ssh/sshd_config
+
+# 키 파일의 권한 조정
+[root@95a2ab13db06 /]# chmod 400 ~/.ssh/id_rsa
+
+-- terminal 2 : 해당 컨테이너를 commit
+jeff@jeff-VirtualBox:~$ docker commit c7_ssh ssh-test-image:0.0
+sha256:ab1dd1cd13a6836ca369598acc54fdb7c623bcc91cdb16458e9dcc097200736c
+
+# 2개의 컨테이너를 생성한 뒤, ssh로 서로 접속해 제약 없이 접속 되는 것을 확인
+jeff@jeff-VirtualBox:~$ docker run -itd --name c7_ssh_test1 ssh-test-image:0.0
+1b4bcdb8b16f41ce81c3292ceb9162d442a9fe02e46edc38c0f7393a2badca6c
+
+jeff@jeff-VirtualBox:~$ docker inspect c7_ssh_test1 | grep 172
+                "LowerDir": "/var/lib/docker/overlay2/052d4fe0d7dfa7219e94e5339e65bd464c5e69617648499212888ea3ab65fb29-init/diff:/var/lib/docker/overlay2/cf2c9f03f8d544bca3e35255652b2ec92bc8c0e037511c281900cdb10f172e27/diff:/var/lib/docker/overlay2/0c7d36733a86a2d874390d12455d6f19215ad56decad6388be60dc4bcc0b3b3b/diff",
+            "Gateway": "172.17.0.1",
+            "IPAddress": "172.17.0.3",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.3",
+
+jeff@jeff-VirtualBox:~$ docker run -it --name c7_ssh_test2 ssh-test-image:0.0
+[root@4c09db5dea5d /]#
+
+-- terminal 3
+jeff@jeff-VirtualBox:~$ docker inspect c7_ssh_test2 | grep 172
+                "LowerDir": …
+            "Gateway": "172.17.0.1",
+            "IPAddress": "172.17.0.4",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.4",
+
+jeff@jeff-VirtualBox:~$ docker run -it --name c7_ssh_test2 ssh-test-image:0.0
+[root@4c09db5dea5d /]#
+[root@4c09db5dea5d /]# ssh 172.17.0.3
+Warning: Permanently added '172.17.0.3' (ECDSA) to the list of known hosts.
+[root@1b4bcdb8b16f ~]#
+
+[root@1b4bcdb8b16f ~]# yum install net-tools		# ifconfig 명령어 설치
+
+-- c7_ssh_test2 
+[root@1b4bcdb8b16f /]# ifconfig
+[root@1b4bcdb8b16f /]# w
+ 11:38:44 up  1:08,  1 user,  load average: 0.54, 0.39, 0.30
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/1    172.17.0.4       11:38    2.00s  0.00s  0.00s -bash
