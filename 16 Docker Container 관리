@@ -1,0 +1,118 @@
+--------------- cp --------------------------
+
+jeff@jeff-VirtualBox:~$ docker run -it --name centos6_test centos:6 bash
+Unable to find image 'centos:6' locally
+6: Pulling from library/centos
+ff50d722b382: Pull complete
+Digest: sha256:dec8f471302de43f4cfcf82f56d99a5227b5ea1aa6d02fa56344986e1f4610e7
+Status: Downloaded newer image for centos:6
+
+[root@d962d6b7896b /]# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  sbin  selinux  srv  sys  tmp  usr  var
+[root@d962d6b7896b /]# cd tmp/
+[root@d962d6b7896b tmp]# ls
+anaconda-post.log  yum.log
+
+
+
+jeff@jeff-VirtualBox:~$ touch local.txt
+
+jeff@jeff-VirtualBox:~$ docker container cp ./local.txt centos6_test:/tmp/local.txt
+
+jeff@jeff-VirtualBox:~$ docker exec -it centos6_test bash
+
+[root@d962d6b7896b /]# cd tmp/
+
+[root@d962d6b7896b tmp]# ls
+anaconda-post.log  local.txt  yum.log
+
+
+-------------diff-----------------------------------------------------------------------------------------------------------------------
+
+
+useradd apple
+        /etc/passwd
+        /etc/shadow
+        /etc/group
+        .
+        .
+        .
+        /etc/skel
+
+
+[root@d962d6b7896b /]# mkdir docker_test
+
+[root@d962d6b7896b /]# mkdir docker_test2
+
+[root@d962d6b7896b /]# useradd docker_user1
+
+[root@d962d6b7896b /]# useradd docker_user2
+
+[root@d962d6b7896b /]# rm /tmp/local.txt
+rm: remove regular empty file `/tmp/local.txt'? y
+[root@d962d6b7896b /]# read escape sequence
+
+jeff@jeff-VirtualBox:~$ docker diff centos6_test
+A /docker_test
+C /home
+A /home/docker_user1
+A /home/docker_user1/.bash_profile
+A /home/docker_user1/.bashrc
+A /home/docker_user1/.bash_logout
+A /home/docker_user2
+A /home/docker_user2/.bash_profile
+A /home/docker_user2/.bashrc
+A /home/docker_user2/.bash_logout
+A /docker_test2
+C /var
+C /var/log
+C /var/log/lastlog
+C /var/spool
+C /var/spool/mail
+A /var/spool/mail/docker_user1
+A /var/spool/mail/docker_user2
+C /etc
+C /etc/group
+C /etc/passwd
+C /etc/group-
+C /etc/gshadow
+C /etc/shadow
+C /etc/passwd-
+C /etc/shadow-
+C /etc/gshadow-
+
+===============================================================이관 백업=====================================================================================
+
+jeff@jeff-VirtualBox:~$ docker container run --name webserver -d -p 80:80 nginx
+
+jeff@jeff-VirtualBox:~$ docker container export webserver > webserver.tar
+
+jeff@jeff-VirtualBox:~$ ls
+Desktop  Docker_Study  Documents  Downloads  examples.desktop  hello1  hello2  local.txt  Music  myvolume  nginx  Pictures  Public  Templates  Videos  webserver.tar
+
+jeff@jeff-VirtualBox:~$ cat webserver.tar | docker import - webap:1.0
+sha256:85273fd12cff9066ad20759cd1c4e82807afc9100370799451effe7e94b7d0ae
+
+jeff@jeff-VirtualBox:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+webap                     1.0                 85273fd12cff        10 seconds ago      125MB
+ssh-test-image            0.0                 edb402161e9c        6 days ago          298MB
+seonwhee0docker/apache2   1.0                 d123ea2a4496        6 days ago          216MB
+my-nginx-image            latest              eaa0a55a928f        7 days ago          126MB
+nginx                     latest              231d40e811cd        7 days ago          126MB
+nginx                     <none>              4152a9608752        10 days ago         126MB
+centos                    7                   5e35e350aded        2 weeks ago         203MB
+ubuntu                    16.04               5f2bf26e3524        4 weeks ago         123MB
+ubuntu                    latest              775349758637        4 weeks ago         64.2MB
+mysql                     5.7                 cd3ed0dfff7e        6 weeks ago         437MB
+seonwhee0docker/mysql     mysql-v5.7          cd3ed0dfff7e        6 weeks ago         437MB
+tensorflow/tensorflow     latest-py3          90f5cb97b18f        8 weeks ago         1.07GB
+centos                    latest              0f3e07c0138f        8 weeks ago         220MB
+alicek106/stress          latest              4df5775342a8        3 months ago        146MB
+ubuntu                    14.04               2c5e00d77a67        6 months ago        188MB
+centos                    6                   d0957ffdf8a2        8 months ago        194MB
+nginx                     <none>              881bd08c0b08        8 months ago        109MB
+ubuntu                    <none>              47b19964fb50        9 months ago        88.1MB
+google/cadvisor           latest              eb1210707573        12 months ago       69.6MB
+orangehrm/oracle-xe-11g   latest              42dda6eba3ea        2 years ago         2.39GB
+
